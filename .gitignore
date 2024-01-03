@@ -30,3 +30,16 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio stuff
+*.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+[Dd]ebug/
+[Pp]ackages/
+x64/
+[Ee]nginnit/[Dd]ebug
+[Ee]nginnit/x64
