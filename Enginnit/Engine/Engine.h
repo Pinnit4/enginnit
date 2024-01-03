@@ -21,7 +21,10 @@ public:
 	~Engine();
 
 	bool Initialize(char* windowTitle);
-	
+
+	bool ShouldShutdown();
+	void Shutdown();
+
 	void Update();
 	void Render();
 private:

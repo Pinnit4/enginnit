@@ -53,6 +53,8 @@ bool Engine::Initialize(char* windowTitle) {
 	return true;
 }
 
+void Engine::Shutdown() { graphics.Shutdown(); }
+
 void Engine::Update() 
 { 
 	double now = glfwGetTime();
@@ -62,6 +64,10 @@ void Engine::Update()
 	glfwPollEvents(); 
 
 	physics.Tick(deltaTime);
+}
+
+bool Engine::ShouldShutdown() {
+	return glfwWindowShouldClose(window);
 }
 
 void Engine::Render() { graphics.Render(); }
