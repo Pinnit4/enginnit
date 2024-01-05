@@ -65,12 +65,6 @@ void Sprite::Render() {
 	pivotDiff -= Graphics::GetCameraPosition();
 
 	// Set quad vertex positions (in local pos, since we already "moved" the matrix right above us in glTranslatef)
-
-	//glTexCoord2f(texture.GetAnchorMinPercent().x, texture.GetAnchorMinPercent().y);		glVertex2f(pivotDiff.x, pivotDiff.y);
-	//glTexCoord2f(texture.GetAnchorMaxPercent().x, texture.GetAnchorMinPercent().y);		glVertex2f(texture.GetWidth() + pivotDiff.x, pivotDiff.y);
-	//glTexCoord2f(texture.GetAnchorMaxPercent().x, texture.GetAnchorMaxPercent().y);		glVertex2f(texture.GetWidth() + pivotDiff.x, texture.GetHeight() + pivotDiff.y);
-	//glTexCoord2f(texture.GetAnchorMinPercent().x, texture.GetAnchorMaxPercent().y);		glVertex2f(pivotDiff.x, texture.GetHeight() + pivotDiff.y);
-
 	glTexCoord2d(texture.GetAnchorMinPercent().x, texture.GetAnchorMinPercent().y);		glVertex2f(pivotDiff.x, pivotDiff.y);
 	glTexCoord2d(texture.GetAnchorMaxPercent().x, texture.GetAnchorMinPercent().y);		glVertex2f(texture.GetWidth() + pivotDiff.x, pivotDiff.y);
 	glTexCoord2d(texture.GetAnchorMaxPercent().x, texture.GetAnchorMaxPercent().y);		glVertex2f(texture.GetWidth() + pivotDiff.x, texture.GetHeight() + pivotDiff.y);

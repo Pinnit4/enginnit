@@ -12,8 +12,10 @@ public:
 	int x;
 	int y;
 
-	TiledMapSprite(Texture texture, char tileId, int x, int y);
-private:
-
+	TiledMapSprite(Texture _texture, char _tileId, int _x, int _y) : Sprite(_texture) {
+		tileId = _tileId;
+		x = _x;
+		y = _y;
+	}
 };
 #endif#pragma once

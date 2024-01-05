@@ -1,9 +1,0 @@
-type:Tileset
-tile_height:16
-tile_width:16
-0:Assets/Sprites/tile_world.png:0:16:15:31
-1:Assets/Sprites/tile_world.png:0:32:15:47
-2:Assets/Sprites/tile_world.png:32:16:47:31
-3:Assets/Sprites/tile_world.png:64:32:79:47
-4:Assets/Sprites/tile_details.png:32:48:47:63
-5:Assets/Sprites/tile_details.png:48:48:63:63

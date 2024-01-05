@@ -30,7 +30,7 @@ void UIHandler::Initialize(GLFWwindow* _window) {
 void UIHandler::Render() {
 	BeginRender();
 
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	EndRender();
 }

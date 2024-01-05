@@ -40,8 +40,8 @@ void Graphics::Set2DViewport(int _depth) {
 	glViewport(0, 0, width, height); // Set the viewport
 	glMatrixMode(GL_PROJECTION); // Set the matrix mode (projection for 2D, investigate more for 3D)
 	glLoadIdentity(); // Load a blank matrix
-	int w = width / 3;
-	int h = height / 3;
+	int w = width / 4;
+	int h = height / 4;
 	glOrtho(-w / 2, w / 2, -h / 2, h / 2, -depth, depth); // Set an orthographic camera and its bounds
 	//SetCameraPosition(Vector2(100,-50));
 	//glOrtho(0, width / 3, 0, height / 3, -depth, depth); // Set an orthographic camera and its bounds
@@ -77,7 +77,7 @@ void Graphics::Shutdown() {
 
 void Graphics::BeginRender() {
 	// Clear the previous rendered frame
-	glClearColor(0.4f, 0.3f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

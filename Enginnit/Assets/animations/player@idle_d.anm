@@ -1,0 +1,4 @@
+type:SpriteAnimation
+tileset:Assets/tilesets/player_tileset0.tls
+fps:10;
+sequence:6

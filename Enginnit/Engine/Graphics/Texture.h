@@ -29,10 +29,14 @@ public:
 
 	void SetAnchors(Vector2Int min, Vector2Int max);
 
+	string GetName();
+	void SetName(string name);
+
 	string GetPath();
 
 private:
 	int id;
+	string name;
 
 	int width;
 	int height;
