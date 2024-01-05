@@ -1,15 +1,29 @@
 #include "Graphics.h"
 
+#ifdef PROFILER_ENABLED
+#include "../Profiling/TimeProfiler.h"
+#endif
+
 std::list<Sprite*> Graphics::rgSp = {};
 GLFWwindow* Graphics::window = NULL;
 
+int Graphics::SCREEN_WIDTH = 1024;
+int Graphics::SCREEN_HEIGHT = 768;
+
+int Graphics::width = 0;
+int Graphics::height = 0;
+int Graphics::depth = 0;
+
+Vector2 Graphics::camPos = Vector2::Zero();
+
 Graphics::Graphics() {
 	window = NULL;
+	uiHandler = UIHandler();
 
 	rgSp.clear();
 }
 
-Graphics::Graphics(GLFWwindow* _window) {
+void Graphics::Initialize(GLFWwindow* _window) {
 	window = _window;
 
 	glfwMakeContextCurrent(window);
@@ -18,28 +32,19 @@ Graphics::Graphics(GLFWwindow* _window) {
 
 	rgSp.clear();
 
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-	
-	ImGui::StyleColorsDark();
-
-	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init();
+	uiHandler.Initialize(window);
 }
 
-void Graphics::Set2DViewport(int depth) {
+void Graphics::Set2DViewport(int _depth) {
+	depth = _depth;
 	glViewport(0, 0, width, height); // Set the viewport
 	glMatrixMode(GL_PROJECTION); // Set the matrix mode (projection for 2D, investigate more for 3D)
 	glLoadIdentity(); // Load a blank matrix
-	glOrtho(0, width, 0, height, -depth, depth); // Set an orthographic camera and its bounds
+	int w = width / 3;
+	int h = height / 3;
+	glOrtho(-w / 2, w / 2, -h / 2, h / 2, -depth, depth); // Set an orthographic camera and its bounds
+	//SetCameraPosition(Vector2(100,-50));
+	//glOrtho(0, width / 3, 0, height / 3, -depth, depth); // Set an orthographic camera and its bounds
 	glDepthRange(-depth, depth); // Set the depth range to the same as the near-far bounds of the camera
 	glMatrixMode(GL_MODELVIEW);
 }
@@ -57,6 +62,7 @@ void Graphics::Render() {
 	BeginRender();
 
 	RenderSprites();
+	uiHandler.Render();
 
 	EndRender();
 }
@@ -73,24 +79,16 @@ void Graphics::BeginRender() {
 	// Clear the previous rendered frame
 	glClearColor(0.4f, 0.3f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-
-	ImGui::ShowDemoWindow();
 }
 
 void Graphics::EndRender() {
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	// After drawing, swap the buffers to show the new rendered frame
 	glfwSwapBuffers(window);
 }
 
 void Graphics::RegisterSprite(Sprite* sp) {
 	if (rgSp.size() > 0) {
-		std::list<Sprite*>::iterator findIt = std::find(rgSp.begin(), rgSp.end(), sp);
+		list<Sprite*>::iterator findIt = find(rgSp.begin(), rgSp.end(), sp);
 		if ((findIt) != rgSp.end()) return;
 	}
 	else if (rgSp.size() > 0) {
@@ -109,6 +107,10 @@ void Graphics::RenderSprites() {
 	if (rgSp.size() == 0)
 		return;
 
+#ifdef PROFILER_ENABLED
+	int pId = TimeProfiler::StartProfiler();
+#endif
+
 	if (rgSp.size() > 1) {
 		rgSp.sort(
 			[&](Sprite* a, Sprite* b) -> bool
@@ -121,7 +123,18 @@ void Graphics::RenderSprites() {
 			});
 	}
 
-	for (std::list<Sprite*>::iterator it = rgSp.begin(); it != rgSp.end(); it++) {
+	for (list<Sprite*>::iterator it = rgSp.begin(); it != rgSp.end(); it++) {
 		(*it)->Render();
 	}
+
+#ifdef PROFILER_ENABLED
+	double duration = TimeProfiler::StopProfiler(pId);
+	//cout << "Finished sprite rendering in " << duration << "s" << endl;
+#endif
 }
+
+void Graphics::MoveCamera(Vector2 delta) { camPos += delta; }
+
+void Graphics::SetCameraPosition(Vector2 newPos) { camPos = newPos; }
+
+Vector2 Graphics::GetCameraPosition() { return camPos; }

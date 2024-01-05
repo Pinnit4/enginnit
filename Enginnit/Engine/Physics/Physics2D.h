@@ -14,7 +14,9 @@ class Physics2D {
 public:
 	Physics2D();
 
+	void Initialize();
 	void Tick(float deltaTime);
+	void Shutdown();
 
 	static void RegisterRigidbody(Rigidbody2D* sp);
 	static void UnregisterRigidbody(Rigidbody2D* sp);

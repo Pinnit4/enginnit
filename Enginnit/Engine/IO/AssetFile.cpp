@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void AssetFile::ReadAssetFile(string filePath, function<void (string, string)> parseCallback) {
+void AssetFile::ReadAssetFile(string filePath, function<void (string, vector<string>)> parseCallback) {
 	fstream f;
 	f.open(filePath, ios::in);
 	if (f.is_open()) {
@@ -21,8 +21,8 @@ void AssetFile::ReadAssetFile(string filePath, function<void (string, string)> p
 				continue;
 			}
 			string id = splitLine[0];
-			string value = splitLine[1];
-			parseCallback(id, value);
+			splitLine.erase(splitLine.begin());
+			parseCallback(id, splitLine);
 		}
 
 		f.close();

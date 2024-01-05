@@ -9,10 +9,10 @@ using namespace std;
 
 class AssetFile {
 public:
-	static void ReadAssetFile(string filePath, function<void(string, string)> parseCallback);
+	static void ReadAssetFile(string filePath, function<void(string, vector<string>)> parseCallback);
 	static void WriteAssetFile(string filePath, vector<vector<string>> data);
-private:
 	static vector<string> GetLineSplitted(string line, char value);
+private:
 };
 
 #endif

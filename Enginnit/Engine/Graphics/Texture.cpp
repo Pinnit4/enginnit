@@ -20,8 +20,24 @@ Texture::Texture(string path) {
 }
 
 int Texture::GetID() { return id; }
+
 int Texture::GetWidth() { return width; }
 int Texture::GetHeight() { return height; }
+
+Vector2Int Texture::GetAnchorMin() { return anchorMin; }
+Vector2Int Texture::GetAnchorMax() { return anchorMax; }
+
+Vector2Double Texture::GetAnchorMinPercent() { return anchorMinPercent; }
+Vector2Double Texture::GetAnchorMaxPercent() { return anchorMaxPercent; }
+
+void Texture::SetAnchors(Vector2Int _anchorMin, Vector2Int _anchorMax) {
+	anchorMin = _anchorMin;
+	anchorMax = _anchorMax;
+	width = anchorMax.x - anchorMin.x + 1;
+	height = anchorMax.y - anchorMin.y + 1;
+	RefreshAnchorsInPercent();
+}
+
 string Texture::GetPath() { return path; }
 
 bool Texture::LoadImage(string _path, unsigned int flags) {
@@ -36,9 +52,17 @@ bool Texture::SetImageParameters(int _id) {
 	if (id > 0) {
 		int mipLevel = 0;
 		glBindTexture(GL_TEXTURE_2D, id);
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_WIDTH, &width);
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_HEIGHT, &height);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_WIDTH, &internalWidth);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_HEIGHT, &internalHeight);
+
+		SetAnchors(Vector2Int::Zero(), Vector2Int(internalWidth-1, internalHeight-1));
+
 		return true;
 	}
 	return false;
+}
+
+void Texture::RefreshAnchorsInPercent() {
+	anchorMinPercent = Vector2Double(((double)anchorMin.x) / ((double)internalWidth), ((double)anchorMin.y) / ((double)internalHeight));
+	anchorMaxPercent = Vector2Double(((double)anchorMax.x + 1) / ((double)internalWidth), ((double)anchorMax.y + 1) / ((double)internalHeight));
 }

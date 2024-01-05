@@ -7,22 +7,23 @@
 #include "GLFW/glfw3.h"
 #include "GLFW/glfw3native.h"
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "imgui/imgui_impl_glfw.h"
-
 #pragma comment(lib, "opengl32.lib")
 
 #include "Sprite.h"
-#include <list>
+#include "UI/UIHandler.h"
 
+#include <list>
 #include <iostream>
+
 using namespace std;
 
 class Graphics {
 public:
+	static int SCREEN_WIDTH;
+	static int SCREEN_HEIGHT;
+
 	Graphics();
-	Graphics(GLFWwindow* _window);
+	void Initialize(GLFWwindow* _window);
 
 	void Set2DViewport(int depth);
 	void EnableAlphaBlending();
@@ -36,11 +37,19 @@ public:
 	static void RegisterSprite(Sprite* sp);
 	static void UnregisterSprite(Sprite* sp);
 
+	static void MoveCamera(Vector2 delta);
+	static void SetCameraPosition(Vector2 newPos);
+	static Vector2 GetCameraPosition();
+
 private:
 	static GLFWwindow* window;
+	UIHandler uiHandler;
 
-	int width;
-	int height;
+	static int width;
+	static int height;
+	static int depth;
+
+	static Vector2 camPos;
 
 	static std::list<Sprite*> rgSp;
 

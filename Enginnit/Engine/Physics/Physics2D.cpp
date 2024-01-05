@@ -6,6 +6,10 @@ Physics2D::Physics2D() {
 	rgRb.clear();
 }
 
+void Physics2D::Initialize() {
+	rgRb.clear();
+}
+
 void Physics2D::Tick(float deltaTime) {
 	TickRigidbodies(deltaTime);
 }
@@ -17,6 +21,10 @@ void Physics2D::TickRigidbodies(float deltaTime) {
 	for (std::list<Rigidbody2D*>::iterator it = rgRb.begin(); it != rgRb.end(); it++) {
 		(*it)->PhysicsTick(deltaTime);
 	}
+}
+
+void Physics2D::Shutdown() {
+
 }
 
 void Physics2D::RegisterRigidbody(Rigidbody2D* rb) {

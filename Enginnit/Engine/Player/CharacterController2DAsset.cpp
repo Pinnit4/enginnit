@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "../Graphics/TextureAsset.h"
 
 using namespace std;
 
@@ -10,10 +11,10 @@ void CharacterController2DAsset::SaveToFile(CharacterController2D* cc, string fi
 	vector<vector<string>> v = {
 		{"type", "CharacterController2D"},
 		{"speed", to_string(cc->movementSpeed)},
-		{"u_tx", cc->upTexture.GetPath()},
-		{"d_tx", cc->downTexture.GetPath()},
-		{"l_tx", cc->leftTexture.GetPath()},
-		{"r_tx", cc->rightTexture.GetPath()},
+		TextureAsset::SaveAsLine(cc->upTexture, "u_tx"),
+		TextureAsset::SaveAsLine(cc->downTexture, "d_tx"),
+		TextureAsset::SaveAsLine(cc->leftTexture, "l_tx"),
+		TextureAsset::SaveAsLine(cc->rightTexture, "r_tx"),
 		{"depth", to_string(cc->depthLayer)}
 	};
 
@@ -21,19 +22,19 @@ void CharacterController2DAsset::SaveToFile(CharacterController2D* cc, string fi
 }
 
 void CharacterController2DAsset::LoadFromFile(CharacterController2D* cc, string filePath) {
-	AssetFile::ReadAssetFile(filePath, [&](string id, string value) {
+	AssetFile::ReadAssetFile(filePath, [&](string id, vector<string> values) {
 		if (id == "speed")
-			cc->movementSpeed = stof(value);
+			cc->movementSpeed = stof(values[0]);
 		else if (id == "u_tx")
-			cc->upTexture = Texture(value);
+			cc->upTexture = TextureAsset::LoadFromLine(values);
 		else if (id == "d_tx")
-			cc->downTexture = Texture(value);
+			cc->downTexture = TextureAsset::LoadFromLine(values);
 		else if (id == "l_tx")
-			cc->leftTexture = Texture(value);
+			cc->leftTexture = TextureAsset::LoadFromLine(values);
 		else if (id == "r_tx")
-			cc->rightTexture = Texture(value);
+			cc->rightTexture = TextureAsset::LoadFromLine(values);
 		else if (id == "depth")
-			cc->depthLayer = stoi(value);
+			cc->depthLayer = stoi(values[0]);
 		});
 
 	cc->SetTexture(cc->downTexture);

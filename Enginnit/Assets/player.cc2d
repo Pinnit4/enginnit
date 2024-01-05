@@ -1,0 +1,7 @@
+type:CharacterController2D
+speed:60.000000
+u_tx:Assets/Sprites/player.png:0:16:7:23
+d_tx:Assets/Sprites/player.png:0:8:7:15
+l_tx:Assets/Sprites/player.png:0:24:7:31
+r_tx:Assets/Sprites/player.png:0:0:7:7
+depth:0

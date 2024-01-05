@@ -1,7 +1,0 @@
-type:CharacterController2D
-speed:100.000000
-u_tx:Assets/Sprites/friend/friend_up.png
-d_tx:Assets/Sprites/friend/friend_down.png
-l_tx:Assets/Sprites/friend/friend_left.png
-r_tx:Assets/Sprites/friend/friend_right.png
-depth:0

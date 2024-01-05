@@ -12,9 +12,6 @@ using namespace std;
 
 class Engine {
 public:
-	static int SCREEN_WIDTH;
-	static int SCREEN_HEIGHT;
-
 	static double deltaTime;
 
 	Engine();

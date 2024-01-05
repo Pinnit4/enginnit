@@ -39,7 +39,9 @@
 *.vcxproj.user
 
 [Dd]ebug/
+[Rr]elease/
 [Pp]ackages/
 x64/
 [Ee]nginnit/[Dd]ebug
+[Ee]nginnit/[Rr]elease
 [Ee]nginnit/x64

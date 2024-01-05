@@ -3,12 +3,10 @@
 #include "IO/Keyboard.h"
 #include "Graphics/Graphics.h"
 
-int Engine::SCREEN_WIDTH = 1024;
-int Engine::SCREEN_HEIGHT = 768;
-
 GLFWwindow* Engine::window = NULL;
 
 double Engine::deltaTime = 0;
+void CenterOnScreen(GLFWwindow* window);
 
 Engine::Engine() {
 
@@ -26,25 +24,23 @@ bool Engine::Initialize(char* windowTitle) {
 	}
 
 	// Create a window
-	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, windowTitle, NULL, NULL);
+	window = glfwCreateWindow(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT, windowTitle, NULL, NULL);
 	if (window == NULL) {
 		cout << "Error creating window" << endl;
 		return false;
 	}
 
-	graphics = Graphics(window);
+	graphics = Graphics();
+	graphics.Initialize(window);
 
-	// Set window at the center of the screen
-	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-	int xPos = (mode->width - SCREEN_WIDTH) / 2;
-	int yPos = (mode->height - SCREEN_HEIGHT) / 2;
-	glfwSetWindowPos(window, xPos, yPos);
+	CenterOnScreen(window);
 
 	graphics.Set2DViewport(10);
 	graphics.EnableAlphaBlending();
 
 	physics = Physics2D();
-	
+	physics.Initialize();
+
 	Mouse::SetCallbacks(window);
 	Keyboard::SetCallbacks(window);
 
@@ -53,15 +49,17 @@ bool Engine::Initialize(char* windowTitle) {
 	return true;
 }
 
-void Engine::Shutdown() { graphics.Shutdown(); }
+void Engine::Shutdown() {
+	graphics.Shutdown();
+	physics.Shutdown();
+}
 
-void Engine::Update() 
-{ 
+void Engine::Update() {
 	double now = glfwGetTime();
 	deltaTime = now - lastTime;
 	lastTime = now;
 
-	glfwPollEvents(); 
+	glfwPollEvents();
 
 	physics.Tick(deltaTime);
 }
@@ -70,4 +68,13 @@ bool Engine::ShouldShutdown() {
 	return glfwWindowShouldClose(window);
 }
 
-void Engine::Render() { graphics.Render(); }
+void Engine::Render() {
+	graphics.Render();
+}
+
+void CenterOnScreen(GLFWwindow* window) {
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	int xPos = (mode->width - Graphics::SCREEN_WIDTH) / 2;
+	int yPos = (mode->height - Graphics::SCREEN_HEIGHT) / 2;
+	glfwSetWindowPos(window, xPos, yPos);
+}

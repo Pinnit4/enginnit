@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "../Engine/Graphics/Tiles/TiledMap.h"
 
 Game::Game() {
 
@@ -9,23 +10,17 @@ Game::~Game() {
 }
 
 void Game::Start() {
-	player = new CharacterController2D("Assets/player.asset");
+	
+	TiledMap* map = new TiledMap("Assets/tiledmap.tlm");
+	map->DrawSpriteGrid(Vector2(512.0f / 3, (768.0f / 2.0f) / 3));
 
-	player->position = Vector2(512.0f, (768.0f / 2.0f));
+	player = new CharacterController2D("Assets/player.cc2d");
+
+	player->position = map->GetWorldPosition(7,2)+ Vector2(4,4);
 	player->scale = Vector2::One();
 	player->useGravity = false;
 	player->pivot = Vector2(0.5f, 0.0f);
-
-	random_device rd;
-	mt19937 gen(rd());
-
-	uniform_int_distribution<> disX(-512, 512);
-	uniform_int_distribution<> disY(-(768 / 2), (768 / 2));
-
-	Sprite* trees[20];
-	for (int i = 0; i < 20; i++) {
-		trees[i] = new Sprite("Assets/Sprites/tree.png", Vector2(512.0f + disX(gen), (768.0f /2.0f) + disY(gen)));
-	}
+	player->depthLayer = 5;
 }
 
 void Game::Tick(double deltaTime) {

@@ -17,6 +17,7 @@ public:
 	Sprite();
 	Sprite(string path);
 	Sprite(string path, Vector2 position);
+	Sprite(Texture texture);
 
 	Vector2 pivot;
 
@@ -29,6 +30,8 @@ public:
 	void SetTexture(Texture tx, Vector2 pivot);
 
 	void Render();
+
+	void Destroy();
 private:
 	Texture texture;
 };
