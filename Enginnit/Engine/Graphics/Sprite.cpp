@@ -49,8 +49,8 @@ void Sprite::Render() {
 	glLoadIdentity();
 
 	// First translate, then rotate, then scale
-	glTranslatef(position.x, position.y, 0);
 	glRotatef(rotation, 0, 0, 1);
+	glTranslatef(position.x, position.y, 0);
 	glScalef(scale.x, scale.y, 1);
 
 	// Set interpolation to nearest to ensure pixel perfection

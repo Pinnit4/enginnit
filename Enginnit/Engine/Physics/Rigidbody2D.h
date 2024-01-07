@@ -1,9 +1,12 @@
 #ifndef ENGINNIT_RIGIDBODY2D
 #define ENGINNIT_RIGIDBODY2D
 
-#include "../Math/Spatial2D.h"
+#include "Collider2D.h"
 
-class Rigidbody2D : virtual public Spatial2D {
+#include "../Graphics/Color.h"
+#include "../Math/Rect2D.h"
+
+class Rigidbody2D : virtual public Collider2D {
 public:
 	Rigidbody2D();
 	Rigidbody2D(Vector2 position);
@@ -12,7 +15,8 @@ public:
 	bool useGravity;
 
 	void PhysicsTick(float deltaTime);
-private:
+	void DebugRender(Color color);
+protected:
 	Vector2 velocity;
 };
 

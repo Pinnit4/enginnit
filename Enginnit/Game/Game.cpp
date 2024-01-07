@@ -19,7 +19,7 @@ void Game::Start() {
 	player->position = map->GetWorldPosition(7,2)+ Vector2(4,4);
 	player->scale = Vector2::One();
 	player->useGravity = false;
-	player->pivot = Vector2(0.5f, 0.0f);
+	player->pivot = Vector2(0.5f, 0.5f);
 	player->depthLayer = 5;
 }
 

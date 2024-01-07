@@ -14,6 +14,8 @@
 
 #include <list>
 #include <iostream>
+#include <vector>
+#include <functional>
 
 using namespace std;
 
@@ -21,6 +23,9 @@ class Graphics {
 public:
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
+
+	static vector<function<void()>> onBeginRender;
+	static vector<function<void()>> onEndRender;
 
 	Graphics();
 	void Initialize(GLFWwindow* _window);

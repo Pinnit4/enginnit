@@ -14,6 +14,9 @@ int Graphics::width = 0;
 int Graphics::height = 0;
 int Graphics::depth = 0;
 
+vector<function<void()>> Graphics::onBeginRender = vector<function<void()>>();
+vector<function<void()>> Graphics::onEndRender = vector<function<void()>>();
+
 Vector2 Graphics::camPos = Vector2::Zero();
 
 Graphics::Graphics() {
@@ -79,9 +82,14 @@ void Graphics::BeginRender() {
 	// Clear the previous rendered frame
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	for (auto& callback : onBeginRender) callback();
 }
 
 void Graphics::EndRender() {
+
+	for (auto& callback : onEndRender) callback();
+
 	// After drawing, swap the buffers to show the new rendered frame
 	glfwSwapBuffers(window);
 }

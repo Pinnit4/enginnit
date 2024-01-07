@@ -7,7 +7,9 @@
 #include <string>
 #include <vector>
 
+#include "../Math/Math.h"
 #include "../Math/Spatial2D.h"
+
 #include "../Graphics/Tiles/Tileset.h"
 #include "../Graphics/Sprite.h"
 #include "SpriteAnimation.h"

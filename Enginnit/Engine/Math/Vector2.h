@@ -2,6 +2,7 @@
 #define VECTOR2HEADER
 
 #include <corecrt_math.h>
+#include <string>
 
 using namespace std;
 
@@ -13,8 +14,16 @@ struct Vector2 {
 	Vector2(float _x, float _y) { x = _x; y = _y; }
 	Vector2(const Vector2& other) { x = other.x; y = other.y; }
 
+	static float Dot(const Vector2& a, const Vector2& b) { return (a.x * b.x) + (a.y * b.y); }
+
+	static Vector2 Project(const Vector2& a, const Vector2& b) {
+		return Vector2(
+			(Dot(a, b) / (b.x * b.x) + (b.y * b.y)) * b.x,
+			(Dot(a, b) / (b.x * b.x) + (b.y * b.y)) * b.y);
+	}
+
 	void Normalize() {
-		float length = GetLength();
+		float length = (float)GetLength();
 		if (length != 0) {
 			x /= length; y /= length;
 		}
@@ -22,7 +31,7 @@ struct Vector2 {
 
 	Vector2 GetNormalized()
 	{
-		float length = GetLength();
+		float length = (float)GetLength();
 		if (length != 0)
 			return Vector2(x / length, y / length);
 		else
@@ -60,6 +69,8 @@ struct Vector2 {
 	static Vector2 Down() { return Vector2(0, -1); }
 	static Vector2 Left() { return Vector2(-1, 0); }
 	static Vector2 Right() { return Vector2(1, 0); }
+
+	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + ")"); }
 };
 
 struct Vector2Double {
@@ -67,11 +78,11 @@ struct Vector2Double {
 	double y;
 
 	Vector2Double() { x = 0; y = 0; }
-	Vector2Double(float _x, float _y) { x = _x; y = _y; }
+	Vector2Double(double _x, double _y) { x = _x; y = _y; }
 	Vector2Double(const Vector2Double& other) { x = other.x; y = other.y; }
 
 	void Normalize() {
-		float length = GetLength();
+		double length = GetLength();
 		if (length != 0) {
 			x /= length; y /= length;
 		}
@@ -79,7 +90,7 @@ struct Vector2Double {
 
 	Vector2Double GetNormalized()
 	{
-		float length = GetLength();
+		double length = GetLength();
 		if (length != 0)
 			return Vector2Double(x / length, y / length);
 		else
@@ -117,6 +128,8 @@ struct Vector2Double {
 	static Vector2Double Down() { return Vector2Double(0, -1); }
 	static Vector2Double Left() { return Vector2Double(-1, 0); }
 	static Vector2Double Right() { return Vector2Double(1, 0); }
+
+	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + ")"); }
 };
 
 struct Vector2Int {
@@ -128,7 +141,7 @@ struct Vector2Int {
 	Vector2Int(const Vector2Int& other) { x = other.x; y = other.y; }
 
 	float GetLength() { return (float)sqrt(GetSqrMagnitude()); }
-	float GetSqrMagnitude() { return ((x * x) + (y * y)); }
+	float GetSqrMagnitude() { return (float)((x * x) + (y * y)); }
 
 	Vector2Int& operator +=(const Vector2Int& a) { x += a.x; y += a.y; return *this; }
 	Vector2Int& operator +(const Vector2Int& a) { x += a.x; y += a.y; return *this; }
@@ -158,6 +171,8 @@ struct Vector2Int {
 	static Vector2Int Down() { return Vector2Int(0, -1); }
 	static Vector2Int Left() { return Vector2Int(-1, 0); }
 	static Vector2Int Right() { return Vector2Int(1, 0); }
+
+	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + ")"); }
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "SpriteAnimator.h"
-#include "../Math/MathX.h"
 
 SpriteAnimator::SpriteAnimator() {
 	isPlaying = false;
@@ -38,7 +37,7 @@ void SpriteAnimator::Tick(double deltaTime) {
 	frameCountdown -= deltaTime;
 
 	if (frameCountdown <= 0.0) {
-		currentFrame = MathX::Repeat(currentFrame + 1, 0, currentAnimation->frames.size());
+		currentFrame = Math::Repeat(currentFrame + 1, 0, currentAnimation->frames.size());
 		frameCountdown += 1.0 / currentAnimation->fps;
 
 		DisplayCurrentFrame();

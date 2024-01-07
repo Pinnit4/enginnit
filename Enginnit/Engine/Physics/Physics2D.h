@@ -25,6 +25,7 @@ private:
 	static std::list<Rigidbody2D*> rgRb;
 
 	void TickRigidbodies(float deltaTime);
+	void DebugRender();
 };
 
 #endif

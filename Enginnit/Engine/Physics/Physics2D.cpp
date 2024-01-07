@@ -1,4 +1,5 @@
 #include "Physics2D.h"
+#include "../Graphics/Graphics.h"
 
 std::list<Rigidbody2D*> Physics2D::rgRb = {};
 
@@ -8,6 +9,7 @@ Physics2D::Physics2D() {
 
 void Physics2D::Initialize() {
 	rgRb.clear();
+	Graphics::onEndRender.push_back([&]() {DebugRender(); });
 }
 
 void Physics2D::Tick(float deltaTime) {
@@ -18,18 +20,26 @@ void Physics2D::TickRigidbodies(float deltaTime) {
 	if (rgRb.size() == 0)
 		return;
 
-	for (std::list<Rigidbody2D*>::iterator it = rgRb.begin(); it != rgRb.end(); it++) {
+	for (auto it = rgRb.begin(); it != rgRb.end(); it++) {
 		(*it)->PhysicsTick(deltaTime);
 	}
 }
 
-void Physics2D::Shutdown() {
+void Physics2D::DebugRender() {
+	Color color = Color(1, 0.5, 0.5);
 
+	for (auto it = rgRb.begin(); it != rgRb.end(); it++) {
+		(*it)->DebugRender(color);
+	}
+}
+
+void Physics2D::Shutdown() {
+	rgRb.clear();
 }
 
 void Physics2D::RegisterRigidbody(Rigidbody2D* rb) {
 	if (rgRb.size() > 1) {
-		std::list<Rigidbody2D*>::iterator findIt = std::find(rgRb.begin(), rgRb.end(), rb);
+		auto findIt = std::find(rgRb.begin(), rgRb.end(), rb);
 		if ((findIt) != rgRb.end()) return;
 	}
 	else if (rgRb.size() > 0) {

@@ -12,15 +12,17 @@ void FocusCameraOnPlayer(CharacterController2D* cc, Vector2 offset);
 
 CharacterController2D::CharacterController2D(string filePath) : Sprite(), Rigidbody2D() {
 	animator = SpriteAnimator(this);
+
 	CharacterController2DAsset::LoadFromFile(this, filePath);
+
+	Vector2 size = Vector2(GetTexture().GetWidth(), GetTexture().GetHeight());
+	rect = Rect2D(pivot * size, size);
 }
 
 void CharacterController2D::Tick(double deltaTime) {
 	MoveCharacter(this, deltaTime);
 	//MoveCamera(deltaTime);
 	FocusCameraOnPlayer(this, Vector2::Zero());
-
-	animator.Tick(deltaTime);
 }
 
 void MoveCharacter(CharacterController2D* cc, double deltaTime) {
