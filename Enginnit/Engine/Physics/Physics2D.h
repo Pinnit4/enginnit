@@ -18,14 +18,20 @@ public:
 	void Tick(float deltaTime);
 	void Shutdown();
 
-	static void RegisterRigidbody(Rigidbody2D* sp);
-	static void UnregisterRigidbody(Rigidbody2D* sp);
+	static void RegisterRigidbody(Rigidbody2D* rb);
+	static void UnregisterRigidbody(Rigidbody2D* rb);
+
+	static void RegisterCollider(Collider2D* cl);
+	static void UnregisterCollider(Collider2D* cl);
 
 private:
 	static std::list<Rigidbody2D*> rgRb;
+	static std::list<Collider2D*> rgCl;
 
 	void TickRigidbodies(float deltaTime);
 	void DebugRender();
+
+	void ProcessRigidbodyCollisions(Rigidbody2D* rb);
 };
 
 #endif

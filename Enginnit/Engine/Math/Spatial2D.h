@@ -7,14 +7,14 @@ using namespace std;
 
 class Spatial2D {
 public:
-	Vector2 position;
+	Vector2f position;
 	float rotation;
-	Vector2 scale;
+	Vector2f scale;
 
 	int depthLayer;
 
 	Spatial2D();
-	Spatial2D(Vector2 position);
-	Spatial2D(Vector2 position, float rotation);
+	Spatial2D(Vector2f position);
+	Spatial2D(Vector2f position, float rotation);
 };
 #endif

@@ -17,7 +17,7 @@ int Graphics::depth = 0;
 vector<function<void()>> Graphics::onBeginRender = vector<function<void()>>();
 vector<function<void()>> Graphics::onEndRender = vector<function<void()>>();
 
-Vector2 Graphics::camPos = Vector2::Zero();
+Vector2f Graphics::camPos = Vector2f::Zero();
 
 Graphics::Graphics() {
 	window = NULL;
@@ -141,8 +141,8 @@ void Graphics::RenderSprites() {
 #endif
 }
 
-void Graphics::MoveCamera(Vector2 delta) { camPos += delta; }
+void Graphics::MoveCamera(Vector2f delta) { camPos += delta; }
 
-void Graphics::SetCameraPosition(Vector2 newPos) { camPos = newPos; }
+void Graphics::SetCameraPosition(Vector2f newPos) { camPos = newPos; }
 
-Vector2 Graphics::GetCameraPosition() { return camPos; }
+Vector2f Graphics::GetCameraPosition() { return camPos; }

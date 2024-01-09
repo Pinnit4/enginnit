@@ -9,15 +9,20 @@
 class Rigidbody2D : virtual public Collider2D {
 public:
 	Rigidbody2D();
-	Rigidbody2D(Vector2 position);
-	Rigidbody2D(Vector2 position, float rotation);
+	Rigidbody2D(Vector2f position);
+	Rigidbody2D(Vector2f position, float rotation);
 
 	bool useGravity;
 
-	void PhysicsTick(float deltaTime);
+	virtual void PhysicsTick(double deltaTime);
+	void ProcessCollision(Collider2D* other);
+
 	void DebugRender(Color color);
+
 protected:
-	Vector2 velocity;
+	Vector2f velocity;
+
+	Vector2f previousPos;
 };
 
 #endif

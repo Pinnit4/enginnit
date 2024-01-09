@@ -6,20 +6,20 @@
 
 using namespace std;
 
-struct Vector2 {
+struct Vector2f {
 	float x;
 	float y;
 
-	Vector2() { x = 0; y = 0; }
-	Vector2(float _x, float _y) { x = _x; y = _y; }
-	Vector2(const Vector2& other) { x = other.x; y = other.y; }
+	Vector2f() { x = 0; y = 0; }
+	Vector2f(float _x, float _y) { x = _x; y = _y; }
+	Vector2f(const Vector2f& other) { x = other.x; y = other.y; }
 
-	static float Dot(const Vector2& a, const Vector2& b) { return (a.x * b.x) + (a.y * b.y); }
+	static float Dot(const Vector2f& a, const Vector2f& b) { return (a.x * b.x) + (a.y * b.y); }
 
-	static Vector2 Project(const Vector2& a, const Vector2& b) {
-		return Vector2(
-			(Dot(a, b) / (b.x * b.x) + (b.y * b.y)) * b.x,
-			(Dot(a, b) / (b.x * b.x) + (b.y * b.y)) * b.y);
+	static Vector2f Project(const Vector2f& a, const Vector2f& b) {
+		float dot = Dot(a, b);
+		float x = ((b.x * b.x) + (b.y * b.y));
+		return Vector2f((dot / x) * b.x, (dot / x) * b.y);
 	}
 
 	void Normalize() {
@@ -29,57 +29,68 @@ struct Vector2 {
 		}
 	}
 
-	Vector2 GetNormalized()
+	Vector2f GetNormalized()
 	{
 		float length = (float)GetLength();
 		if (length != 0)
-			return Vector2(x / length, y / length);
+			return Vector2f(x / length, y / length);
 		else
-			return Vector2(x, y);
+			return Vector2f(x, y);
 	}
 
 	float GetLength() { return (float)sqrt(GetSqrMagnitude()); }
 	float GetSqrMagnitude() { return ((x * x) + (y * y)); }
 
-	Vector2& operator +=(const Vector2& a) { x += a.x; y += a.y; return *this; }
-	Vector2& operator +(const Vector2& a) { x += a.x; y += a.y; return *this; }
+	//Vector2f& operator =(const Vector2f& a) { x = a.x; y = a.y; return *this; }
 
-	Vector2& operator -=(const Vector2& a) { x -= a.x; y -= a.y; return *this; }
-	Vector2& operator -(const Vector2& a) { x -= a.x; y -= a.y; return *this; }
+	Vector2f& operator +=(const Vector2f& a) { x += a.x; y += a.y; return *this; }
+	Vector2f& operator +(const Vector2f& a) { Vector2f v = Vector2f(x + a.x, y + a.y); return v; }
+	Vector2f& operator +(const Vector2f& a) const { Vector2f v = Vector2f(x + a.x, y + a.y); return v; }
 
-	Vector2& operator *=(const Vector2& a) { x *= a.x; y *= a.y; return *this; }
-	Vector2& operator *(const Vector2& a) { x *= a.x; y *= a.y; return *this; }
+	Vector2f& operator -=(const Vector2f& a) { x -= a.x; y -= a.y; return *this; }
+	Vector2f& operator -(const Vector2f& a) { Vector2f v = Vector2f(x - a.x, y - a.y); return v; }
+	Vector2f& operator -(const Vector2f& a) const { Vector2f v = Vector2f(x - a.x, y - a.y); return v; }
 
-	Vector2& operator /=(const Vector2& a) { x /= a.x; y /= a.y; return *this; }
-	Vector2& operator /(const Vector2& a) { x /= a.x; y /= a.y; return *this; }
+	Vector2f& operator *=(const Vector2f& a) { x *= a.x; y *= a.y; return *this; }
+	Vector2f& operator *(const Vector2f& a) { Vector2f v = Vector2f(x * a.x, y * a.y); return v; }
+	Vector2f& operator *(const Vector2f& a) const { Vector2f v = Vector2f(x * a.x, y * a.y); return v; }
 
-	Vector2& operator *=(const float a) { x *= a; y *= a; return *this; }
-	Vector2& operator *(const float a) { x *= a; y *= a; return *this; }
+	Vector2f& operator /=(const Vector2f& a) { x /= a.x; y /= a.y; return *this; }
+	Vector2f& operator /(const Vector2f& a) { Vector2f v = Vector2f(x / a.x, y / a.y); return v; }
+	Vector2f& operator /(const Vector2f& a) const { Vector2f v = Vector2f(x / a.x, y / a.y); return v; }
 
-	Vector2& operator /=(const float a) { x /= a; y /= a; return *this; }
-	Vector2& operator /(const float a) { x /= a; y /= a; return *this; }
+	Vector2f& operator *=(const float a) { x *= a; y *= a; return *this; }
+	Vector2f& operator *(const float a) { Vector2f v = Vector2f(x * a, y * a); return v; }
+	Vector2f& operator *(const float a) const { Vector2f v = Vector2f(x * a, y * a); return v; }
 
-	bool operator==(const Vector2& a) { return x == a.x && y == a.y; }
-	bool operator!=(const Vector2& a) { return !operator==(a); }
+	Vector2f& operator /=(const float a) { x /= a; y /= a; return *this; }
+	Vector2f& operator /(const float a) { Vector2f v = Vector2f(x / a, y / a); return v; }
+	Vector2f& operator /(const float a) const { Vector2f v = Vector2f(x / a, y / a); return v; }
 
-	static Vector2 Zero() { return Vector2(0, 0); }
-	static Vector2 One() { return Vector2(1, 1); }
+	bool operator==(const Vector2f& a) { return x == a.x && y == a.y; }
+	bool operator==(const Vector2f& a) const { return x == a.x && y == a.y; }
 
-	static Vector2 Up() { return Vector2(0, 1); }
-	static Vector2 Down() { return Vector2(0, -1); }
-	static Vector2 Left() { return Vector2(-1, 0); }
-	static Vector2 Right() { return Vector2(1, 0); }
+	bool operator!=(const Vector2f& a) { return !operator==(a); }
+	bool operator!=(const Vector2f& a) const { return !operator==(a); }
+
+	static Vector2f Zero() { return Vector2f(0, 0); }
+	static Vector2f One() { return Vector2f(1, 1); }
+
+	static Vector2f Up() { return Vector2f(0, 1); }
+	static Vector2f Down() { return Vector2f(0, -1); }
+	static Vector2f Left() { return Vector2f(-1, 0); }
+	static Vector2f Right() { return Vector2f(1, 0); }
 
 	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + ")"); }
 };
 
-struct Vector2Double {
+struct Vector2d {
 	double x;
 	double y;
 
-	Vector2Double() { x = 0; y = 0; }
-	Vector2Double(double _x, double _y) { x = _x; y = _y; }
-	Vector2Double(const Vector2Double& other) { x = other.x; y = other.y; }
+	Vector2d() { x = 0; y = 0; }
+	Vector2d(double _x, double _y) { x = _x; y = _y; }
+	Vector2d(const Vector2d& other) { x = other.x; y = other.y; }
 
 	void Normalize() {
 		double length = GetLength();
@@ -88,89 +99,112 @@ struct Vector2Double {
 		}
 	}
 
-	Vector2Double GetNormalized()
+	Vector2d GetNormalized()
 	{
 		double length = GetLength();
 		if (length != 0)
-			return Vector2Double(x / length, y / length);
+			return Vector2d(x / length, y / length);
 		else
-			return Vector2Double(x, y);
+			return Vector2d(x, y);
 	}
 
 	double GetLength() { return sqrt(GetSqrMagnitude()); }
 	double GetSqrMagnitude() { return ((x * x) + (y * y)); }
 
-	Vector2Double& operator +=(const Vector2Double& a) { x += a.x; y += a.y; return *this; }
-	Vector2Double& operator +(const Vector2Double& a) { x += a.x; y += a.y; return *this; }
+	//Vector2d& operator =(const Vector2d& a) { x = a.x; y = a.y; return *this; }
 
-	Vector2Double& operator -=(const Vector2Double& a) { x -= a.x; y -= a.y; return *this; }
-	Vector2Double& operator -(const Vector2Double& a) { x -= a.x; y -= a.y; return *this; }
+	Vector2d& operator +=(const Vector2d& a) { x += a.x; y += a.y; return *this; }
+	Vector2d& operator +(const Vector2d& a) { Vector2d v = Vector2d(x + a.x, y + a.y); return v; }
+	Vector2d& operator +(const Vector2d& a) const { Vector2d v = Vector2d(x + a.x, y + a.y); return v; }
 
-	Vector2Double& operator *=(const Vector2Double& a) { x *= a.x; y *= a.y; return *this; }
-	Vector2Double& operator *(const Vector2Double& a) { x *= a.x; y *= a.y; return *this; }
+	Vector2d& operator -=(const Vector2d& a) { x -= a.x; y -= a.y; return *this; }
+	Vector2d& operator -(const Vector2d& a) { Vector2d v = Vector2d(x - a.x, y - a.y); return v; }
+	Vector2d& operator -(const Vector2d& a) const { Vector2d v = Vector2d(x - a.x, y - a.y); return v; }
 
-	Vector2Double& operator /=(const Vector2Double& a) { x /= a.x; y /= a.y; return *this; }
-	Vector2Double& operator /(const Vector2Double& a) { x /= a.x; y /= a.y; return *this; }
+	Vector2d& operator *=(const Vector2d& a) { x *= a.x; y *= a.y; return *this; }
+	Vector2d& operator *(const Vector2d& a) { Vector2d v = Vector2d(x * a.x, y * a.y); return v; }
+	Vector2d& operator *(const Vector2d& a) const { Vector2d v = Vector2d(x * a.x, y * a.y); return v; }
 
-	Vector2Double& operator *=(const double a) { x *= a; y *= a; return *this; }
-	Vector2Double& operator *(const double a) { x *= a; y *= a; return *this; }
+	Vector2d& operator /=(const Vector2d& a) { x /= a.x; y /= a.y; return *this; }
+	Vector2d& operator /(const Vector2d& a) { Vector2d v = Vector2d(x / a.x, y / a.y); return v; }
+	Vector2d& operator /(const Vector2d& a) const { Vector2d v = Vector2d(x / a.x, y / a.y); return v; }
 
-	Vector2Double& operator /=(const double a) { x /= a; y /= a; return *this; }
-	Vector2Double& operator /(const double a) { x /= a; y /= a; return *this; }
+	Vector2d& operator *=(const double a) { x *= a; y *= a; return *this; }
+	Vector2d& operator *(const double a) {Vector2d v = Vector2d(x * a, y * a);return v;}
+	Vector2d& operator *(const double a) const { Vector2d v = Vector2d(x * a, y * a); return v; }
 
-	bool operator==(const Vector2Double& a) { return x == a.x && y == a.y; }
-	bool operator!=(const Vector2Double& a) { return !operator==(a); }
+	Vector2d& operator /=(const double a) { x /= a; y /= a; return *this; }
+	Vector2d& operator /(const double a) {Vector2d v = Vector2d(x / a, y / a);return v;}
+	Vector2d& operator /(const double a) const { Vector2d v = Vector2d(x / a, y / a); return v; }
 
-	static Vector2Double Zero() { return Vector2Double(0, 0); }
-	static Vector2Double One() { return Vector2Double(1, 1); }
+	bool operator==(const Vector2d& a) { return x == a.x && y == a.y; }
+	bool operator==(const Vector2d& a) const { return x == a.x && y == a.y; }
 
-	static Vector2Double Up() { return Vector2Double(0, 1); }
-	static Vector2Double Down() { return Vector2Double(0, -1); }
-	static Vector2Double Left() { return Vector2Double(-1, 0); }
-	static Vector2Double Right() { return Vector2Double(1, 0); }
+	bool operator!=(const Vector2d& a) { return !operator==(a); }
+	bool operator!=(const Vector2d& a) const { return !operator==(a); }
+
+
+	static Vector2d Zero() { return Vector2d(0, 0); }
+	static Vector2d One() { return Vector2d(1, 1); }
+
+	static Vector2d Up() { return Vector2d(0, 1); }
+	static Vector2d Down() { return Vector2d(0, -1); }
+	static Vector2d Left() { return Vector2d(-1, 0); }
+	static Vector2d Right() { return Vector2d(1, 0); }
 
 	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + ")"); }
 };
 
-struct Vector2Int {
+struct Vector2i {
 	int x;
 	int y;
 
-	Vector2Int() { x = 0; y = 0; }
-	Vector2Int(int _x, int _y) { x = _x; y = _y; }
-	Vector2Int(const Vector2Int& other) { x = other.x; y = other.y; }
+	Vector2i() { x = 0; y = 0; }
+	Vector2i(int _x, int _y) { x = _x; y = _y; }
+	Vector2i(const Vector2i& other) { x = other.x; y = other.y; }
 
 	float GetLength() { return (float)sqrt(GetSqrMagnitude()); }
 	float GetSqrMagnitude() { return (float)((x * x) + (y * y)); }
 
-	Vector2Int& operator +=(const Vector2Int& a) { x += a.x; y += a.y; return *this; }
-	Vector2Int& operator +(const Vector2Int& a) { x += a.x; y += a.y; return *this; }
+	//Vector2i& operator =(const Vector2i& a) { x = a.x; y = a.y; return *this; }
 
-	Vector2Int& operator -=(const Vector2Int& a) { x -= a.x; y -= a.y; return *this; }
-	Vector2Int& operator -(const Vector2Int& a) { x -= a.x; y -= a.y; return *this; }
+	Vector2i& operator +=(const Vector2i& a) { x += a.x; y += a.y; return *this; }
+	Vector2i& operator +(const Vector2i& a) {Vector2i v = Vector2i(x + a.x, y + a.y);return v;}
+	Vector2i& operator +(const Vector2i& a) const { Vector2i v = Vector2i(x + a.x, y + a.y); return v; }
 
-	Vector2Int& operator *=(const Vector2Int& a) { x *= a.x; y *= a.y; return *this; }
-	Vector2Int& operator *(const Vector2Int& a) { x *= a.x; y *= a.y; return *this; }
+	Vector2i& operator -=(const Vector2i& a) { x -= a.x; y -= a.y; return *this; }
+	Vector2i& operator -(const Vector2i& a) {Vector2i v = Vector2i(x - a.x, y - a.y);return v;}
+	Vector2i& operator -(const Vector2i& a) const { Vector2i v = Vector2i(x - a.x, y - a.y); return v; }
 
-	Vector2Int& operator /=(const Vector2Int& a) { x /= a.x; y /= a.y; return *this; }
-	Vector2Int& operator /(const Vector2Int& a) { x /= a.x; y /= a.y; return *this; }
+	Vector2i& operator *=(const Vector2i& a) { x *= a.x; y *= a.y; return *this; }
+	Vector2i& operator *(const Vector2i& a) {Vector2i v = Vector2i(x * a.x, y * a.y);return v;}
+	Vector2i& operator *(const Vector2i& a) const { Vector2i v = Vector2i(x * a.x, y * a.y); return v; }
 
-	Vector2Int& operator *=(const float a) { x *= a; y *= a; return *this; }
-	Vector2Int& operator *(const float a) { x *= a; y *= a; return *this; }
+	Vector2i& operator /=(const Vector2i& a) { x /= a.x; y /= a.y; return *this; }
+	Vector2i& operator /(const Vector2i& a) {Vector2i v = Vector2i(x / a.x, y / a.y);return v;}
+	Vector2i& operator /(const Vector2i& a) const { Vector2i v = Vector2i(x / a.x, y / a.y); return v; }
 
-	Vector2Int& operator /=(const float a) { x /= a; y /= a; return *this; }
-	Vector2Int& operator /(const float a) { x /= a; y /= a; return *this; }
+	Vector2i& operator *=(const int a) { x *= a; y *= a; return *this; }
+	Vector2i& operator *(const int a) {Vector2i v = Vector2i(x * a, y * a);return v;}
+	Vector2i& operator *(const int a) const { Vector2i v = Vector2i(x * a, y * a); return v; }
 
-	bool operator==(const Vector2Int& a) { return x == a.x && y == a.y; }
-	bool operator!=(const Vector2Int& a) { return !operator==(a); }
+	Vector2i& operator /=(const int a) { x /= a; y /= a; return *this; }
+	Vector2i& operator /(const int a) {Vector2i v = Vector2i(x / a, y / a);return v;}
+	Vector2i& operator /(const int a) const { Vector2i v = Vector2i(x / a, y / a); return v; }
 
-	static Vector2Int Zero() { return Vector2Int(0, 0); }
-	static Vector2Int One() { return Vector2Int(1, 1); }
+	bool operator==(const Vector2i& a) { return x == a.x && y == a.y; }
+	bool operator==(const Vector2i& a) const { return x == a.x && y == a.y; }
 
-	static Vector2Int Up() { return Vector2Int(0, 1); }
-	static Vector2Int Down() { return Vector2Int(0, -1); }
-	static Vector2Int Left() { return Vector2Int(-1, 0); }
-	static Vector2Int Right() { return Vector2Int(1, 0); }
+	bool operator!=(const Vector2i& a) { return !operator==(a); }
+	bool operator!=(const Vector2i& a) const { return !operator==(a); }
+
+	static Vector2i Zero() { return Vector2i(0, 0); }
+	static Vector2i One() { return Vector2i(1, 1); }
+
+	static Vector2i Up() { return Vector2i(0, 1); }
+	static Vector2i Down() { return Vector2i(0, -1); }
+	static Vector2i Left() { return Vector2i(-1, 0); }
+	static Vector2i Right() { return Vector2i(1, 0); }
 
 	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + ")"); }
 };

@@ -9,25 +9,30 @@
 class Rect2D {
 public:
 	Rect2D();
-	Rect2D(Vector2 size);
-	Rect2D(Vector2 center, Vector2 size);
+	Rect2D(Vector2f size);
+	Rect2D(Vector2f center, Vector2f size);
 
-	void SetCenter(Vector2 center);
-	void SetSize(Vector2 size);
+	void SetCenter(Vector2f center);
+	void SetSize(Vector2f size);
 
-	Vector2 GetCenter();
-	Vector2 GetSize();
+	Vector2f GetCenter();
+	Vector2f GetSize();
+
+	Vector2f GetUpperLeftVertex();
+	Vector2f GetUpperRightVertex();
+	Vector2f GetLowerLeftVertex();
+	Vector2f GetLowerRightVertex();
 
 	void DebugRender(TransformData data, Color color);
 	void RefreshRotation(float rotation);
 private:
-	Vector2 center;
-	Vector2 size;
+	Vector2f center;
+	Vector2f size;
 
-	Vector2 upperLeftVertex;
-	Vector2 upperRightVertex;
-	Vector2 lowerLeftVertex;
-	Vector2 lowerRightVertex;
+	Vector2f upperLeftVertex;
+	Vector2f upperRightVertex;
+	Vector2f lowerLeftVertex;
+	Vector2f lowerRightVertex;
 
 	float lastRotation;
 

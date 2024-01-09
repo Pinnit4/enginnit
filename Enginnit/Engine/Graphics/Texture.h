@@ -21,13 +21,13 @@ public:
 	int GetWidth();
 	int GetHeight();
 
-	Vector2Int GetAnchorMin();
-	Vector2Int GetAnchorMax();
+	Vector2i GetAnchorMin();
+	Vector2i GetAnchorMax();
 	
-	Vector2Double GetAnchorMinPercent();
-	Vector2Double GetAnchorMaxPercent();
+	Vector2d GetAnchorMinPercent();
+	Vector2d GetAnchorMaxPercent();
 
-	void SetAnchors(Vector2Int min, Vector2Int max);
+	void SetAnchors(Vector2i min, Vector2i max);
 
 	string GetName();
 	void SetName(string name);
@@ -44,11 +44,11 @@ private:
 	int internalWidth;
 	int internalHeight;
 
-	Vector2Int anchorMin;
-	Vector2Int anchorMax;
+	Vector2i anchorMin;
+	Vector2i anchorMax;
 
-	Vector2Double anchorMinPercent;
-	Vector2Double anchorMaxPercent;
+	Vector2d anchorMinPercent;
+	Vector2d anchorMaxPercent;
 
 	string path;
 

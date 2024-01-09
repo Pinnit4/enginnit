@@ -14,8 +14,7 @@ TiledMap::TiledMap(string filePath) {
 	TiledMapAsset::LoadFromFile(this, filePath);
 }
 
-void TiledMap::DrawSpriteGrid(Vector2 position) {
-	cout << "clearing previous sprites: " << spriteGrid.size() << endl;
+void TiledMap::DrawSpriteGrid(Vector2f position) {
 	for (unsigned int i = 0; i < spriteGrid.size(); i++) {
 		vector<TiledMapSprite*> spriteLine = vector<TiledMapSprite*>();
 		for (unsigned int j = 0; j < spriteLine.size(); j++) {
@@ -25,9 +24,7 @@ void TiledMap::DrawSpriteGrid(Vector2 position) {
 
 	spriteGrid.clear();
 
-	cout << "start sprite drawing: " << tileGrid.size() << endl;
-
-	Vector2 currentPos = position;
+	Vector2f currentPos = position;
 	float deltaX = tileset->GetWidth();
 	float deltaY = -tileset->GetHeight();
 
@@ -39,9 +36,7 @@ void TiledMap::DrawSpriteGrid(Vector2 position) {
 			char id = tileLine[x];
 			Texture tx = tileset->GetTexture(id);
 			TiledMapSprite* sp = new TiledMapSprite(tx, id, x, y);
-			cout << "Sprite created succesfully: " << tx.GetPath() << endl;
 			sp->position = currentPos;
-
 			spriteLine.push_back(sp);
 			currentPos.x += deltaX;
 		}
@@ -60,12 +55,15 @@ TiledMapSprite* TiledMap::GetSprite(int x, int y) {
 	return spriteGrid[y][x];
 }
 
-Vector2 TiledMap::GetWorldPosition(int x, int y) {
+Vector2f TiledMap::GetWorldPosition(int x, int y) {
 	if (x >= GetWidth() || y >= GetHeight()) {
 		cout << "ERROR: Couldn't find grid position (" << x << "," << y << "), map size is (" << GetWidth() << "," << GetHeight() << ")" << endl;
-		return Vector2::Zero();
+		return Vector2f::Zero();
 	}
-	return spriteGrid[y][x]->position;
+
+	auto sprite = spriteGrid[y][x];
+	cout << "sprite grid pos: " << sprite->position.ToString() << endl;
+	return (spriteGrid[y][x]->position);
 }
 
 int TiledMap::GetWidth() {

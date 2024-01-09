@@ -8,25 +8,30 @@ using namespace std;
 
 void MoveCharacter(CharacterController2D* cc, double deltaTime);
 void MoveCamera(double deltaTime);
-void FocusCameraOnPlayer(CharacterController2D* cc, Vector2 offset);
+void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset);
 
 CharacterController2D::CharacterController2D(string filePath) : Sprite(), Rigidbody2D() {
 	animator = SpriteAnimator(this);
 
 	CharacterController2DAsset::LoadFromFile(this, filePath);
 
-	Vector2 size = Vector2(GetTexture().GetWidth(), GetTexture().GetHeight());
-	rect = Rect2D(pivot * size, size);
+	Vector2f size = Vector2f(GetTexture().GetWidth(), GetTexture().GetHeight());
+	rect->SetCenter(pivot * size);
+	rect->SetSize(size);
 }
 
 void CharacterController2D::Tick(double deltaTime) {
-	MoveCharacter(this, deltaTime);
 	//MoveCamera(deltaTime);
-	FocusCameraOnPlayer(this, Vector2::Zero());
+	FocusCameraOnPlayer(this, Vector2f::Zero());
+}
+
+void CharacterController2D::PhysicsTick(double deltaTime) {
+	Rigidbody2D::PhysicsTick(deltaTime);
+	MoveCharacter(this, deltaTime);
 }
 
 void MoveCharacter(CharacterController2D* cc, double deltaTime) {
-	Vector2 input = Vector2::Zero();
+	Vector2f input = Vector2f::Zero();
 	if (Keyboard::GetKey(GLFW_KEY_W))
 		input.y += 1;
 	if (Keyboard::GetKey(GLFW_KEY_S))
@@ -64,15 +69,16 @@ void MoveCharacter(CharacterController2D* cc, double deltaTime) {
 			cc->animator.Play(cc->idleDownAnim);
 	}
 
-	cc->position += input.GetNormalized() * cc->movementSpeed * deltaTime;
+	cc->position += (input.GetNormalized() * (cc->movementSpeed * deltaTime));
 }
 
-void FocusCameraOnPlayer(CharacterController2D* cc, Vector2 offset) {
-	Graphics::SetCameraPosition(cc->position + offset);
+void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset) {
+	Vector2f pos = cc->position;
+	Graphics::SetCameraPosition(pos + offset);
 }
 
 void MoveCamera(double deltaTime) {
-	Vector2 input = Vector2::Zero();
+	Vector2f input = Vector2f::Zero();
 	if (Keyboard::GetKey(GLFW_KEY_UP))
 		input.y += 1;
 	if (Keyboard::GetKey(GLFW_KEY_DOWN))

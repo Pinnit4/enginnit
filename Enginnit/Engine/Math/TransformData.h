@@ -8,25 +8,25 @@
 using namespace std;
 
 struct TransformData {
-	Vector2 position;
-	Vector2 scale;
+	Vector2f position;
+	Vector2f scale;
 	float rotation;
 	float x;
 	float y;
 
-	TransformData(Vector2 _position) {
+	TransformData(Vector2f _position) {
 		position = _position;
 		rotation = 0;
-		scale = Vector2::One();
+		scale = Vector2f::One();
 	}
 
-	TransformData(Vector2 _position, float _rotation) {
+	TransformData(Vector2f _position, float _rotation) {
 		position = _position;
 		rotation = _rotation;
-		scale = Vector2::One();
+		scale = Vector2f::One();
 	}
 
-	TransformData(Vector2 _position, float _rotation, Vector2 _scale) {
+	TransformData(Vector2f _position, float _rotation, Vector2f _scale) {
 		position = _position;
 		rotation = _rotation;
 		scale = _scale;

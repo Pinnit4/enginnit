@@ -19,25 +19,34 @@ struct Color {
 	Color(const Color& other) { r = other.r; g = other.g; b = other.b; a = other.a; }
 
 	Color& operator +=(const Color& x) { r += x.r; g += x.g; b += x.b; a += x.a; return *this; }
-	Color& operator +(const Color& x) { r += x.r; g += x.g; b += x.b; a += x.a; return *this; }
+	Color& operator +(const Color& x) { Color c = Color(r + x.r, g + x.g, b + x.b, a + x.a); return c; }
+	Color& operator +(const Color& x) const { Color c = Color(r + x.r, g + x.g, b + x.b, a + x.a); return c; }
 
 	Color& operator -=(const Color& x) { r -= x.r; g -= x.g; b -= x.b; a -= x.a; return *this; }
-	Color& operator -(const Color& x) { r -= x.r; g -= x.g; b -= x.b; a -= x.a; return *this; }
+	Color& operator -(const Color& x) { Color c = Color(r - x.r, g - x.g, b - x.b, a - x.a); return c; }
+	Color& operator -(const Color& x) const { Color c = Color(r - x.r, g - x.g, b - x.b, a - x.a); return c; }
 
 	Color& operator *=(const Color& x) { r *= x.r; g *= x.g;  b *= x.b; a *= x.a; return *this; }
-	Color& operator *(const Color& x) { r *= x.r; g *= x.g;  b *= x.b; a *= x.a; return *this; }
+	Color& operator *(const Color& x) { Color c = Color(r * x.r, g * x.g, b * x.b, a * x.a); return c; }
+	Color& operator *(const Color& x) const { Color c = Color(r * x.r, g * x.g, b + x.b, a * x.a); return c; }
 
 	Color& operator /=(const Color& x) { r /= x.r; g /= x.g;  b /= x.b; a /= x.a; return *this; }
-	Color& operator /(const Color& x) { r /= x.r; g /= x.g;  b /= x.b; a /= x.a; return *this; }
+	Color& operator /(const Color& x) { Color c = Color(r / x.r, g / x.g, b / x.b, a / x.a); return c; }
+	Color& operator /(const Color& x) const { Color c = Color(r / x.r, g / x.g, b / x.b, a / x.a); return c; }
 
 	Color& operator *=(const float x) { r *= x; g *= x;  b *= x; a *= x; return *this; }
-	Color& operator *(const float x) { r *= x; g *= x; b *= x; a *= x; return *this; }
+	Color& operator *(const float x) { Color c = Color(r * x, g * x, b * x, a * x); return c; }
+	Color& operator *(const float x) const { Color c = Color(r * x, g * x, b * x, a * x); return c; }
 
 	Color& operator /=(const float x) { r /= x; g /= x; b /= x; a /= x; return *this; }
-	Color& operator /(const float x) { r /= x; g /= x; b /= x; a /= x; return *this; }
+	Color& operator /(const float x) { Color c = Color(r / x, g / x, b / x, a / x); return c; }
+	Color& operator /(const float x) const { Color c = Color(r / x, g / x, b / x, a / x); return c; }
 
 	bool operator==(const Color& x) { return r == x.r && g == x.g && b == x.b && a == x.a; }
+	bool operator==(const Color& x) const { return r == x.r && g == x.g && b == x.b && a == x.a; }
+
 	bool operator!=(const Color& x) { return !operator==(x); }
+	bool operator!=(const Color& x) const { return !operator==(x); }
 
 	static Color Black() { return  Color(0, 0, 0, 1); }
 	static Color White() { return Color(1, 1, 1, 1); }

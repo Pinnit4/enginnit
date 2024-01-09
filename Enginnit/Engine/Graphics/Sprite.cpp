@@ -4,25 +4,25 @@
 Sprite::Sprite() : Spatial2D() {
 	texture = Texture();
 	Graphics::RegisterSprite(this);
-	pivot = Vector2::Zero();
+	pivot = Vector2f::Zero();
 }
 
 Sprite::Sprite(string path) : Spatial2D() {
 	texture = Texture(path);
 	Graphics::RegisterSprite(this);
-	pivot = Vector2::Zero();
+	pivot = Vector2f::Zero();
 }
 
-Sprite::Sprite(string path, Vector2 _position) : Spatial2D(_position) {
+Sprite::Sprite(string path, Vector2f _position) : Spatial2D(_position) {
 	texture = Texture(path);
 	Graphics::RegisterSprite(this);
-	pivot = Vector2::Zero();
+	pivot = Vector2f::Zero();
 }
 
 Sprite::Sprite(Texture tx) : Spatial2D() {
 	texture = tx;
 	Graphics::RegisterSprite(this);
-	pivot = Vector2::Zero();
+	pivot = Vector2f::Zero();
 }
 
 Texture Sprite::GetTexture() { return texture; }
@@ -30,14 +30,14 @@ Texture Sprite::GetTexture() { return texture; }
 void Sprite::SetTexture(string path) {
 	SetTexture(Texture(path), pivot);
 }
-void Sprite::SetTexture(string path, Vector2 _pivot) {
+void Sprite::SetTexture(string path, Vector2f _pivot) {
 	SetTexture(Texture(path), _pivot);
 }
 
 void Sprite::SetTexture(Texture _texture) {
 	SetTexture(_texture, pivot);
 }
-void Sprite::SetTexture(Texture _texture, Vector2 _pivot) {
+void Sprite::SetTexture(Texture _texture, Vector2f _pivot) {
 	texture = _texture;
 	pivot = _pivot;
 }
@@ -61,7 +61,7 @@ void Sprite::Render() {
 	glColor4f(1, 1, 1, 1);
 	glBegin(GL_QUADS);
 
-	Vector2 pivotDiff = Vector2(-texture.GetWidth() * pivot.x, -texture.GetHeight() * pivot.y);
+	Vector2f pivotDiff = Vector2f(-texture.GetWidth() * pivot.x, -texture.GetHeight() * pivot.y);
 	pivotDiff -= Graphics::GetCameraPosition();
 
 	// Set quad vertex positions (in local pos, since we already "moved" the matrix right above us in glTranslatef)
@@ -78,5 +78,5 @@ void Sprite::Render() {
 void Sprite::Destroy() {
 	Graphics::UnregisterSprite(this);
 	texture = NULL;
-	pivot = Vector2::Zero();
+	pivot = Vector2f::Zero();
 }

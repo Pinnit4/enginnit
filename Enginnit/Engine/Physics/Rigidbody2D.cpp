@@ -3,27 +3,55 @@
 #include "Physics2D.h"
 
 Rigidbody2D::Rigidbody2D() : Collider2D() {
-	velocity = Vector2::Zero();
+	velocity = Vector2f::Zero();
 	Physics2D::RegisterRigidbody(this);
+	previousPos = position;
 }
-Rigidbody2D::Rigidbody2D(Vector2 position) : Collider2D(position) {
-	velocity = Vector2::Zero();
+Rigidbody2D::Rigidbody2D(Vector2f position) : Collider2D(position) {
+	velocity = Vector2f::Zero();
 	Physics2D::RegisterRigidbody(this);
+	previousPos = position;
 }
-Rigidbody2D::Rigidbody2D(Vector2 position, float rotation) : Collider2D(position, rotation) {
-	velocity = Vector2::Zero();
+Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(position, rotation) {
+	velocity = Vector2f::Zero();
 	Physics2D::RegisterRigidbody(this);
+	previousPos = position;
 }
 
-void Rigidbody2D::PhysicsTick(float deltaTime) {
+void Rigidbody2D::PhysicsTick(double deltaTime) {
+	previousPos = position;
+
 	if (useGravity) {
-		velocity += Vector2::Down() * 9.81f * 30 * deltaTime;
+		velocity += Vector2f::Down() * 9.81f * 30 * deltaTime;
 		position += velocity * 30 * deltaTime;
 	}
 
-	rect.RefreshRotation(rotation);
+	rect->RefreshRotation(rotation);
+}
+
+void Rigidbody2D::ProcessCollision(Collider2D* other) {
+	// Stepped method, as Mario64
+	Vector2f direction = (position - previousPos);
+
+	double steps = 5;
+
+	double multiplier = 1;
+	double stepDecrease = 1 / steps;
+
+	for (int i = 0; i < steps; i++) {
+		multiplier -= stepDecrease;
+		Vector2f newPos = Vector2f(previousPos);
+		newPos += (direction * multiplier);
+		position = newPos;
+
+		if (!Collider2D::AreColliding(*this, *other))
+			return;
+	}
+
+	// Full force method
+	//position = previousPos;
 }
 
 void Rigidbody2D::DebugRender(Color color) {
-	rect.DebugRender(TransformData::FromSpatial2D(*this), color);
+	rect->DebugRender(TransformData::FromSpatial2D(*this), color);
 }

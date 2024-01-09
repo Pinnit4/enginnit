@@ -1,5 +1,5 @@
 type:CharacterController2D
-speed:60.000000
+speed:60
 idle_r_anim:idle_r
 idle_l_anim:idle_l
 idle_u_anim:idle_u

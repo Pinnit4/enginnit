@@ -37,25 +37,34 @@ struct Vector4 {
 	float GetSqrMagnitude() { return ((x * x) + (y * y) + (z * z) + (w * w)); }
 
 	Vector4& operator +=(const Vector4& a) { x += a.x; y += a.y; z += a.z; w += a.w; return *this; }
-	Vector4& operator +(const Vector4& a) { x += a.x; y += a.y; z += a.z; w += a.w; return *this; }
+	Vector4& operator +(const Vector4& a) { Vector4 v = Vector4(x + a.x, y + a.y, z + a.z, w + a.w); return v; }
+	Vector4& operator +(const Vector4& a) const { Vector4 v = Vector4(x + a.x, y + a.y, z + a.z, w + a.w); return v; }
 
 	Vector4& operator -=(const Vector4& a) { x -= a.x; y -= a.y; z -= a.z; w -= a.w; return *this; }
-	Vector4& operator -(const Vector4& a) { x -= a.x; y -= a.y; z -= a.z; w -= a.w; return *this; }
+	Vector4& operator -(const Vector4& a) { Vector4 v = Vector4(x - a.x, y - a.y, z - a.z, w - a.w); return v; }
+	Vector4& operator -(const Vector4& a) const { Vector4 v = Vector4(x - a.x, y - a.y, z - a.z, w - a.w); return v; }
 
 	Vector4& operator *=(const Vector4& a) { x *= a.x; y *= a.y;  z *= a.z; w *= a.w; return *this; }
-	Vector4& operator *(const Vector4& a) { x *= a.x; y *= a.y;  z *= a.z; w *= a.w; return *this; }
+	Vector4& operator *(const Vector4& a) { Vector4 v = Vector4(x * a.x, y * a.y, z * a.z, w * a.w); return v; }
+	Vector4& operator *(const Vector4& a) const { Vector4 v = Vector4(x * a.x, y * a.y, z * a.z, w * a.w); return v; }
 
 	Vector4& operator /=(const Vector4& a) { x /= a.x; y /= a.y;  z /= a.z; w /= a.w; return *this; }
-	Vector4& operator /(const Vector4& a) { x /= a.x; y /= a.y;  z /= a.z; w /= a.w; return *this; }
+	Vector4& operator /(const Vector4& a) { Vector4 v = Vector4(x / a.x, y / a.y, z / a.z, w / a.w); return v; }
+	Vector4& operator /(const Vector4& a) const { Vector4 v = Vector4(x / a.x, y / a.y, z / a.z, w / a.w); return v; }
 
 	Vector4& operator *=(const float a) { x *= a; y *= a;  z *= a; w *= a; return *this; }
-	Vector4& operator *(const float a) { x *= a; y *= a; z *= a; w *= a; return *this; }
+	Vector4& operator *(const float a) { Vector4 v = Vector4(x * a, y * a, z * a, w * a); return v; }
+	Vector4& operator *(const float a) const { Vector4 v = Vector4(x * a, y * a, z * a, w * a); return v; }
 
 	Vector4& operator /=(const float a) { x /= a; y /= a; z /= a; w /= a; return *this; }
-	Vector4& operator /(const float a) { x /= a; y /= a; z /= a; w /= a; return *this; }
+	Vector4& operator /(const float a) { Vector4 v = Vector4(x / a, y / a, z / a, w / a); return v; }
+	Vector4& operator /(const float a) const { Vector4 v = Vector4(x / a, y / a, z / a, w / a); return v; }
 
 	bool operator==(const Vector4& a) { return x == a.x && y == a.y && z == a.z && w == a.w; }
+	bool operator==(const Vector4& a) const { return x == a.x && y == a.y && z == a.z && w == a.w; }
+
 	bool operator!=(const Vector4& a) { return !operator==(a); }
+	bool operator!=(const Vector4& a) const { return !operator==(a); }
 
 	static Vector4 Zero() { return Vector4(0, 0, 0, 0); }
 	static Vector4 One() { return Vector4(1, 1, 1, 1); }

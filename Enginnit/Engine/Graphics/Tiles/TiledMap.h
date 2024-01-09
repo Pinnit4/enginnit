@@ -21,10 +21,10 @@ public:
 	vector<vector<char>> tileGrid;
 	vector<vector<TiledMapSprite*>> spriteGrid;
 
-	void DrawSpriteGrid(Vector2 position);
+	void DrawSpriteGrid(Vector2f position);
 	TiledMapSprite* GetSprite(int x, int y);
 
-	Vector2 GetWorldPosition(int x, int y);
+	Vector2f GetWorldPosition(int x, int y);
 
 	int GetWidth();
 	int GetHeight();

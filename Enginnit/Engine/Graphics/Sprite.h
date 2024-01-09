@@ -16,18 +16,18 @@ class Sprite : virtual public Spatial2D {
 public:
 	Sprite();
 	Sprite(string path);
-	Sprite(string path, Vector2 position);
+	Sprite(string path, Vector2f position);
 	Sprite(Texture texture);
 
-	Vector2 pivot;
+	Vector2f pivot;
 
 	Texture GetTexture();	
 
 	void SetTexture(string path);
-	void SetTexture(string path, Vector2 pivot);
+	void SetTexture(string path, Vector2f pivot);
 
 	void SetTexture(Texture tx);
-	void SetTexture(Texture tx, Vector2 pivot);
+	void SetTexture(Texture tx, Vector2f pivot);
 
 	void Render();
 

@@ -33,8 +33,8 @@ public:
 		if (values.size() < 6) return tx;
 
 		int h = tx.GetHeight() - 1;
-		Vector2Int anchorMin = Vector2Int(stoi(values[2]), h - stoi(values[5]));
-		Vector2Int anchorMax = Vector2Int(stoi(values[4]), h - stoi(values[3]));
+		Vector2i anchorMin = Vector2i(stoi(values[2]), h - stoi(values[5]));
+		Vector2i anchorMax = Vector2i(stoi(values[4]), h - stoi(values[3]));
 		tx.SetAnchors(anchorMin, anchorMax);
 
 		return tx;

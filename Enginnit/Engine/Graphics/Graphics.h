@@ -42,9 +42,9 @@ public:
 	static void RegisterSprite(Sprite* sp);
 	static void UnregisterSprite(Sprite* sp);
 
-	static void MoveCamera(Vector2 delta);
-	static void SetCameraPosition(Vector2 newPos);
-	static Vector2 GetCameraPosition();
+	static void MoveCamera(Vector2f delta);
+	static void SetCameraPosition(Vector2f newPos);
+	static Vector2f GetCameraPosition();
 
 private:
 	static GLFWwindow* window;
@@ -54,7 +54,7 @@ private:
 	static int height;
 	static int depth;
 
-	static Vector2 camPos;
+	static Vector2f camPos;
 
 	static std::list<Sprite*> rgSp;
 

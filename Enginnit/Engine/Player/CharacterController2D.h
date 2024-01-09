@@ -20,6 +20,7 @@ public:
 	CharacterController2D(string filePath);
 
 	void Tick(double deltaTime);
+	void PhysicsTick(double deltaTime) override;
 private:
 };
 #endif
