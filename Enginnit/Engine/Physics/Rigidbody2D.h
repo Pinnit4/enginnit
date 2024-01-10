@@ -19,10 +19,12 @@ public:
 
 	void DebugRender(Color color);
 
+	void Destroy() override;
 protected:
 	Vector2f velocity;
-
 	Vector2f previousPos;
+
+	bool CollisionSteppedRollback(Collider2D* other, bool useX, bool useY);
 };
 
 #endif

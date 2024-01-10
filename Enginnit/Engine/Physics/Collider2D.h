@@ -11,12 +11,18 @@ public:
 	Collider2D(Vector2f position);
 	Collider2D(Vector2f position, float rotation);
 
+	bool enabled;
+
 	Rect2D* GetRect();
-	void DebugRender(Color color);
+	void DebugRender();
 
 	static bool AreColliding(const Collider2D& a, const Collider2D& b);
+
+	virtual void Destroy();
 protected:
 	Rect2D* rect;
+
+	Color debugColor;
 };
 
 #endif

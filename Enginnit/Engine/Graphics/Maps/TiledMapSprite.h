@@ -18,4 +18,4 @@ public:
 		y = _y;
 	}
 };
-#endif#pragma once
+#endif

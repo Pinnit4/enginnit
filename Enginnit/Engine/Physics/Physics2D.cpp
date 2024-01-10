@@ -10,7 +10,9 @@ Physics2D::Physics2D() {
 
 void Physics2D::Initialize() {
 	rgRb.clear();
-	Graphics::onEndRender.push_back([&]() {DebugRender(); });
+#ifdef _DEBUG
+	Graphics::onEndRender.push_back([&]() { DebugRender(); });
+#endif
 }
 
 void Physics2D::Tick(float deltaTime) {
@@ -21,17 +23,15 @@ void Physics2D::TickRigidbodies(float deltaTime) {
 	if (rgRb.size() == 0)
 		return;
 
-	for (auto it = rgRb.begin(); it != rgRb.end(); it++) {
-		(*it)->PhysicsTick(deltaTime);
-		ProcessRigidbodyCollisions((*it));
+	for (auto rb : rgRb) {
+		rb->PhysicsTick(deltaTime);
+		ProcessRigidbodyCollisions(rb);
 	}
 }
 
 void Physics2D::DebugRender() {
-	Color color = Color(1, 0.5, 0.5);
-
-	for (auto it = rgRb.begin(); it != rgRb.end(); it++)
-		(*it)->DebugRender(color);
+	for (auto cl : rgCl)
+		cl->DebugRender();
 }
 
 void Physics2D::Shutdown() {
@@ -72,9 +72,10 @@ void Physics2D::UnregisterCollider(Collider2D* cl) {
 }
 
 void Physics2D::ProcessRigidbodyCollisions(Rigidbody2D* rb) {
-	for (auto it = rgCl.begin(); it != rgCl.end(); it++) {
-		if (rb == (*it)) continue;
-		if (Collider2D::AreColliding(*(*it), *rb))
-			rb->ProcessCollision((*it));
+	for (auto cl : rgCl) {
+		if (rb == cl) continue;
+		if (!cl->enabled) continue;
+		if (Collider2D::AreColliding(*cl, *rb))
+			rb->ProcessCollision(cl);
 	}
 }

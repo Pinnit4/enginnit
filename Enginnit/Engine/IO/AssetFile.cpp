@@ -15,6 +15,7 @@ void AssetFile::ReadAssetFile(string filePath, function<void (string, vector<str
 	if (f.is_open()) {
 		string line;
 		while (getline(f, line)) {
+			if (line == "") continue;
 			vector<string> splitLine = GetLineSplitted(line, ':');
 			if (splitLine.size() < 2) {
 				cout << "line size was less than 2: " << splitLine.size() << endl;

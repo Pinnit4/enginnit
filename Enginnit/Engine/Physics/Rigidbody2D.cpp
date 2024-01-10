@@ -6,16 +6,27 @@ Rigidbody2D::Rigidbody2D() : Collider2D() {
 	velocity = Vector2f::Zero();
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
+	useGravity = true;
+	debugColor = Color(0.5, 0.5, 1);
 }
 Rigidbody2D::Rigidbody2D(Vector2f position) : Collider2D(position) {
 	velocity = Vector2f::Zero();
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
+	useGravity = true;
+	debugColor = Color(0.5, 0.5, 1);
 }
 Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(position, rotation) {
 	velocity = Vector2f::Zero();
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
+	useGravity = true;
+	debugColor = Color(0.5, 0.5, 1);
+}
+
+void Rigidbody2D::Destroy() {
+	Collider2D::Destroy();
+	Physics2D::UnregisterRigidbody(this);
 }
 
 void Rigidbody2D::PhysicsTick(double deltaTime) {
@@ -30,8 +41,21 @@ void Rigidbody2D::PhysicsTick(double deltaTime) {
 }
 
 void Rigidbody2D::ProcessCollision(Collider2D* other) {
+	// Custom stepped method: first trying rollback on each axis separately, then both of them if unsuccesful
+	Vector2f auxPos = position;
+
+	bool success = CollisionSteppedRollback(other, true, false);
+	if (success) return;
+
+	position = auxPos;
+	success = CollisionSteppedRollback(other, false, true);
+	if (success) return;
+
+	position = auxPos;
+	success = CollisionSteppedRollback(other, true, true);
+
 	// Stepped method, as Mario64
-	Vector2f direction = (position - previousPos);
+	/*Vector2f direction = (position - previousPos);
 
 	double steps = 5;
 
@@ -46,10 +70,29 @@ void Rigidbody2D::ProcessCollision(Collider2D* other) {
 
 		if (!Collider2D::AreColliding(*this, *other))
 			return;
-	}
+	}*/
 
 	// Full force method
 	//position = previousPos;
+}
+
+bool Rigidbody2D::CollisionSteppedRollback(Collider2D* other, bool useX, bool useY) {
+	Vector2f direction = (previousPos - position);
+
+	if (!useX) direction.x = 0; // Don't rollback on X axis
+	if (!useY) direction.y = 0;	// Don't rollback on Y axis
+
+	double steps = 5;
+	double stepDecrease = 1 / steps;
+
+	for (int i = 0; i < steps; i++) {
+		position += (direction * stepDecrease);
+
+		if (!Collider2D::AreColliding(*this, *other))
+			return true;
+	}
+
+	return false;
 }
 
 void Rigidbody2D::DebugRender(Color color) {

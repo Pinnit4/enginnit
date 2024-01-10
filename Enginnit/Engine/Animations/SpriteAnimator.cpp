@@ -3,10 +3,18 @@
 SpriteAnimator::SpriteAnimator() {
 	isPlaying = false;
 	sprite = NULL;
+	currentAnimation = NULL;
+	currentAnimationName = "";
+	frameCountdown = 0;
+	currentFrame = 0;
 }
 SpriteAnimator::SpriteAnimator(Sprite* _sprite) {
 	isPlaying = false;
 	sprite = _sprite;
+	currentAnimation = NULL;
+	currentAnimationName = "";
+	frameCountdown = 0;
+	currentFrame = 0;
 }
 
 void SpriteAnimator::Play(string animationName) {

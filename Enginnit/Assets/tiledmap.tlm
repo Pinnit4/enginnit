@@ -1,5 +1,6 @@
 type:TiledMap
 tileset:Assets/tilesets/world_tileset0.tls
+
 tile_line:501025550505502
 tile_line:505503021102103
 tile_line:015510020103141
@@ -8,3 +9,12 @@ tile_line:510102203021353
 tile_line:501111311002051
 tile_line:100400055451540
 tile_line:505055110332012
+
+coll_line:X....XXX.X.XX..
+coll_line:X.XX...........
+coll_line:..XX.........X.
+coll_line:X.XX...X.....X.
+coll_line:X............X.
+coll_line:X............X.
+coll_line:...X...XXXX.XX.
+coll_line:X.X.XX.........

@@ -1,20 +1,22 @@
+#ifdef TILESETEDITOR
+
 #define GLFW_EXPOSE_NATIVE_WIN32
 #define GLFW_EXPOSE_NATIVE_WGL
 
 #include "Engine/Engine.h"
-#include "Game/Game.h"
+#include "TilesetEditor/TilesetEditor.h"
 
 int main() {
 	Engine engine;
-	engine.Initialize((char*)"Super Amigos");
+	engine.Initialize((char*)"Tileset Editor");
 
-	Game game;
-	game.Start();
+	TilesetEditor editor;
+	editor.Start();
 
 	while (!engine.ShouldShutdown()) {
 		engine.Update();
 
-		game.Tick(Engine::deltaTime);
+		editor.Tick(Engine::deltaTime);
 
 		engine.Render();
 	}
@@ -23,3 +25,5 @@ int main() {
 
 	return 0;
 }
+
+#endif

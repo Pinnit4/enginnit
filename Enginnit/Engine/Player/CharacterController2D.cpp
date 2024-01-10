@@ -21,6 +21,7 @@ CharacterController2D::CharacterController2D(string filePath) : Sprite(), Rigidb
 }
 
 void CharacterController2D::Tick(double deltaTime) {
+	animator.Tick(deltaTime);
 	//MoveCamera(deltaTime);
 	FocusCameraOnPlayer(this, Vector2f::Zero());
 }
