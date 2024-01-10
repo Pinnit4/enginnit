@@ -10,8 +10,14 @@ void MoveCharacter(CharacterController2D* cc, double deltaTime);
 void MoveCamera(double deltaTime);
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset);
 
-CharacterController2D::CharacterController2D(string filePath) : Sprite(), Rigidbody2D() {
+CharacterController2D::CharacterController2D() : Sprite(), Rigidbody2D(), SceneObject() {
 	animator = SpriteAnimator(this);
+	movementSpeed = 0;
+}
+
+CharacterController2D::CharacterController2D(string filePath) : Sprite(), Rigidbody2D(), SceneObject() {
+	animator = SpriteAnimator(this);
+	movementSpeed = 0;
 
 	CharacterController2DAsset::LoadFromFile(this, filePath);
 
@@ -41,6 +47,9 @@ void MoveCharacter(CharacterController2D* cc, double deltaTime) {
 		input.x -= 1;
 	if (Keyboard::GetKey(GLFW_KEY_D))
 		input.x += 1;
+
+	if (Keyboard::GetKeyDown(GLFW_KEY_K))
+		cout << cc->position.ToString() << endl;
 
 	if (input.x > 0) {
 		if (cc->animator.GetCurrentAnimationName() != cc->runRightAnim)

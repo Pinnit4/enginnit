@@ -1,7 +1,7 @@
 #ifndef ENGINNIT_TILED_MAP_COLLIDER
 #define ENGINNIT_TILED_MAP_COLLIDER
 
-#include "../../Physics/Collider2D.h"
+#include "../Physics/Collider2D.h"
 
 using namespace std;
 

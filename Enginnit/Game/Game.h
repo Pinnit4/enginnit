@@ -1,9 +1,9 @@
 #ifndef GAME_BASE
 #define GAME_BASE
 
-#include "../Engine/Player/CharacterController2D.h"
 #include <random>
 #include <iostream>
+#include "../Engine/Scenes/Scene.h"
 
 using namespace std;
 
@@ -15,8 +15,7 @@ public:
 	void Start();
 	void Tick(double deltaTime);
 private:
-	CharacterController2D* player;
-	Sprite* trees[];
+	Scene* currentScene;
 };
 
 #endif

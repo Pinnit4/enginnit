@@ -5,10 +5,11 @@
 #include "../Physics/Rigidbody2D.h"
 #include "../IO/Keyboard.h"
 #include "../Animations/SpriteAnimator.h"
+#include "../Scenes/SceneObject.h"
 
 using namespace std;
 
-class CharacterController2D : public Sprite, public Rigidbody2D {
+class CharacterController2D : public Sprite, public Rigidbody2D, public SceneObject {
 public:
 	float movementSpeed;
 	
@@ -17,9 +18,10 @@ public:
 	string idleRightAnim, idleLeftAnim, idleUpAnim, idleDownAnim;
 	string runRightAnim, runLeftAnim, runUpAnim, runDownAnim;
 
+	CharacterController2D();
 	CharacterController2D(string filePath);
-
-	void Tick(double deltaTime);
+	
+	void Tick(double deltaTime) override;
 	void PhysicsTick(double deltaTime) override;
 private:
 };

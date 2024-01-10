@@ -23,15 +23,19 @@ TiledMap::TiledMap(string filePath) {
 	TiledMapAsset::LoadFromFile(this, filePath);
 }
 
-void TiledMap::DrawMap(Vector2f position) {
+void TiledMap::Start() {
+	DrawMap();
+}
+
+void TiledMap::DrawMap() {
 	DeleteSpriteGrid();
 	DeleteColliderGrid();
 
-	DrawSpriteGrid(position);
-	DrawColliderGrid(position);
+	DrawSpriteGrid();
+	DrawColliderGrid();
 }
 
-void TiledMap::DrawSpriteGrid(Vector2f position) {
+void TiledMap::DrawSpriteGrid() {
 	Vector2f currentPos = position;
 	float tileWidth = tileset->GetWidth();
 	float tileHeight = -tileset->GetHeight();
@@ -55,7 +59,7 @@ void TiledMap::DrawSpriteGrid(Vector2f position) {
 	}
 }
 
-void TiledMap::DrawColliderGrid(Vector2f position) {
+void TiledMap::DrawColliderGrid() {
 	Vector2f currentPos = position;
 	float tileWidth = tileset->GetWidth();
 	float tileHeight = -tileset->GetHeight();

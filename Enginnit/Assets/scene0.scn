@@ -1,0 +1,13 @@
+type:Scene
+start_obj:TiledMap
+file:Assets/tiledmap.tlm
+position:170.5:128
+end_obj:0
+start_obj:CharacterController2D
+file:Assets/player.cc2d
+position:258.5:87.5
+gravity:0
+pivot:0.5:0.5
+depth:5
+scale:1:1
+end_obj:0
