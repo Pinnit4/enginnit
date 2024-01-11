@@ -9,7 +9,7 @@ double Engine::deltaTime = 0;
 void CenterOnScreen(GLFWwindow* window);
 
 Engine::Engine() {
-
+	lastTime = 0;
 }
 
 Engine::~Engine() {
@@ -24,13 +24,13 @@ bool Engine::Initialize(char* windowTitle) {
 	}
 
 	// Create a window
-	window = glfwCreateWindow(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT, windowTitle, NULL, NULL);
+	window = glfwCreateWindow(GraphicsManager::SCREEN_WIDTH, GraphicsManager::SCREEN_HEIGHT, windowTitle, NULL, NULL);
 	if (window == NULL) {
 		cout << "Error creating window" << endl;
 		return false;
 	}
 
-	graphics = Graphics();
+	graphics = GraphicsManager();
 	graphics.Initialize(window);
 
 	CenterOnScreen(window);
@@ -74,7 +74,7 @@ void Engine::Render() {
 
 void CenterOnScreen(GLFWwindow* window) {
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-	int xPos = (mode->width - Graphics::SCREEN_WIDTH) / 2;
-	int yPos = (mode->height - Graphics::SCREEN_HEIGHT) / 2;
+	int xPos = (mode->width - GraphicsManager::SCREEN_WIDTH) / 2;
+	int yPos = (mode->height - GraphicsManager::SCREEN_HEIGHT) / 2;
 	glfwSetWindowPos(window, xPos, yPos);
 }

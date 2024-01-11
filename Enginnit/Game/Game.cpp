@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "../Engine/Maps/TiledMap.h"
 
 Game::Game() {
 	currentScene = NULL;

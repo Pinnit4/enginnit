@@ -1,9 +1,7 @@
 #include "Collider2D.h"
 
 #include "Physics2D.h"
-
-Vector2f GetProjectionMinMaxOnAxis(Rect2D rect, Vector2f axis);
-float GetProjectionScalarOnAxis(Vector2f vertex, Vector2f axis);
+#include "../Debug/DebugDrawer.h"
 
 Collider2D::Collider2D() : Spatial2D() {
 	rect = new Rect2D();
@@ -30,11 +28,15 @@ void Collider2D::Destroy() {
 
 Rect2D* Collider2D::GetRect() { return rect; }
 void Collider2D::DebugRender() {
-	if (enabled)
-		rect->DebugRender(TransformData::FromSpatial2D(*this), debugColor);
-	else
-		rect->DebugRender(TransformData::FromSpatial2D(*this), debugColor * 0.25);
+	Vector2f pivotDiff = GraphicsManager::GetCameraPosition();
+	DebugDrawer::Initialize(position - pivotDiff, 0, scale);
 
+	if (enabled)
+		DebugDrawer::SetColor(debugColor);
+	else
+		DebugDrawer::SetColor(debugColor * 0.25);
+
+	DebugDrawer::DrawWirePolygon(rect->GetPoints());
 }
 
 bool Collider2D::AreColliding(const Collider2D& a, const Collider2D& b) {
@@ -44,40 +46,12 @@ bool Collider2D::AreColliding(const Collider2D& a, const Collider2D& b) {
 	Rect2D br = Rect2D(b.position + b.rect->GetCenter(), b.rect->GetSize());
 	br.RefreshRotation(a.rotation);
 
-	float aMax = 0, aMin = 0;
-	float bMax = 0, bMin = 0;
+	bool intersection = ar.Intersects(br);
+	if (intersection) return true;
 
-	Vector2f axes[4] = {
-		 (ar.GetUpperRightVertex()) - (ar.GetUpperLeftVertex()),
-		 (ar.GetLowerRightVertex()) - (ar.GetUpperRightVertex()),
-		 (br.GetUpperLeftVertex()) - (br.GetLowerLeftVertex()),
-		 (br.GetUpperLeftVertex()) - (br.GetUpperRightVertex())
-	};
+	bool contains = ar.Contains(br);
+	if (contains) return true;
 
-	for (unsigned int i = 0; i < 4; i++) {
-		auto axis = axes[i];
-		Vector2f aMinMax = GetProjectionMinMaxOnAxis(ar, axis);
-		Vector2f bMinMax = GetProjectionMinMaxOnAxis(br, axis);
-
-		if (!(bMinMax.x <= aMinMax.y && bMinMax.y >= aMinMax.x))
-			return false;
-	}
-
-	return true;
-}
-
-Vector2f GetProjectionMinMaxOnAxis(Rect2D rect, Vector2f axis) {
-	float aURScalar = GetProjectionScalarOnAxis(rect.GetUpperRightVertex(), axis);
-	float aULScalar = GetProjectionScalarOnAxis(rect.GetUpperLeftVertex(), axis);
-	float aLRScalar = GetProjectionScalarOnAxis(rect.GetLowerRightVertex(), axis);
-	float aLLScalar = GetProjectionScalarOnAxis(rect.GetLowerLeftVertex(), axis);
-
-	vector<float> values = { aURScalar, aULScalar, aLRScalar, aLLScalar };
-	return Vector2f(Math::Min(values), Math::Max(values));
-}
-
-float GetProjectionScalarOnAxis(Vector2f vertex, Vector2f axis) {
-	Vector2f projection = Vector2f::Project(vertex, axis);
-	float scalar = Vector2f::Dot(projection, axis);
-	return scalar;
+	contains = br.Contains(ar);
+	return contains;
 }

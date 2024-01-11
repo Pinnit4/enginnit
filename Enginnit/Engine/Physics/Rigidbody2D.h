@@ -3,9 +3,6 @@
 
 #include "Collider2D.h"
 
-#include "../Graphics/Color.h"
-#include "../Math/Rect2D.h"
-
 class Rigidbody2D : virtual public Collider2D {
 public:
 	Rigidbody2D();
@@ -16,8 +13,6 @@ public:
 
 	virtual void PhysicsTick(double deltaTime);
 	void ProcessCollision(Collider2D* other);
-
-	void DebugRender(Color color);
 
 	void Destroy() override;
 protected:

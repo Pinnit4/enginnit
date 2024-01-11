@@ -11,7 +11,7 @@ Physics2D::Physics2D() {
 void Physics2D::Initialize() {
 	rgRb.clear();
 #ifdef _DEBUG
-	Graphics::onEndRender.push_back([&]() { DebugRender(); });
+	GraphicsManager::onEndRender.push_back([&]() { DebugRender(); });
 #endif
 }
 
@@ -74,8 +74,7 @@ void Physics2D::UnregisterCollider(Collider2D* cl) {
 void Physics2D::ProcessRigidbodyCollisions(Rigidbody2D* rb) {
 	for (auto cl : rgCl) {
 		if (rb == cl) continue;
-		if (!cl->enabled) continue;
-		if (Collider2D::AreColliding(*cl, *rb))
+		if (cl->enabled && Collider2D::AreColliding(*cl, *rb))
 			rb->ProcessCollision(cl);
 	}
 }

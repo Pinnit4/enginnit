@@ -1,14 +1,7 @@
 #ifndef ENGINNIT_SPRITE
 #define ENGINNIT_SPRITE
 
-#include "GLFW/glfw3.h"
-#include "SOIL/src/SOIL.h"
 #include "Texture.h"
-
-#include <iostream>
-#include <string>
-#include "../Math/Vector2.h"
-#include "../Math/Spatial2D.h"
 
 using namespace std;
 

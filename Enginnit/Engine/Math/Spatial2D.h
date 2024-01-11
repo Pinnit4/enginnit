@@ -1,7 +1,7 @@
 #ifndef ENGINNIT_SPATIAL2D
 #define ENGINNIT_SPATIAL2D
 
-#include "Vector2.h"
+#include "Vectors/Vectors.h"
 
 using namespace std;
 

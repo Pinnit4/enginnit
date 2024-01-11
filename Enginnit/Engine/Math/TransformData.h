@@ -1,8 +1,6 @@
 #ifndef TRANSFORMDATAHEADER
 #define TRANSFORMDATAHEADER
 
-#include <corecrt_math.h>
-#include "Vector2.h"
 #include "Spatial2D.h"
 
 using namespace std;
@@ -11,8 +9,6 @@ struct TransformData {
 	Vector2f position;
 	Vector2f scale;
 	float rotation;
-	float x;
-	float y;
 
 	TransformData(Vector2f _position) {
 		position = _position;

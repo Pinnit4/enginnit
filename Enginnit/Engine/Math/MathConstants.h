@@ -1,0 +1,8 @@
+#ifndef ENGINNIT_MATH_CONSTANTS
+#define ENGINNIT_MATH_CONSTANTS
+
+#define PI  3.141592865
+#define PHI 1.618033989
+#define E   2.718281828
+
+#endif

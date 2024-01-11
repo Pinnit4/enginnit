@@ -1,9 +1,9 @@
 #ifndef CHARACTER_CONTROLLER2D
 #define CHARACTER_CONTROLLER2D
 
-#include "../Graphics/Sprite.h"
+#include "../Graphics/Graphics.h"
 #include "../Physics/Rigidbody2D.h"
-#include "../IO/Keyboard.h"
+#include "../IO/Input.h"
 #include "../Animations/SpriteAnimator.h"
 #include "../Scenes/SceneObject.h"
 

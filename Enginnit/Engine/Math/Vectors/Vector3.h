@@ -77,4 +77,76 @@ struct Vector3f {
 	static Vector3f Back() { return Vector3f(0, 0, -1); }
 };
 
+struct Vector3d {
+	double x;
+	double y;
+	double z;
+
+	Vector3d() { x = 0; y = 0; z = 0; }
+	Vector3d(double _x, double _y) { x = _x; y = _y; z = 0; }
+	Vector3d(double _x, double _y, double _z) { x = _x; y = _y; z = _z; }
+	Vector3d(const Vector3d& other) { x = other.x; y = other.y; z = other.z; }
+
+	void Normalize() {
+		double length = GetLength();
+		if (length != 0) {
+			x /= length; y /= length; z /= length;
+		}
+	}
+
+	Vector3d GetNormalized()
+	{
+		double length = GetLength();
+		if (length != 0)
+			return Vector3d(x / length, y / length, z / length);
+		else
+			return Vector3d(x, y, z);
+	}
+
+	double GetLength() { return sqrt(GetSqrMagnitude()); }
+	double GetSqrMagnitude() { return ((x * x) + (y * y) + (z * z)); }
+
+	Vector3d& operator +=(const Vector3d& a) { x += a.x; y += a.y; z += a.z; return *this; }
+	Vector3d& operator +(const Vector3d& a) { Vector3d v = Vector3d(x + a.x, y + a.y, z + a.z); return v; }
+	Vector3d& operator +(const Vector3d& a) const { Vector3d v = Vector3d(x + a.x, y + a.y, z + a.z); return v; }
+
+	Vector3d& operator -=(const Vector3d& a) { x -= a.x; y -= a.y; z -= a.z; return *this; }
+	Vector3d& operator -(const Vector3d& a) { Vector3d v = Vector3d(x - a.x, y - a.y, z - a.z); return v; }
+	Vector3d& operator -(const Vector3d& a) const { Vector3d v = Vector3d(x - a.x, y - a.y, z - a.z); return v; }
+
+	Vector3d& operator *=(const Vector3d& a) { x *= a.x; y *= a.y;  z *= a.z; return *this; }
+	Vector3d& operator *(const Vector3d& a) { Vector3d v = Vector3d(x * a.x, y * a.y, z * a.z); return v; }
+	Vector3d& operator *(const Vector3d& a) const { Vector3d v = Vector3d(x * a.x, y * a.y, z * a.z); return v; }
+
+	Vector3d& operator /=(const Vector3d& a) { x /= a.x; y /= a.y;  z /= a.z; return *this; }
+	Vector3d& operator /(const Vector3d& a) { Vector3d v = Vector3d(x / a.x, y / a.y, z / a.z); return v; }
+	Vector3d& operator /(const Vector3d& a) const { Vector3d v = Vector3d(x / a.x, y / a.y, z / a.z); return v; }
+
+	Vector3d& operator *=(const double a) { x *= a; y *= a;  z *= a; return *this; }
+	Vector3d& operator *(const double a) { Vector3d v = Vector3d(x * a, y * a, z * a); return v; }
+	Vector3d& operator *(const double a) const { Vector3d v = Vector3d(x * a, y * a, z * a); return v; }
+
+	Vector3d& operator /=(const double a) { x /= a; y /= a; z /= a; return *this; }
+	Vector3d& operator /(const double a) { Vector3d v = Vector3d(x / a, y / a, z / a); return v; }
+	Vector3d& operator /(const double a) const { Vector3d v = Vector3d(x / a, y / a, z / a); return v; }
+
+	bool operator==(const Vector3d& a) { return x == a.x && y == a.y && z == a.z; }
+	bool operator==(const Vector3d& a) const { return x == a.x && y == a.y && z == a.z; }
+
+	bool operator!=(const Vector3d& a) { return !operator==(a); }
+	bool operator!=(const Vector3d& a) const { return !operator==(a); }
+
+	static Vector3d Zero() { return Vector3d(0, 0, 0); }
+	static Vector3d One() { return Vector3d(1, 1, 1); }
+
+	static Vector3d Up() { return Vector3d(0, 1, 0); }
+	static Vector3d Down() { return Vector3d(0, -1, 0); }
+
+	static Vector3d Left() { return Vector3d(-1, 0, 0); }
+	static Vector3d Right() { return Vector3d(1, 0, 0); }
+
+	static Vector3d Forward() { return Vector3d(0, 0, 1); }
+	static Vector3d Back() { return Vector3d(0, 0, -1); }
+};
+
 #endif

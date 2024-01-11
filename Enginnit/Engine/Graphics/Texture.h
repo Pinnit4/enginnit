@@ -1,13 +1,12 @@
 #ifndef ENGINNIT_TEXTURE
 #define ENGINNIT_TEXTURE
 
-#include "GLFW/glfw3.h"
-#include "SOIL/src/SOIL.h"
+#include "GraphicsInternal.h"
+#include "../Math/Math.h"
 
 #include <iostream>
 #include <string>
 
-#include "../Math/Vector2.h"
 
 using namespace std;
 

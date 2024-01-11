@@ -1,11 +1,6 @@
 #ifndef COLORHEADER
 #define COLORHEADER
 
-#include <corecrt_math.h>
-#include <string>
-
-using namespace std;
-
 struct Color {
 	float r;
 	float g;

@@ -1,32 +1,32 @@
-#include "Graphics.h"
+#include "GraphicsManager.h"
 
 #ifdef PROFILER_ENABLED
 #include "../Profiling/TimeProfiler.h"
 #endif
 
-std::list<Sprite*> Graphics::rgSp = {};
-GLFWwindow* Graphics::window = NULL;
+std::list<Sprite*> GraphicsManager::rgSp = {};
+GLFWwindow* GraphicsManager::window = NULL;
 
-int Graphics::SCREEN_WIDTH = 1024;
-int Graphics::SCREEN_HEIGHT = 768;
+int GraphicsManager::SCREEN_WIDTH = 1024;
+int GraphicsManager::SCREEN_HEIGHT = 768;
 
-int Graphics::width = 0;
-int Graphics::height = 0;
-int Graphics::depth = 0;
+int GraphicsManager::width = 0;
+int GraphicsManager::height = 0;
+int GraphicsManager::depth = 0;
 
-vector<function<void()>> Graphics::onBeginRender = vector<function<void()>>();
-vector<function<void()>> Graphics::onEndRender = vector<function<void()>>();
+vector<function<void()>> GraphicsManager::onBeginRender = vector<function<void()>>();
+vector<function<void()>> GraphicsManager::onEndRender = vector<function<void()>>();
 
-Vector2f Graphics::camPos = Vector2f::Zero();
+Vector2f GraphicsManager::camPos = Vector2f::Zero();
 
-Graphics::Graphics() {
+GraphicsManager::GraphicsManager() {
 	window = NULL;
 	uiHandler = UIHandler();
 
 	rgSp.clear();
 }
 
-void Graphics::Initialize(GLFWwindow* _window) {
+void GraphicsManager::Initialize(GLFWwindow* _window) {
 	window = _window;
 
 	glfwMakeContextCurrent(window);
@@ -38,7 +38,7 @@ void Graphics::Initialize(GLFWwindow* _window) {
 	uiHandler.Initialize(window);
 }
 
-void Graphics::Set2DViewport(int _depth) {
+void GraphicsManager::Set2DViewport(int _depth) {
 	depth = _depth;
 	glViewport(0, 0, width, height); // Set the viewport
 	glMatrixMode(GL_PROJECTION); // Set the matrix mode (projection for 2D, investigate more for 3D)
@@ -52,16 +52,16 @@ void Graphics::Set2DViewport(int _depth) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void Graphics::EnableAlphaBlending() {
+void GraphicsManager::EnableAlphaBlending() {
 	glEnable(GL_ALPHA_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-int Graphics::GetWidth() { return width; }
-int Graphics::GetHeight() { return height; }
+int GraphicsManager::GetWidth() { return width; }
+int GraphicsManager::GetHeight() { return height; }
 
-void Graphics::Render() {
+void GraphicsManager::Render() {
 	BeginRender();
 
 	RenderSprites();
@@ -70,7 +70,7 @@ void Graphics::Render() {
 	EndRender();
 }
 
-void Graphics::Shutdown() {
+void GraphicsManager::Shutdown() {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
@@ -78,7 +78,7 @@ void Graphics::Shutdown() {
 	glfwTerminate();
 }
 
-void Graphics::BeginRender() {
+void GraphicsManager::BeginRender() {
 	// Clear the previous rendered frame
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -86,7 +86,7 @@ void Graphics::BeginRender() {
 	for (auto& callback : onBeginRender) callback();
 }
 
-void Graphics::EndRender() {
+void GraphicsManager::EndRender() {
 
 	for (auto& callback : onEndRender) callback();
 
@@ -94,7 +94,7 @@ void Graphics::EndRender() {
 	glfwSwapBuffers(window);
 }
 
-void Graphics::RegisterSprite(Sprite* sp) {
+void GraphicsManager::RegisterSprite(Sprite* sp) {
 	if (rgSp.size() > 0) {
 		list<Sprite*>::iterator findIt = find(rgSp.begin(), rgSp.end(), sp);
 		if ((findIt) != rgSp.end()) return;
@@ -105,13 +105,13 @@ void Graphics::RegisterSprite(Sprite* sp) {
 	rgSp.push_back(sp);
 }
 
-void Graphics::UnregisterSprite(Sprite* sp) {
+void GraphicsManager::UnregisterSprite(Sprite* sp) {
 	if (rgSp.size() > 0) {
 		rgSp.remove_if([&](Sprite* x) -> bool {return x == sp; });
 	}
 }
 
-void Graphics::RenderSprites() {
+void GraphicsManager::RenderSprites() {
 	if (rgSp.size() == 0)
 		return;
 
@@ -141,8 +141,8 @@ void Graphics::RenderSprites() {
 #endif
 }
 
-void Graphics::MoveCamera(Vector2f delta) { camPos += delta; }
+void GraphicsManager::MoveCamera(Vector2f delta) { camPos += delta; }
 
-void Graphics::SetCameraPosition(Vector2f newPos) { camPos = newPos; }
+void GraphicsManager::SetCameraPosition(Vector2f newPos) { camPos = newPos; }
 
-Vector2f Graphics::GetCameraPosition() { return camPos; }
+Vector2f GraphicsManager::GetCameraPosition() { return camPos; }

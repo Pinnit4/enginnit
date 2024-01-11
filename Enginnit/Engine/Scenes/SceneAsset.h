@@ -10,8 +10,8 @@
 #include <vector>
 #include "../Player/CharacterController2D.h"
 #include "../Player/CharacterController2DAsset.h"
-#include "../Maps/TiledMap.h"
-#include "../Maps/TiledMapAsset.h"
+
+#include "../Maps/Maps.h"
 
 using namespace std;
 

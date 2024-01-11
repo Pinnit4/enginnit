@@ -1,8 +1,6 @@
 #include "CharacterController2D.h"
 
-#include <string>
 #include "CharacterController2DAsset.h"
-#include "../Graphics/Graphics.h"
 
 using namespace std;
 
@@ -84,7 +82,7 @@ void MoveCharacter(CharacterController2D* cc, double deltaTime) {
 
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset) {
 	Vector2f pos = cc->position;
-	Graphics::SetCameraPosition(pos + offset);
+	GraphicsManager::SetCameraPosition(pos + offset);
 }
 
 void MoveCamera(double deltaTime) {
@@ -98,5 +96,5 @@ void MoveCamera(double deltaTime) {
 	if (Keyboard::GetKey(GLFW_KEY_RIGHT))
 		input.x += 1;
 
-	Graphics::MoveCamera(input.GetNormalized() * 50 * deltaTime);
+	GraphicsManager::MoveCamera(input.GetNormalized() * 50 * deltaTime);
 }

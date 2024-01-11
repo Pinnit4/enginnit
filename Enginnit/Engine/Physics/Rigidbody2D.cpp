@@ -94,7 +94,3 @@ bool Rigidbody2D::CollisionSteppedRollback(Collider2D* other, bool useX, bool us
 
 	return false;
 }
-
-void Rigidbody2D::DebugRender(Color color) {
-	rect->DebugRender(TransformData::FromSpatial2D(*this), color);
-}

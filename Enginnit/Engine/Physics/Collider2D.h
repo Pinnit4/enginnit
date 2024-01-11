@@ -1,9 +1,8 @@
 #ifndef COLLIDER2DHEADER
 #define COLLIDER2DHEADER
 
-#include "../Math/Vector2.h"
-#include "../Math/Spatial2D.h"
-#include "../Math/Rect2D.h"
+#include "../Math/Math.h"
+#include "../Graphics/Graphics.h"
 
 class Collider2D : virtual public Spatial2D {
 public:

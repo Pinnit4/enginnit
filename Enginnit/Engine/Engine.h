@@ -5,9 +5,11 @@
 #pragma comment(lib, "opengl32.lib")
 
 #include "Graphics/Graphics.h"
+#include "Graphics/GraphicsManager.h"
 
 #include <iostream>
 #include "Physics/Physics2D.h"
+
 using namespace std;
 
 class Engine {
@@ -29,7 +31,7 @@ private:
 
 	double lastTime;
 
-	Graphics graphics;
+	GraphicsManager graphics;
 	Physics2D physics;
 };
 
