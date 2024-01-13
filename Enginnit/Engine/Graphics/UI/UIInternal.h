@@ -1,5 +1,5 @@
-#ifndef ENGINNIT_UI_HANDLER
-#define ENGINNIT_UI_HANDLER
+#ifndef ENGINNIT_UI_INTERNAL
+#define ENGINNIT_UI_INTERNAL
 
 #include "GLFW/glfw3.h"
 #include "GLFW/glfw3native.h"
@@ -12,17 +12,8 @@
 
 #include <iostream>
 
-using namespace std;
+#include "../SOIL/src/SOIL.h"
 
-class UIHandler {
-public:
-	UIHandler();
-
-	void Initialize(GLFWwindow* _window);
-	void Render();
-	void Shutdown();
-private:
-	GLFWwindow* window;
-};
+#include "../Color.h"
 
 #endif

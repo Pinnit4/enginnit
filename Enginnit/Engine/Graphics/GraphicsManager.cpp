@@ -15,13 +15,17 @@ int GraphicsManager::height = 0;
 int GraphicsManager::depth = 0;
 
 vector<function<void()>> GraphicsManager::onBeginRender = vector<function<void()>>();
+
+vector<function<void()>> GraphicsManager::beforeUiRender = vector<function<void()>>();
+vector<function<void()>> GraphicsManager::afterUiRender = vector<function<void()>>();
+
 vector<function<void()>> GraphicsManager::onEndRender = vector<function<void()>>();
 
 Vector2f GraphicsManager::camPos = Vector2f::Zero();
 
 GraphicsManager::GraphicsManager() {
 	window = NULL;
-	uiHandler = UIHandler();
+	uiHandler = UIManager();
 
 	rgSp.clear();
 }
@@ -65,7 +69,10 @@ void GraphicsManager::Render() {
 	BeginRender();
 
 	RenderSprites();
+
+	for (auto& callback : beforeUiRender) callback();
 	uiHandler.Render();
+	for (auto& callback : afterUiRender) callback();
 
 	EndRender();
 }

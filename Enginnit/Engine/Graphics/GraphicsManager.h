@@ -5,10 +5,9 @@
 #define ENGINNIT_GRAPHICSMANAGER
 
 #include "Graphics.h"
-#include "UI/UIHandler.h"
+#include "UI/UI.h"
 
 #include <list>
-#include <iostream>
 #include <vector>
 #include <functional>
 
@@ -20,6 +19,10 @@ public:
 	static int SCREEN_HEIGHT;
 
 	static vector<function<void()>> onBeginRender;
+
+	static vector<function<void()>> beforeUiRender;
+	static vector<function<void()>> afterUiRender;
+
 	static vector<function<void()>> onEndRender;
 
 	GraphicsManager();
@@ -43,7 +46,7 @@ public:
 
 private:
 	static GLFWwindow* window;
-	UIHandler uiHandler;
+	UIManager uiHandler;
 
 	static int width;
 	static int height;

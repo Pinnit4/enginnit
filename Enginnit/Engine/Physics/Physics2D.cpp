@@ -1,5 +1,6 @@
 #include "Physics2D.h"
 #include "../Graphics/Graphics.h"
+#include "../Debug/DebugCodes.h"
 
 std::list<Rigidbody2D*> Physics2D::rgRb = {};
 std::list<Collider2D*> Physics2D::rgCl = {};
@@ -11,7 +12,7 @@ Physics2D::Physics2D() {
 void Physics2D::Initialize() {
 	rgRb.clear();
 #ifdef _DEBUG
-	GraphicsManager::onEndRender.push_back([&]() { DebugRender(); });
+	GraphicsManager::beforeUiRender.push_back([&]() { DebugRender(); });
 #endif
 }
 
@@ -30,8 +31,11 @@ void Physics2D::TickRigidbodies(float deltaTime) {
 }
 
 void Physics2D::DebugRender() {
-	for (auto cl : rgCl)
-		cl->DebugRender();
+	if (DebugCodes::GetInt("show_hitbox", 0) == 1)
+	{
+		for (auto cl : rgCl)
+			cl->DebugRender();
+	}
 }
 
 void Physics2D::Shutdown() {

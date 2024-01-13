@@ -30,28 +30,35 @@ bool Engine::Initialize(char* windowTitle) {
 		return false;
 	}
 
-	graphics = GraphicsManager();
-	graphics.Initialize(window);
+	graphics = new GraphicsManager();
+	graphics->Initialize(window);
 
 	CenterOnScreen(window);
 
-	graphics.Set2DViewport(10);
-	graphics.EnableAlphaBlending();
+	graphics->Set2DViewport(10);
+	graphics->EnableAlphaBlending();
 
-	physics = Physics2D();
-	physics.Initialize();
+	physics = new Physics2D();
+	physics->Initialize();
 
 	Mouse::SetCallbacks(window);
 	Keyboard::SetCallbacks(window);
 
 	lastTime = glfwGetTime();
 
+#ifdef _DEBUG
+	console = new DebugConsole();
+#endif
+
 	return true;
 }
 
 void Engine::Shutdown() {
-	graphics.Shutdown();
-	physics.Shutdown();
+#ifdef _DEBUG
+	console->Destroy();
+#endif
+	graphics->Shutdown();
+	physics->Shutdown();
 }
 
 void Engine::Update() {
@@ -61,7 +68,11 @@ void Engine::Update() {
 
 	glfwPollEvents();
 
-	physics.Tick(deltaTime);
+	physics->Tick(deltaTime);
+
+#ifdef _DEBUG
+	console->Tick(deltaTime);
+#endif
 }
 
 bool Engine::ShouldShutdown() {
@@ -69,7 +80,7 @@ bool Engine::ShouldShutdown() {
 }
 
 void Engine::Render() {
-	graphics.Render();
+	graphics->Render();
 }
 
 void CenterOnScreen(GLFWwindow* window) {

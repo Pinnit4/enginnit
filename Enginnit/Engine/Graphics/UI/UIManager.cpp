@@ -1,13 +1,15 @@
-#include "UIHandler.h"
+#include "UIManager.h"
+
+std::list<UIElement*> UIManager::rgEl = {};
 
 void BeginRender();
 void EndRender();
 
-UIHandler::UIHandler() {
+UIManager::UIManager() {
 	window = NULL;
 }
 
-void UIHandler::Initialize(GLFWwindow* _window) {
+void UIManager::Initialize(GLFWwindow* _window) {
 	window = _window;
 
 	// Setup Dear ImGui context
@@ -27,9 +29,10 @@ void UIHandler::Initialize(GLFWwindow* _window) {
 	ImGui_ImplOpenGL3_Init();
 }
 
-void UIHandler::Render() {
+void UIManager::Render() {
 	BeginRender();
 
+	RenderUIElements();
 	//ImGui::ShowDemoWindow();
 
 	EndRender();
@@ -46,10 +49,42 @@ void EndRender() {
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void UIHandler::Shutdown() {
+void UIManager::Shutdown() {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
 
 	glfwTerminate();
+}
+
+void UIManager::RegisterUIElement(UIElement* element) {
+	if (rgEl.size() > 0) {
+		auto findIt = find(rgEl.begin(), rgEl.end(), element);
+		if ((findIt) != rgEl.end()) return;
+	}
+	else if (rgEl.size() > 0) {
+		if (rgEl.front() != element) return;
+	}
+	rgEl.push_back(element);
+}
+
+void UIManager::UnregisterUIElement(UIElement* element) {
+	if (rgEl.size() > 0) {
+		rgEl.remove_if([&](UIElement* x) -> bool {return x == element; });
+	}
+}
+
+void UIManager::RenderUIElements() {
+	if (rgEl.size() == 0)
+		return;
+
+	if (rgEl.size() > 1) {
+		rgEl.sort(
+			[&](UIElement* a, UIElement* b) -> bool
+			{
+				return (a->sortingOrder < b->sortingOrder);
+			});
+	}
+
+	for (auto el : rgEl) el->Render();
 }

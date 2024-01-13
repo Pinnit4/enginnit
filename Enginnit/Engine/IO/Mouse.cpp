@@ -34,6 +34,8 @@ void Mouse::MouseButtonCallback(GLFWwindow* window, int button, int action, int 
 	ImGuiIO& io = ImGui::GetIO();
 	io.AddMouseButtonEvent(button, action == GLFW_PRESS);
 
+	if (io.WantCaptureMouse) action == GLFW_RELEASE;
+
 	if (action != GLFW_RELEASE && buttons[button] == false) {
 		buttonsUp[button] = false;
 		buttonsDown[button] = true;
