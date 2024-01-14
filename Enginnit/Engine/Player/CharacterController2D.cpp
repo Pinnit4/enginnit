@@ -1,6 +1,7 @@
 #include "CharacterController2D.h"
 
 #include "CharacterController2DAsset.h"
+#include "../Debug/DebugConsole.h"
 
 using namespace std;
 
@@ -47,7 +48,7 @@ void MoveCharacter(CharacterController2D* cc, double deltaTime) {
 		input.x += 1;
 
 	if (Keyboard::GetKeyDown(GLFW_KEY_K))
-		cout << cc->position.ToString() << endl;
+		DebugConsole::Log("Character pos: " + cc->position.ToString());
 
 	if (input.x > 0) {
 		if (cc->animator.GetCurrentAnimationName() != cc->runRightAnim)

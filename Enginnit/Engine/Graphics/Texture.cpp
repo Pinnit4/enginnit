@@ -1,23 +1,26 @@
 #include "Texture.h"
 
 #include <iostream>
+#include "../Debug/DebugConsole.h"
 using namespace std;
 
 Texture::Texture() {
 	id = -1;
 	name = "default";
+	width = 0; height = 0;
+	internalWidth = 0; internalHeight = 0;
 }
 
 Texture::Texture(int _id) {
 	if (!SetImageParameters(_id)) {
-		cout << "Error loading image with ID: " << _id << endl;
+		DebugConsole::LogError("Error loading image with ID: " + _id);
 	}
 	name = "default";
 }
 
 Texture::Texture(string path) {
 	if (!LoadImage(path, SOIL_FLAG_MULTIPLY_ALPHA | SOIL_FLAG_INVERT_Y)) {
-		cout << "Error loading image with path: " << path << endl;
+		DebugConsole::LogError("Error loading image with path : " + path);
 	}
 	name = "default";
 }
@@ -61,7 +64,7 @@ bool Texture::SetImageParameters(int _id) {
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_WIDTH, &internalWidth);
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_HEIGHT, &internalHeight);
 
-		SetAnchors(Vector2i::Zero(), Vector2i(internalWidth-1, internalHeight-1));
+		SetAnchors(Vector2i::Zero(), Vector2i(internalWidth - 1, internalHeight - 1));
 
 		return true;
 	}
