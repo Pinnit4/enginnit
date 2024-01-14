@@ -1,7 +1,8 @@
 #include "Collider2D.h"
 
 #include "Physics2D.h"
-#include "../Debug/DebugDrawer.h"
+#include "../Math/TransformData.h"
+#include "../Graphics/Drawer.h"
 
 Collider2D::Collider2D() : Spatial2D() {
 	rect = new Rect2D();
@@ -42,15 +43,11 @@ void Collider2D::Destroy() { Disable(); }
 
 Rect2D* Collider2D::GetRect() { return rect; }
 void Collider2D::DebugRender() {
-	Vector2f pivotDiff = GraphicsManager::GetCameraPosition();
-	DebugDrawer::Initialize(position - pivotDiff, 0, scale);
+	TransformData td = TransformData::FromSpatial2D(*this);
+	td.rotation = 0;
+	td.position -= GraphicsManager::GetCameraPosition();
 
-	if (enabled)
-		DebugDrawer::SetColor(debugColor);
-	else
-		DebugDrawer::SetColor(debugColor * 0.25);
-
-	DebugDrawer::DrawWirePolygon(rect->GetPoints());
+	Drawer::DrawWirePolygon(rect, td, debugColor);
 }
 
 bool Collider2D::AreColliding(const Collider2D& a, const Collider2D& b) {

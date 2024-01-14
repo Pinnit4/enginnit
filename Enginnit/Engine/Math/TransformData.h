@@ -28,6 +28,8 @@ struct TransformData {
 		scale = _scale;
 	}
 
+	static TransformData Default() { return TransformData(Vector2f::Zero()); }
+
 	static TransformData FromSpatial2D(Spatial2D sp) {
 		return TransformData(sp.position, sp.rotation, sp.scale);
 	}
