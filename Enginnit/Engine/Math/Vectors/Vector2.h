@@ -168,6 +168,9 @@ struct Vector2i {
 
 	//Vector2i& operator =(const Vector2i& a) { x = a.x; y = a.y; return *this; }
 
+	operator Vector2f() const { return Vector2f(x, y); }
+	operator Vector2d() const { return Vector2d(x, y); }
+
 	Vector2i& operator +=(const Vector2i& a) { x += a.x; y += a.y; return *this; }
 	Vector2i& operator +(const Vector2i& a) {Vector2i v = Vector2i(x + a.x, y + a.y);return v;}
 	Vector2i& operator +(const Vector2i& a) const { Vector2i v = Vector2i(x + a.x, y + a.y); return v; }
