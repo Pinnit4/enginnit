@@ -13,13 +13,14 @@ public:
 
 	virtual void PhysicsTick(double deltaTime);
 	void ProcessCollision(Collider2D* other);
-
-	void Destroy() override;
 protected:
 	Vector2f velocity;
 	Vector2f previousPos;
 
 	bool CollisionSteppedRollback(Collider2D* other, bool useX, bool useY);
+	
+	void EnableInternal() override;
+	void DisableInternal() override;
 };
 
 #endif

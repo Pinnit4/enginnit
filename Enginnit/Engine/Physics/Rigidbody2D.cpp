@@ -24,8 +24,13 @@ Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(positio
 	debugColor = Color(0.5, 0.5, 1);
 }
 
-void Rigidbody2D::Destroy() {
-	Collider2D::Destroy();
+void Rigidbody2D::EnableInternal() {
+	Collider2D::EnableInternal();
+	Physics2D::RegisterRigidbody(this);
+}
+
+void Rigidbody2D::DisableInternal() {
+	Collider2D::DisableInternal();
 	Physics2D::UnregisterRigidbody(this);
 }
 

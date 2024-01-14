@@ -1,5 +1,6 @@
 #include "TiledMap.h"
 #include "TiledMapAsset.h"
+#include "../Debug/DebugConsole.h"
 
 TiledMap::TiledMap() {
 	tileset = new Tileset();
@@ -72,7 +73,10 @@ void TiledMap::DrawColliderGrid() {
 			char id = lineIds[x];
 			TiledMapCollider* sp = new TiledMapCollider(id, x, y, tileWidth, tileHeight);
 			sp->position = currentPos;
-			sp->enabled = id == 'X';
+			if (id == 'X')
+				sp->Enable();
+			else
+				sp->Disable();
 			colliderLine.push_back(sp);
 			currentPos.x += tileWidth;
 		}
@@ -107,21 +111,20 @@ void TiledMap::DeleteColliderGrid() {
 
 TiledMapSprite* TiledMap::GetSprite(int x, int y) {
 	if (x >= GetWidth() || y >= GetHeight()) {
-		cout << "ERROR: Couldn't find sprite (" << x << "," << y << "), map size is (" << GetWidth() << "," << GetHeight() << ")" << endl;
+		Vector2i pos = Vector2i(x, y);
+		Vector2i size = Vector2i(GetWidth(), GetHeight());
+		DebugConsole::LogError("ERROR: Couldn't find position " + pos.ToString() + ", map size is " + size.ToString());
 		return NULL;
 	}
 	return spriteGrid[y][x];
 }
 
 Vector2f TiledMap::GetWorldPosition(int x, int y) {
-	if (x >= GetWidth() || y >= GetHeight()) {
-		cout << "ERROR: Couldn't find grid position (" << x << "," << y << "), map size is (" << GetWidth() << "," << GetHeight() << ")" << endl;
-		return Vector2f::Zero();
-	}
+	auto sprite = GetSprite(x, y);
+	if (sprite == NULL)return Vector2f::Zero();
 
-	auto sprite = spriteGrid[y][x];
-	cout << "sprite grid pos: " << sprite->position.ToString() << endl;
-	return (spriteGrid[y][x]->position);
+	DebugConsole::Log("sprite grid pos: " + sprite->position.ToString());
+	return (sprite->position);
 }
 
 int TiledMap::GetWidth() {

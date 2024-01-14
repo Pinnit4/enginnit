@@ -22,9 +22,23 @@ Collider2D::Collider2D(Vector2f position, float rotation) : Spatial2D(position, 
 	debugColor = Color(0.5, 1, 0.5);
 }
 
-void Collider2D::Destroy() {
-	Physics2D::UnregisterCollider(this);
+
+void Collider2D::Enable() {
+	if (enabled) return;
+	enabled = true;
+	EnableInternal();
 }
+
+void Collider2D::Disable() {
+	if (!enabled) return;
+	enabled = false;
+	DisableInternal();
+}
+
+void Collider2D::EnableInternal() { Physics2D::RegisterCollider(this); }
+void Collider2D::DisableInternal() { Physics2D::UnregisterCollider(this); }
+
+void Collider2D::Destroy() { Disable(); }
 
 Rect2D* Collider2D::GetRect() { return rect; }
 void Collider2D::DebugRender() {

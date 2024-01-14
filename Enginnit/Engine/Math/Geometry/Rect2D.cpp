@@ -22,8 +22,8 @@ Vector2f Rect2D::GetSize() { return size; }
 
 
 void Rect2D::CreateVertices() {
+	points.push_back(Vector2f(center.x - (size.x / 2), center.y - (size.y / 2)));
 	points.push_back(Vector2f(center.x - (size.x / 2), center.y + (size.y / 2)));
 	points.push_back(Vector2f(center.x + (size.x / 2), center.y + (size.y / 2)));
 	points.push_back(Vector2f(center.x + (size.x / 2), center.y - (size.y / 2)));
-	points.push_back(Vector2f(center.x - (size.x / 2), center.y - (size.y / 2)));
 }

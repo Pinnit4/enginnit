@@ -10,7 +10,7 @@ public:
 	int sortingOrder;
 
 	virtual void Render();
-	void Destroy();
+	virtual void Destroy();
 private:
 };
 

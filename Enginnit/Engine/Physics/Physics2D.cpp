@@ -78,7 +78,7 @@ void Physics2D::UnregisterCollider(Collider2D* cl) {
 void Physics2D::ProcessRigidbodyCollisions(Rigidbody2D* rb) {
 	for (auto cl : rgCl) {
 		if (rb == cl) continue;
-		if (cl->enabled && Collider2D::AreColliding(*cl, *rb))
+		if (Collider2D::AreColliding(*cl, *rb))
 			rb->ProcessCollision(cl);
 	}
 }
