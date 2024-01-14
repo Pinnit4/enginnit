@@ -46,16 +46,14 @@ void Sprite::SetTexture(Texture _texture, Vector2f _pivot) {
 }
 
 void Sprite::Render() {
-	Rect2D auxRect = Rect2D();
 	Vector2f size = Vector2f(texture.GetWidth(), texture.GetHeight());
-	auxRect.SetSize(size);
-
 	Vector2f center = (size / 2.0);
 	center -= GraphicsManager::GetCameraPosition();
 	center -= (size * pivot);
-	auxRect.SetCenter(center);
 
-	Drawer::DrawRect2D(texture, &auxRect, TransformData::FromSpatial2D(*this));
+	Rect2D r = Rect2D(center, size);
+
+	Drawer::DrawRect2D(texture, &r, TransformData::FromSpatial2D(*this));
 }
 
 void Sprite::Destroy() {
