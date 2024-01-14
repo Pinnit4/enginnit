@@ -31,8 +31,11 @@ public:
 	void Set2DViewport(int depth);
 	void EnableAlphaBlending();
 
-	int GetWidth();
-	int GetHeight();
+	static Vector2i GetScreenSize();
+	static int GetWidth();
+	static int GetHeight();
+
+	static float GetProjectionScale();
 
 	void Render();
 	void Shutdown();
@@ -51,6 +54,8 @@ private:
 	static int width;
 	static int height;
 	static int depth;
+
+	static float projectionScale;
 
 	static Vector2f camPos;
 

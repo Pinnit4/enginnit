@@ -35,7 +35,6 @@ vector<string> GetLineSplitted(string line, char value) {
 
 void DebugConsole::Render() {
 	if (!visible) return;
-	//ImGui::ShowDemoWindow();
 
 	if (ImGui::Begin("Debug Console", nullptr, ImGuiWindowFlags_NoCollapse)) {
 
