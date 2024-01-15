@@ -17,16 +17,12 @@ void Drawer::DrawRect2D(Texture tx, Rect2D* rect, TransformData td, Color c) {
 
 	glBegin(GL_QUADS);
 
-	// Set quad vertex positions (in local pos, since we already "moved" the matrix right above us in glTranslatef)
-	Vector2d anchorMin = tx.GetAnchorMinPercent();
-	Vector2d anchorMax = tx.GetAnchorMaxPercent();
-
 	vector<Vector2f> points = rect->GetPoints();
+	vector<Vector2d> anchors = tx.GetAllAnchorsPercent();
 
-	glTexCoord2d(anchorMin.x, anchorMin.y);		glVertex(points[0]);
-	glTexCoord2d(anchorMin.x, anchorMax.y);		glVertex(points[1]);
-	glTexCoord2d(anchorMax.x, anchorMax.y);		glVertex(points[2]);
-	glTexCoord2d(anchorMax.x, anchorMin.y);		glVertex(points[3]);
+	for (unsigned int i = 0; i < points.size() && i < anchors.size(); i++) {
+		glTexCoord(anchors[i]);		glVertex(points[i]);
+	}
 
 	glEnd();
 

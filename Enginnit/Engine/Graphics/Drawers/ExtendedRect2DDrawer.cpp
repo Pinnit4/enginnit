@@ -27,7 +27,7 @@ void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, TransformData td, C
 	}
 
 	vector<Vector2f> points = rect->GetPoints();
-	vector<Vector2i> anchors = { tx.GetAnchorMin(), Vector2i(tx.GetAnchorMin().x,tx.GetAnchorMax().y), tx.GetAnchorMax(), Vector2i(tx.GetAnchorMax().x, tx.GetAnchorMin().y) };
+	vector<Vector2i> anchors = tx.GetAllAnchors();
 
 	Vector2f ll_loc, tr_loc;
 	Vector2i an_min, an_max;

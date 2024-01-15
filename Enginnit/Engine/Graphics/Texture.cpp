@@ -37,7 +37,8 @@ Texture::Texture(const Texture& source) {
 	width = source.width;
 	height = source.height;
 
-	SetAnchors(source.anchorMin, source.anchorMax);
+	anchors = source.anchors;
+	anchorsPercent = source.anchorsPercent;
 }
 
 int Texture::GetID() { return id; }
@@ -45,18 +46,24 @@ int Texture::GetID() { return id; }
 int Texture::GetWidth() { return width; }
 int Texture::GetHeight() { return height; }
 
-Vector2i Texture::GetAnchorMin() { return anchorMin; }
-Vector2i Texture::GetAnchorMax() { return anchorMax; }
+Vector2i Texture::GetAnchorMin() { return anchors[0]; }
+Vector2i Texture::GetAnchorMax() { return anchors[2]; }
+vector<Vector2i> Texture::GetAllAnchors() { return anchors; }
 
-Vector2d Texture::GetAnchorMinPercent() { return anchorMinPercent; }
-Vector2d Texture::GetAnchorMaxPercent() { return anchorMaxPercent; }
+Vector2d Texture::GetAnchorMinPercent() { return anchorsPercent[0]; }
+Vector2d Texture::GetAnchorMaxPercent() { return anchorsPercent[2]; }
+vector<Vector2d> Texture::GetAllAnchorsPercent() { return  anchorsPercent; }
 
-void Texture::SetAnchors(Vector2i _anchorMin, Vector2i _anchorMax) {
-	anchorMin = _anchorMin;
-	anchorMax = _anchorMax;
+void Texture::SetAnchors(Vector2i anchorMin, Vector2i anchorMax) {
+	anchors = { anchorMin, Vector2i(anchorMin.x, anchorMax.y), anchorMax, Vector2i(anchorMax.x, anchorMin.y) };
+
+	Vector2d minPercent = Vector2d(((double)anchorMin.x) / ((double)internalWidth), ((double)anchorMin.y) / ((double)internalHeight));
+	Vector2d maxPercent = Vector2d(((double)anchorMax.x + 1) / ((double)internalWidth), ((double)anchorMax.y + 1) / ((double)internalHeight));
+
+	anchorsPercent = { minPercent, Vector2d(minPercent.x, maxPercent.y), maxPercent, Vector2d(maxPercent.x, minPercent.y) };
+
 	width = anchorMax.x - anchorMin.x + 1;
 	height = anchorMax.y - anchorMin.y + 1;
-	RefreshAnchorsInPercent();
 }
 
 string Texture::GetName() { return name; }
@@ -84,9 +91,4 @@ bool Texture::SetImageParameters(int _id) {
 		return true;
 	}
 	return false;
-}
-
-void Texture::RefreshAnchorsInPercent() {
-	anchorMinPercent = Vector2d(((double)anchorMin.x) / ((double)internalWidth), ((double)anchorMin.y) / ((double)internalHeight));
-	anchorMaxPercent = Vector2d(((double)anchorMax.x + 1) / ((double)internalWidth), ((double)anchorMax.y + 1) / ((double)internalHeight));
 }

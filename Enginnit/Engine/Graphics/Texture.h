@@ -23,9 +23,11 @@ public:
 
 	Vector2i GetAnchorMin();
 	Vector2i GetAnchorMax();
+	vector<Vector2i> GetAllAnchors();
 	
 	Vector2d GetAnchorMinPercent();
 	Vector2d GetAnchorMaxPercent();
+	vector<Vector2d> GetAllAnchorsPercent();
 
 	void SetAnchors(Vector2i min, Vector2i max);
 
@@ -44,18 +46,13 @@ private:
 	int internalWidth;
 	int internalHeight;
 
-	Vector2i anchorMin;
-	Vector2i anchorMax;
-
-	Vector2d anchorMinPercent;
-	Vector2d anchorMaxPercent;
+	vector<Vector2i> anchors;
+	vector<Vector2d> anchorsPercent;
 
 	string path;
 
 	bool LoadImage(string path, unsigned int flags);
 	bool SetImageParameters(int _id);
-
-	void RefreshAnchorsInPercent();
 };
 
 #endif
