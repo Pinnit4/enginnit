@@ -25,6 +25,21 @@ Texture::Texture(string path) {
 	name = "default";
 }
 
+Texture::Texture(const Texture& source) {
+	id = source.id;
+
+	name = source.name;
+	path = source.path;
+
+	internalWidth = source.internalWidth;
+	internalHeight = source.internalHeight;
+
+	width = source.width;
+	height = source.height;
+
+	SetAnchors(source.anchorMin, source.anchorMax);
+}
+
 int Texture::GetID() { return id; }
 
 int Texture::GetWidth() { return width; }

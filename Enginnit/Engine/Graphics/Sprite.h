@@ -13,8 +13,11 @@ public:
 	Sprite(Texture texture);
 
 	Vector2f pivot;
+	string path;
 
 	Texture GetTexture();	
+	vector<int> GetMargins();
+	void SetMargins(vector<int> margins);
 
 	void SetTexture(string path);
 	void SetTexture(string path, Vector2f pivot);
@@ -27,5 +30,6 @@ public:
 	void Destroy();
 private:
 	Texture texture;
+	vector<int> margins;
 };
 #endif

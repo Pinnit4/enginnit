@@ -27,8 +27,11 @@ void UIImage::SetTexture(Texture _texture) {
 	texture = _texture;
 }
 
+vector<int> UIImage::GetMargins() { return margins; }
+void UIImage::SetMargins(vector<int> _margins) { margins = _margins; }
+
 void UIImage::Render() {
-	Drawer::DrawRect2D(texture, rect);
+	Drawer::DrawRect2DWithMargins(texture, rect, margins);
 }
 
 void UIImage::Destroy() {

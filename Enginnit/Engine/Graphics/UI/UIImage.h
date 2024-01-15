@@ -15,6 +15,9 @@ public:
 	Texture GetTexture();
 	Rect2D* GetRect();
 
+	vector<int> GetMargins();
+	void SetMargins(vector<int> margins);
+
 	void SetTexture(string path);
 	void SetTexture(Texture tx);
 
@@ -23,5 +26,7 @@ public:
 private:
 	Texture texture;
 	Rect2D* rect;
+
+	vector<int> margins;
 };
 #endif

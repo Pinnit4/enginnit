@@ -15,6 +15,7 @@ public:
 	Texture();
 	Texture(int _id);
 	Texture(string path);
+	Texture(const Texture& source);
 
 	int GetID();
 	int GetWidth();

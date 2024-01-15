@@ -3,21 +3,21 @@
 #include "../GraphicsManager.h"
 
 DialogPanel::DialogPanel() : UIElement() {
-	background = new UIImage("Assets/sprites/tile_housecave.png");
+	background = new UIImage("Assets/sprites/ui_border_opaque.png");
+	background->SetMargins({ 3,3,3,3 });
 }
-
 
 void DialogPanel::Render() {
 	string name = "##dialog_panel";
 	const char* name_c = name.c_str();
 
 	if (ImGui::Begin(name_c, nullptr,
-		ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground)) {
+		ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoSavedSettings)) {
 
 		Vector2f screenSize = (Vector2f)GraphicsManager::GetScreenSize();
 
-		ImGui::SetWindowSize(name_c, ImVec2(screenSize.x, screenSize.y / 3.0));
-		ImGui::SetWindowPos(name_c, ImVec2(0, screenSize.y * 2.0 / 3.0));
+		ImGui::SetWindowSize(name_c, ImVec2(screenSize.x - 16, screenSize.y / 3.0 - 16));
+		ImGui::SetWindowPos(name_c, ImVec2(8, (screenSize.y * 2.0 / 3.0) + 8));
 
 		Vector2f windowSize = Vector2f(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 
