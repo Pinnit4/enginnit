@@ -7,6 +7,7 @@ Rigidbody2D::Rigidbody2D() : Collider2D() {
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
 	useGravity = true;
+	isTrigger = false;
 	debugColor = Color(0.5, 0.5, 1);
 }
 Rigidbody2D::Rigidbody2D(Vector2f position) : Collider2D(position) {
@@ -14,6 +15,7 @@ Rigidbody2D::Rigidbody2D(Vector2f position) : Collider2D(position) {
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
 	useGravity = true;
+	isTrigger = false;
 	debugColor = Color(0.5, 0.5, 1);
 }
 Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(position, rotation) {
@@ -21,6 +23,7 @@ Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(positio
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
 	useGravity = true;
+	isTrigger = false;
 	debugColor = Color(0.5, 0.5, 1);
 }
 
@@ -46,6 +49,11 @@ void Rigidbody2D::PhysicsTick(double deltaTime) {
 }
 
 void Rigidbody2D::ProcessCollision(Collider2D* other) {
+	if (other->isTrigger || isTrigger) {
+		// TODO - Process as trigger
+		return;
+	}
+
 	// Custom stepped method: first trying rollback on each axis separately, then both of them if unsuccesful
 	Vector2f auxPos = position;
 

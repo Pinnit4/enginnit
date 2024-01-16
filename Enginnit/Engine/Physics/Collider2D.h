@@ -10,6 +10,8 @@ public:
 	Collider2D(Vector2f position);
 	Collider2D(Vector2f position, float rotation);
 
+	bool isTrigger;
+
 	Rect2D* GetRect();
 	void DebugRender();
 

@@ -3,6 +3,7 @@
 #include "GraphicsManager.h"
 #include "../Math/TransformData.h"
 #include "Drawer.h"
+#include "TextureLoader.h"
 
 void DrawRect2DSegment(Texture tx, Vector2f ll_loc, Vector2f tr_loc, Rect2D mr, TransformData td);
 
@@ -15,7 +16,7 @@ Sprite::Sprite() : Spatial2D() {
 }
 
 Sprite::Sprite(string path) : Spatial2D() {
-	texture = Texture(path);
+	texture = TextureLoader::LoadTexture(path);
 	GraphicsManager::RegisterSprite(this);
 	pivot = Vector2f::Zero();
 	path = "";
@@ -23,7 +24,7 @@ Sprite::Sprite(string path) : Spatial2D() {
 }
 
 Sprite::Sprite(string path, Vector2f _position) : Spatial2D(_position) {
-	texture = Texture(path);
+	texture = TextureLoader::LoadTexture(path);
 	GraphicsManager::RegisterSprite(this);
 	pivot = Vector2f::Zero();
 	path = "";
@@ -44,10 +45,10 @@ void Sprite::SetMargins(vector<int> _margins) { margins = _margins; }
 Texture Sprite::GetTexture() { return texture; }
 
 void Sprite::SetTexture(string path) {
-	SetTexture(Texture(path), pivot);
+	SetTexture(TextureLoader::LoadTexture(path), pivot);
 }
 void Sprite::SetTexture(string path, Vector2f _pivot) {
-	SetTexture(Texture(path), _pivot);
+	SetTexture(TextureLoader::LoadTexture(path), _pivot);
 }
 
 void Sprite::SetTexture(Texture _texture) {

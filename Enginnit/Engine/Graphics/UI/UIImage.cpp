@@ -2,6 +2,7 @@
 
 #include "UIManager.h"
 #include "../Drawer.h"
+#include "../TextureLoader.h"
 
 UIImage::UIImage() : UIElement() {
 	texture = Texture();
@@ -9,7 +10,7 @@ UIImage::UIImage() : UIElement() {
 }
 
 UIImage::UIImage(string path) : UIElement() {
-	texture = Texture(path);
+	texture = TextureLoader::LoadTexture(path);
 	rect = new Rect2D();
 }
 UIImage::UIImage(Texture tx) : UIElement() {
@@ -21,7 +22,7 @@ Texture UIImage::GetTexture() { return texture; }
 Rect2D* UIImage::GetRect() { return rect; }
 
 void UIImage::SetTexture(string path) {
-	SetTexture(Texture(path));
+	SetTexture(TextureLoader::LoadTexture(path));
 }
 void UIImage::SetTexture(Texture _texture) {
 	texture = _texture;

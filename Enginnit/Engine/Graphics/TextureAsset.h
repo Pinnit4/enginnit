@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Texture.h"
+#include "TextureLoader.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ public:
 	}
 
 	static Texture LoadFromLine(vector<string> values) {
-		Texture tx = Texture(values[0]);
+		Texture tx = TextureLoader::LoadTexture(values[0]);
 		if (values.size() < 2) return tx;
 
 		tx.SetName(values[1]);
