@@ -23,6 +23,9 @@ public:
 
 	void Render() override;
 	void Destroy() override;
+
+	void AdjustToCurrentWindow();
+	void AdjustToCurrentWindow(vector<float> padding);
 private:
 	Texture texture;
 	Rect2D* rect;

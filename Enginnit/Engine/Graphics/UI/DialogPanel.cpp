@@ -5,6 +5,8 @@
 DialogPanel::DialogPanel() : UIElement() {
 	background = new UIImage("Assets/sprites/ui_border_opaque.png");
 	background->SetMargins({ 3,3,3,3 });
+
+	dialogFont = ImGui::GetIO().Fonts->AddFontFromFileTTF("Assets/fonts/slkscr.ttf", 32);
 }
 
 void DialogPanel::Render() {
@@ -12,27 +14,26 @@ void DialogPanel::Render() {
 	const char* name_c = name.c_str();
 
 	if (ImGui::Begin(name_c, nullptr,
-		ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoSavedSettings)) {
+		ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove)) {
 
+		background->AdjustToCurrentWindow();
 		Vector2f screenSize = (Vector2f)GraphicsManager::GetScreenSize();
 
-		ImGui::SetWindowSize(name_c, ImVec2(screenSize.x - 16, screenSize.y / 3.0 - 16));
+		ImGui::SetWindowSize(name_c, ImVec2(screenSize.x - 16, (screenSize.y / 3.0) - 16));
 		ImGui::SetWindowPos(name_c, ImVec2(8, (screenSize.y * 2.0 / 3.0) + 8));
 
-		Vector2f windowSize = Vector2f(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
+		background->AdjustToCurrentWindow({8,16,0,16});
 
-		Vector2f pos = Vector2f(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y);
+		ImGui::Dummy(ImVec2(16, 16));
 
-		pos += (windowSize / 2.0);
-		pos -= (screenSize / 2.0);
+		ImGui::Dummy(ImVec2(32, 16));
+		ImGui::SameLine();
 
-		pos.y *= -1;
-
-		pos /= GraphicsManager::GetProjectionScale();
-		windowSize /= GraphicsManager::GetProjectionScale();
-
-		background->GetRect()->SetCenter(pos);
-		background->GetRect()->SetSize(windowSize);
+		ImGui::PushFont(dialogFont);
+		ImGui::PushTextWrapPos((screenSize.x - 64 + 8));
+		ImGui::TextWrapped("a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a ");
+		ImGui::PopTextWrapPos();
+		ImGui::PopFont();
 	}
 	ImGui::End();
 

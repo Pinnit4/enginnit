@@ -11,5 +11,6 @@ public:
 	void Render() override;
 private:
 	UIImage* background;
+	ImFont* dialogFont;
 };
 #endif
