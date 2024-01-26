@@ -5,7 +5,7 @@
 Rigidbody2D::Rigidbody2D() : Collider2D() {
 	velocity = Vector2f::Zero();
 	Physics2D::RegisterRigidbody(this);
-	previousPos = position;
+	previousPos = spatial->position;
 	useGravity = true;
 	isTrigger = false;
 	debugColor = Color(0.5, 0.5, 1);
@@ -38,14 +38,14 @@ void Rigidbody2D::DisableInternal() {
 }
 
 void Rigidbody2D::PhysicsTick(double deltaTime) {
-	previousPos = position;
+	previousPos = spatial->position;
 
 	if (useGravity) {
 		velocity += Vector2f::Down() * 9.81f * 30 * deltaTime;
-		position += velocity * 30 * deltaTime;
+		spatial->position += velocity * 30 * deltaTime;
 	}
 
-	rect->RefreshRotation(rotation);
+	rect->RefreshRotation(spatial->rotation);
 }
 
 void Rigidbody2D::ProcessCollision(Collider2D* other) {
@@ -55,16 +55,16 @@ void Rigidbody2D::ProcessCollision(Collider2D* other) {
 	}
 
 	// Custom stepped method: first trying rollback on each axis separately, then both of them if unsuccesful
-	Vector2f auxPos = position;
+	Vector2f auxPos = spatial->position;
 
 	bool success = CollisionSteppedRollback(other, true, false);
 	if (success) return;
 
-	position = auxPos;
+	spatial->position = auxPos;
 	success = CollisionSteppedRollback(other, false, true);
 	if (success) return;
 
-	position = auxPos;
+	spatial->position = auxPos;
 	success = CollisionSteppedRollback(other, true, true);
 
 	// Stepped method, as Mario64
@@ -90,7 +90,7 @@ void Rigidbody2D::ProcessCollision(Collider2D* other) {
 }
 
 bool Rigidbody2D::CollisionSteppedRollback(Collider2D* other, bool useX, bool useY) {
-	Vector2f direction = (previousPos - position);
+	Vector2f direction = (previousPos - spatial->position);
 
 	if (!useX) direction.x = 0; // Don't rollback on X axis
 	if (!useY) direction.y = 0;	// Don't rollback on Y axis
@@ -99,7 +99,7 @@ bool Rigidbody2D::CollisionSteppedRollback(Collider2D* other, bool useX, bool us
 	double stepDecrease = 1 / steps;
 
 	for (int i = 0; i < steps; i++) {
-		position += (direction * stepDecrease);
+		spatial->position += (direction * stepDecrease);
 
 		if (!Collider2D::AreColliding(*this, *other))
 			return true;

@@ -55,7 +55,7 @@ protected:
 		v.push_back({ "run_u_anim", cc->runUpAnim });
 		v.push_back({ "run_d_anim", cc->runDownAnim });
 
-		v.push_back({ "depth", to_string(cc->depthLayer) });
+		v.push_back({ "depth", to_string(cc->spatial->depthLayer) });
 
 		for (auto i = cc->GetAnimator()->animations.begin(); i != cc->GetAnimator()->animations.end(); i++)
 			v.push_back({ (*i).first, (*i).second->path });
@@ -89,16 +89,16 @@ protected:
 
 			cc->runDownAnim = values[0];
 		else if (id == "depth")
-			cc->depthLayer = stoi(values[0]);
+			cc->spatial->depthLayer = stoi(values[0]);
 		else if (id == "anim")
 			LoadAnimation(cc, values);
 
 		else if (id == "position")
-			cc->position = Vector2f(stof(values[0]), stof(values[1]));
+			cc->spatial->position = Vector2f(stof(values[0]), stof(values[1]));
 		else if (id == "rotation")
-			cc->rotation = stof(values[0]);
+			cc->spatial->rotation = stof(values[0]);
 		else if (id == "scale")
-			cc->scale = Vector2f(stof(values[0]), stof(values[1]));
+			cc->spatial->scale = Vector2f(stof(values[0]), stof(values[1]));
 		else if (id == "pivot")
 			cc->GetSprite()->pivot = Vector2f(stof(values[0]), stof(values[1]));
 		else if (id == "gravity")

@@ -4,13 +4,14 @@
 #include "../Math/Math.h"
 #include "../Graphics/Graphics.h"
 
-class Collider2D : virtual public Spatial2D {
+class Collider2D {
 public:
 	Collider2D();
 	Collider2D(Vector2f position);
 	Collider2D(Vector2f position, float rotation);
 
 	bool isTrigger;
+	Spatial2D* spatial;
 
 	Rect2D* GetRect();
 	void DebugRender();

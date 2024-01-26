@@ -3,25 +3,30 @@
 #include "Physics2D.h"
 #include "../Graphics/Drawer.h"
 
-Collider2D::Collider2D() : Spatial2D() {
+Collider2D::Collider2D() {
+	spatial = new Spatial2D();
 	rect = new Rect2D();
 	Physics2D::RegisterCollider(this);
 	enabled = true;
 	debugColor = Color(0.5, 1, 0.5);
+	isTrigger = false;
 }
-Collider2D::Collider2D(Vector2f position) : Spatial2D(position) {
+Collider2D::Collider2D(Vector2f position) {
+	spatial = new Spatial2D(position);
 	rect = new Rect2D();
 	Physics2D::RegisterCollider(this);
 	enabled = true;
 	debugColor = Color(0.5, 1, 0.5);
+	isTrigger = false;
 }
-Collider2D::Collider2D(Vector2f position, float rotation) : Spatial2D(position, rotation) {
+Collider2D::Collider2D(Vector2f position, float rotation) {
+	spatial = new Spatial2D(position, rotation);
 	rect = new Rect2D();
 	Physics2D::RegisterCollider(this);
 	enabled = true;
 	debugColor = Color(0.5, 1, 0.5);
+	isTrigger = false;
 }
-
 
 void Collider2D::Enable() {
 	if (enabled) return;
@@ -42,16 +47,16 @@ void Collider2D::Destroy() { Disable(); }
 
 Rect2D* Collider2D::GetRect() { return rect; }
 void Collider2D::DebugRender() {
-	Spatial2D sp = Spatial2D(position - GraphicsManager::GetCameraPosition(), 0, scale);
+	Spatial2D sp = Spatial2D(spatial->position - GraphicsManager::GetCameraPosition(), 0, spatial->scale);
 	Drawer::DrawWirePolygon(rect, sp, debugColor);
 }
 
 bool Collider2D::AreColliding(const Collider2D& a, const Collider2D& b) {
-	Rect2D ar = Rect2D(a.position + a.rect->GetCenter(), a.rect->GetSize());
-	ar.RefreshRotation(a.rotation);
+	Rect2D ar = Rect2D(a.spatial->position + a.rect->GetCenter(), a.rect->GetSize());
+	ar.RefreshRotation(a.spatial->rotation);
 
-	Rect2D br = Rect2D(b.position + b.rect->GetCenter(), b.rect->GetSize());
-	br.RefreshRotation(a.rotation);
+	Rect2D br = Rect2D(b.spatial->position + b.rect->GetCenter(), b.rect->GetSize());
+	br.RefreshRotation(a.spatial->rotation);
 
 	bool intersection = ar.Intersects(br);
 	if (intersection) return true;

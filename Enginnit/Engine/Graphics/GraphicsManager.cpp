@@ -136,11 +136,11 @@ void GraphicsManager::RenderSprites() {
 		rgSp.sort(
 			[&](Sprite* a, Sprite* b) -> bool
 			{
-				if (a->depthLayer == b->depthLayer) {
-					return (a->position.y > b->position.y);
+				if (a->spatial->depthLayer == b->spatial->depthLayer) {
+					return (a->spatial->position.y > b->spatial->position.y);
 				}
 
-				return (a->depthLayer < b->depthLayer);
+				return (a->spatial->depthLayer < b->spatial->depthLayer);
 			});
 	}
 

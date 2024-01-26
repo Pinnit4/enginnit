@@ -9,13 +9,13 @@ void MoveCamera(double deltaTime);
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset);
 
 CharacterController2D::CharacterController2D() : Rigidbody2D(), SceneObject() {
-	sprite = new Sprite();
+	sprite = new Sprite(spatial);
 	animator = new SpriteAnimator(sprite);
 	movementSpeed = 0;
 }
 
 CharacterController2D::CharacterController2D(string filePath) : Rigidbody2D(), SceneObject() {
-	sprite = new Sprite();
+	sprite = new Sprite(spatial);
 	animator = new SpriteAnimator(sprite);
 	movementSpeed = 0;
 
@@ -25,8 +25,6 @@ CharacterController2D::CharacterController2D(string filePath) : Rigidbody2D(), S
 	Vector2f size = Vector2f(sprite->GetTexture().GetWidth(), sprite->GetTexture().GetHeight());
 	rect->SetCenter(sprite->pivot * size);
 	rect->SetSize(size);
-
-	DebugConsole::Log("character start position: " + position.ToString());
 }
 
 void CharacterController2D::TickInternal(double deltaTime) {
@@ -52,7 +50,7 @@ void CharacterController2D::TickMovement(double deltaTime) {
 		input.x += 1;
 
 	if (Keyboard::GetKeyDown(GLFW_KEY_K))
-		DebugConsole::Log("Character pos: " + position.ToString());
+		DebugConsole::Log("Character pos: " + spatial->position.ToString());
 
 	if (input.x > 0) 
 		animator->SwitchAnimation(runRightAnim);
@@ -74,13 +72,13 @@ void CharacterController2D::TickMovement(double deltaTime) {
 			animator->SwitchAnimation(idleDownAnim);
 	}
 
-	position += (input.GetNormalized() * (movementSpeed * deltaTime));
-	sprite->position = position;
-	sprite->depthLayer = depthLayer;
+	spatial->position += (input.GetNormalized() * (movementSpeed * deltaTime));
+	//sprite->position = position;
+	//sprite->depthLayer = depthLayer;
 }
 
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset) {
-	Vector2f pos = cc->position;
+	Vector2f pos = cc->spatial->position;
 	GraphicsManager::SetCameraPosition(pos + offset);
 }
 

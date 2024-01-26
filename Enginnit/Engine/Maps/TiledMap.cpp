@@ -51,7 +51,7 @@ void TiledMap::DrawSpriteGrid() {
 			char id = lineIds[x];
 			Texture tx = tileset->GetTexture(id);
 			TiledMapSprite* sp = new TiledMapSprite(tx, id, x, y);
-			sp->position = currentPos;
+			sp->spatial->position = currentPos;
 			spriteLine.push_back(sp);
 			currentPos.x += tileWidth;
 		}
@@ -74,7 +74,7 @@ void TiledMap::DrawColliderGrid() {
 		for (unsigned int x = 0; x < lineIds.size(); x++) {
 			char id = lineIds[x];
 			TiledMapCollider* sp = new TiledMapCollider(id, x, y, tileWidth, tileHeight);
-			sp->position = currentPos;
+			sp->spatial->position = currentPos;
 			if (id == 'X')
 				sp->Enable();
 			else
@@ -125,8 +125,8 @@ Vector2f TiledMap::GetWorldPosition(int x, int y) {
 	auto sprite = GetSprite(x, y);
 	if (sprite == NULL)return Vector2f::Zero();
 
-	DebugConsole::Log("sprite grid pos: " + sprite->position.ToString());
-	return (sprite->position);
+	DebugConsole::Log("sprite grid pos: " + sprite->spatial->position.ToString());
+	return (sprite->spatial->position);
 }
 
 int TiledMap::GetWidth() {
