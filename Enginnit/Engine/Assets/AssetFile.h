@@ -1,5 +1,5 @@
-#ifndef ENGINNIT_ASSETFILE
-#define ENGINNIT_ASSETFILE
+#ifndef ENGINNIT_ASSET_FILE
+#define ENGINNIT_ASSET_FILE
 
 #include <string>
 #include <vector>

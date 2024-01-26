@@ -1,7 +1,7 @@
 #ifndef ENGINNIT_TILED_MAP_SPRITE
 #define ENGINNIT_TILED_MAP_SPRITE
 
-#include "../Graphics/Sprite.h"
+#include "../Graphics/Sprites/Sprite.h"
 
 using namespace std;
 

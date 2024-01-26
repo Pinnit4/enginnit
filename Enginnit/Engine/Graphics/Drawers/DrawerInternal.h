@@ -1,8 +1,6 @@
 #ifndef ENGINNIT_GRAPHICS_DRAWERINTERNAL
 #define ENGINNIT_GRAPHICS_DRAWERINTERNAL
 
-#include "../../Math/Math.h"
-#include "../../Math/TransformData.h"
 #include "../GraphicsInternal.h"
 #include "../GraphicsManager.h"
 

@@ -11,6 +11,7 @@ struct Vector2f {
 	float y;
 
 	Vector2f() { x = 0; y = 0; }
+	Vector2f(float a) { x = a; y = a; }
 	Vector2f(float _x, float _y) { x = _x; y = _y; }
 	Vector2f(const Vector2f& other) { x = other.x; y = other.y; }
 

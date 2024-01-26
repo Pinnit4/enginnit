@@ -1,6 +1,7 @@
 #include "TiledMap.h"
-#include "TiledMapAsset.h"
+
 #include "../Debug/DebugConsole.h"
+#include "TiledMapLoader.h"
 
 TiledMap::TiledMap() {
 	tileset = new Tileset();
@@ -21,10 +22,11 @@ TiledMap::TiledMap(string filePath) {
 	colliderGrid.clear();
 	colliderGridIds.clear();
 
-	TiledMapAsset::LoadFromFile(this, filePath);
+	TiledMapLoader loader = TiledMapLoader();
+	loader.LoadFromFile(this, filePath);
 }
 
-void TiledMap::Start() {
+void TiledMap::StartInternal() {
 	DrawMap();
 }
 

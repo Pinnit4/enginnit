@@ -1,42 +1,46 @@
 #include "CharacterController2D.h"
 
-#include "CharacterController2DAsset.h"
 #include "../Debug/DebugConsole.h"
+#include "CharacterController2DLoader.h"
 
 using namespace std;
 
-void MoveCharacter(CharacterController2D* cc, double deltaTime);
 void MoveCamera(double deltaTime);
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset);
 
-CharacterController2D::CharacterController2D() : Sprite(), Rigidbody2D(), SceneObject() {
-	animator = SpriteAnimator(this);
+CharacterController2D::CharacterController2D() : Rigidbody2D(), SceneObject() {
+	sprite = new Sprite();
+	animator = new SpriteAnimator(sprite);
 	movementSpeed = 0;
 }
 
-CharacterController2D::CharacterController2D(string filePath) : Sprite(), Rigidbody2D(), SceneObject() {
-	animator = SpriteAnimator(this);
+CharacterController2D::CharacterController2D(string filePath) : Rigidbody2D(), SceneObject() {
+	sprite = new Sprite();
+	animator = new SpriteAnimator(sprite);
 	movementSpeed = 0;
 
-	CharacterController2DAsset::LoadFromFile(this, filePath);
+	CharacterController2DLoader loader = CharacterController2DLoader();
+	loader.LoadFromFile(this, filePath);
 
-	Vector2f size = Vector2f(GetTexture().GetWidth(), GetTexture().GetHeight());
-	rect->SetCenter(pivot * size);
+	Vector2f size = Vector2f(sprite->GetTexture().GetWidth(), sprite->GetTexture().GetHeight());
+	rect->SetCenter(sprite->pivot * size);
 	rect->SetSize(size);
+
+	DebugConsole::Log("character start position: " + position.ToString());
 }
 
-void CharacterController2D::Tick(double deltaTime) {
-	animator.Tick(deltaTime);
+void CharacterController2D::TickInternal(double deltaTime) {
+	animator->Tick(deltaTime);
 	//MoveCamera(deltaTime);
 	FocusCameraOnPlayer(this, Vector2f::Zero());
 }
 
 void CharacterController2D::PhysicsTick(double deltaTime) {
 	Rigidbody2D::PhysicsTick(deltaTime);
-	MoveCharacter(this, deltaTime);
+	TickMovement(deltaTime);
 }
 
-void MoveCharacter(CharacterController2D* cc, double deltaTime) {
+void CharacterController2D::TickMovement(double deltaTime) {
 	Vector2f input = Vector2f::Zero();
 	if (Keyboard::GetKey(GLFW_KEY_W))
 		input.y += 1;
@@ -48,37 +52,31 @@ void MoveCharacter(CharacterController2D* cc, double deltaTime) {
 		input.x += 1;
 
 	if (Keyboard::GetKeyDown(GLFW_KEY_K))
-		DebugConsole::Log("Character pos: " + cc->position.ToString());
+		DebugConsole::Log("Character pos: " + position.ToString());
 
-	if (input.x > 0) {
-		if (cc->animator.GetCurrentAnimationName() != cc->runRightAnim)
-			cc->animator.Play(cc->runRightAnim);
-	}
-	else if (input.x < 0) {
-		if (cc->animator.GetCurrentAnimationName() != cc->runLeftAnim)
-			cc->animator.Play(cc->runLeftAnim);
-	}
-	else if (input.y > 0) {
-		if (cc->animator.GetCurrentAnimationName() != cc->runUpAnim)
-			cc->animator.Play(cc->runUpAnim);
-	}
-	else if (input.y < 0) {
-		if (cc->animator.GetCurrentAnimationName() != cc->runDownAnim)
-			cc->animator.Play(cc->runDownAnim);
-	}
+	if (input.x > 0) 
+		animator->SwitchAnimation(runRightAnim);
+	else if (input.x < 0) 
+		animator->SwitchAnimation(runLeftAnim);
+	else if (input.y > 0)
+		animator->SwitchAnimation(runUpAnim);
+	else if (input.y < 0)
+		animator->SwitchAnimation(runDownAnim);
 	else {
-		string currentAnim = cc->animator.GetCurrentAnimationName();
-		if (currentAnim == cc->runRightAnim)
-			cc->animator.Play(cc->idleRightAnim);
-		else if (currentAnim == cc->runLeftAnim)
-			cc->animator.Play(cc->idleLeftAnim);
-		else if (currentAnim == cc->runUpAnim)
-			cc->animator.Play(cc->idleUpAnim);
-		else if (currentAnim == cc->runDownAnim)
-			cc->animator.Play(cc->idleDownAnim);
+		string currentAnim = animator->GetCurrentAnimationName();
+		if (currentAnim == runRightAnim)
+			animator->SwitchAnimation(idleRightAnim);
+		else if (currentAnim == runLeftAnim)
+			animator->SwitchAnimation(idleLeftAnim);
+		else if (currentAnim == runUpAnim)
+			animator->SwitchAnimation(idleUpAnim);
+		else if (currentAnim == runDownAnim)
+			animator->SwitchAnimation(idleDownAnim);
 	}
 
-	cc->position += (input.GetNormalized() * (cc->movementSpeed * deltaTime));
+	position += (input.GetNormalized() * (movementSpeed * deltaTime));
+	sprite->position = position;
+	sprite->depthLayer = depthLayer;
 }
 
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset) {

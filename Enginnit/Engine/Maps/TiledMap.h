@@ -2,8 +2,8 @@
 #define ENGINNIT_TILED_MAP
 
 #include "../Graphics/Tiles/Tileset.h"
-#include "../Graphics/Texture.h"
-#include "../Scenes/SceneObject.h"
+#include "../Graphics/Textures/Texture.h"
+#include "../Scenes/Scenes.h"
 
 #include "TiledMapSprite.h"
 #include "TiledMapCollider.h"
@@ -17,8 +17,6 @@ class TiledMap : public SceneObject {
 public:
 	TiledMap();
 	TiledMap(string filePath);
-
-	void Start() override;
 
 	Tileset* tileset;
 	Vector2f position;
@@ -36,7 +34,8 @@ public:
 
 	int GetWidth();
 	int GetHeight();
-private:
+protected:
+	void StartInternal() override;
 
 	void DrawSpriteGrid();
 	void DeleteSpriteGrid();

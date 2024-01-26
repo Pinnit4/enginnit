@@ -1,7 +1,7 @@
 #ifndef ENGINNIT_TILESET
 #define ENGINNIT_TILESET
 
-#include "../Texture.h"
+#include "../Textures/Texture.h"
 
 #include <map>
 

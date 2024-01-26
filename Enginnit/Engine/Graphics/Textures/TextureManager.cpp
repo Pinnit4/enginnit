@@ -1,8 +1,8 @@
-#include "TextureLoader.h"
+#include "TextureManager.h"
 
-map<string, Texture> TextureLoader::textureCache = {};
+map<string, Texture> TextureManager::textureCache = {};
 
-Texture TextureLoader::LoadTexture(string path) {
+Texture TextureManager::GetTexture(string path) {
 	if (!textureCache.count(path)) {
 		Texture tx = Texture(path);
 		textureCache.insert({ path,tx });

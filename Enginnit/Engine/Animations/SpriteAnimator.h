@@ -11,7 +11,7 @@
 #include "../Math/Spatial2D.h"
 
 #include "../Graphics/Tiles/Tileset.h"
-#include "../Graphics/Sprite.h"
+#include "../Graphics/Sprites/Sprite.h"
 #include "SpriteAnimation.h"
 
 using namespace std;
@@ -28,6 +28,9 @@ public:
 	void Play(string animationName);
 	void Stop();
 	void Resume();
+
+	void SwitchAnimation(string animationName);
+	void SwitchAnimation(string from, string to);
 
 	string GetCurrentAnimationName();
 

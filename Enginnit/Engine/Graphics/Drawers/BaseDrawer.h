@@ -2,7 +2,7 @@
 #define ENGINNIT_GRAPHICS_BASEDRAWER
 
 #include "DrawerInternal.h"
-#include "../Texture.h"
+#include "../Textures/Texture.h"
 
 namespace Drawer {
 	void DrawRect2D(Texture tx, Rect2D* rect);

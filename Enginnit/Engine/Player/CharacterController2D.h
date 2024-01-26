@@ -5,24 +5,31 @@
 #include "../Physics/Rigidbody2D.h"
 #include "../IO/Input.h"
 #include "../Animations/SpriteAnimator.h"
-#include "../Scenes/SceneObject.h"
+#include "../Scenes/Scenes.h"
 
 using namespace std;
 
-class CharacterController2D : public Sprite, public Rigidbody2D, public SceneObject {
+class CharacterController2D : public Rigidbody2D, public SceneObject {
 public:
+	CharacterController2D();
+	CharacterController2D(string filePath);
+
 	float movementSpeed;
-	
-	SpriteAnimator animator;
 
 	string idleRightAnim, idleLeftAnim, idleUpAnim, idleDownAnim;
 	string runRightAnim, runLeftAnim, runUpAnim, runDownAnim;
 
-	CharacterController2D();
-	CharacterController2D(string filePath);
-	
-	void Tick(double deltaTime) override;
 	void PhysicsTick(double deltaTime) override;
-private:
+
+	Sprite* GetSprite() { return sprite; }
+	SpriteAnimator* GetAnimator() { return animator; }
+
+protected:
+	Sprite* sprite;
+	SpriteAnimator* animator;
+
+	void TickInternal(double deltaTime) override;
+
+	void TickMovement(double deltaTime);
 };
 #endif

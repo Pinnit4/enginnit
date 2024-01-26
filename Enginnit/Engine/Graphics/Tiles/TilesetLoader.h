@@ -3,8 +3,8 @@
 
 #include "Tileset.h"
 
-#include "../../IO/AssetFile.h"
-#include "../TextureAsset.h"
+#include "../../Assets/AssetFile.h"
+#include "../Textures/TextureLoader.h"
 
 #include <string>
 #include <vector>
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class TilesetAsset {
+class TilesetLoader {
 public:
 	static void SaveToFile(Tileset* ts, string filePath) {
 		vector<vector<string>> v = {
@@ -22,7 +22,7 @@ public:
 		};
 
 		for (auto i = ts->tiles.begin(); i != ts->tiles.end(); i++)
-			v.push_back(TextureAsset::SaveAsLine((*i).second, to_string((*i).first)));
+			v.push_back(TextureLoader::SaveAsLine((*i).second, to_string((*i).first)));
 
 		AssetFile::WriteAssetFile(filePath, v);
 	}
@@ -37,7 +37,7 @@ public:
 				ts->tileHeight = stoi(values[0]);
 			}
 			else {
-				ts->tiles[id.at(0)] = TextureAsset::LoadFromLine(values);
+				ts->tiles[id.at(0)] = TextureLoader::LoadFromLine(values);
 			}
 			});
 

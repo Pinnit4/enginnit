@@ -31,6 +31,16 @@ void SpriteAnimator::Play(string animationName) {
 	isPlaying = true;
 }
 
+void SpriteAnimator::SwitchAnimation(string animationName) {
+	if (currentAnimationName == animationName) return;
+	Play(animationName);
+}
+
+void SpriteAnimator::SwitchAnimation(string from, string to) {
+	if (currentAnimationName != from) return;
+	Play(to);
+}
+
 void SpriteAnimator::Stop() {
 	isPlaying = false;
 }

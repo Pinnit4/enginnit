@@ -1,8 +1,7 @@
 #ifndef ENGINNIT_TEXTURE
 #define ENGINNIT_TEXTURE
 
-#include "GraphicsInternal.h"
-#include "../Math/Math.h"
+#include "../GraphicsInternal.h"
 
 #include <iostream>
 #include <string>

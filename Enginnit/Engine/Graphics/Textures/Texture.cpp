@@ -1,7 +1,8 @@
 #include "Texture.h"
 
 #include <iostream>
-#include "../Debug/DebugConsole.h"
+#include "../../Debug/DebugConsole.h"
+
 using namespace std;
 
 Texture::Texture() {

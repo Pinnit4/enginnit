@@ -1,10 +1,11 @@
+#ifndef ENGINNIT_GRAPHICS_MANAGER
+#define ENGINNIT_GRAPHICS_MANAGER
+
 #define GLFW_EXPOSE_NATIVE_WIN32
 #define GLFW_EXPOSE_NATIVE_WGL
 
-#ifndef ENGINNIT_GRAPHICSMANAGER
-#define ENGINNIT_GRAPHICSMANAGER
-
-#include "Graphics.h"
+#include "GraphicsInternal.h"
+#include "Sprites/Sprite.h"
 #include "UI/UI.h"
 
 #include <list>
@@ -49,7 +50,7 @@ public:
 
 private:
 	static GLFWwindow* window;
-	UIManager uiHandler;
+	UIManager uiManager;
 
 	static int width;
 	static int height;

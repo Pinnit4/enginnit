@@ -28,7 +28,7 @@ Vector2f GraphicsManager::camPos = Vector2f::Zero();
 
 GraphicsManager::GraphicsManager() {
 	window = NULL;
-	uiHandler = UIManager();
+	uiManager = UIManager();
 
 	rgSp.clear();
 }
@@ -42,7 +42,7 @@ void GraphicsManager::Initialize(GLFWwindow* _window) {
 
 	rgSp.clear();
 
-	uiHandler.Initialize(window);
+	uiManager.Initialize(window);
 }
 
 void GraphicsManager::Set2DViewport(int _depth) {
@@ -77,7 +77,7 @@ void GraphicsManager::Render() {
 	RenderSprites();
 
 	for (auto& callback : beforeUiRender) callback();
-	uiHandler.Render();
+	uiManager.Render();
 	for (auto& callback : afterUiRender) callback();
 
 	EndRender();

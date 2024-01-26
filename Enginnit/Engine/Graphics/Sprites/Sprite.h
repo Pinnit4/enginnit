@@ -1,11 +1,12 @@
 #ifndef ENGINNIT_SPRITE
 #define ENGINNIT_SPRITE
 
-#include "Texture.h"
+#include "../Textures/Texture.h"
+#include "../../Assets/Asset.h"
 
 using namespace std;
 
-class Sprite : virtual public Spatial2D {
+class Sprite : virtual public Spatial2D, public Asset {
 public:
 	Sprite();
 	Sprite(string path);

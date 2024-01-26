@@ -1,13 +1,11 @@
 #include "Sprite.h"
 
-#include "GraphicsManager.h"
-#include "../Math/TransformData.h"
-#include "Drawer.h"
-#include "TextureLoader.h"
+#include "../GraphicsManager.h"
+#include "../../Math/TransformData.h"
+#include "../Drawer.h"
+#include "../Textures/TextureLoader.h"
 
-void DrawRect2DSegment(Texture tx, Vector2f ll_loc, Vector2f tr_loc, Rect2D mr, TransformData td);
-
-Sprite::Sprite() : Spatial2D() {
+Sprite::Sprite() : Spatial2D(), Asset() {
 	texture = Texture();
 	GraphicsManager::RegisterSprite(this);
 	pivot = Vector2f::Zero();
@@ -15,23 +13,23 @@ Sprite::Sprite() : Spatial2D() {
 	margins = { 0,0,0,0 };
 }
 
-Sprite::Sprite(string path) : Spatial2D() {
-	texture = TextureLoader::LoadTexture(path);
+Sprite::Sprite(string path) : Spatial2D(), Asset() {
+	texture = TextureManager::GetTexture(path);
 	GraphicsManager::RegisterSprite(this);
 	pivot = Vector2f::Zero();
 	path = "";
 	margins = { 0,0,0,0 };
 }
 
-Sprite::Sprite(string path, Vector2f _position) : Spatial2D(_position) {
-	texture = TextureLoader::LoadTexture(path);
+Sprite::Sprite(string path, Vector2f _position) : Spatial2D(_position), Asset() {
+	texture = TextureManager::GetTexture(path);
 	GraphicsManager::RegisterSprite(this);
 	pivot = Vector2f::Zero();
 	path = "";
 	margins = { 0,0,0,0 };
 }
 
-Sprite::Sprite(Texture tx) : Spatial2D() {
+Sprite::Sprite(Texture tx) : Spatial2D(), Asset() {
 	texture = tx;
 	GraphicsManager::RegisterSprite(this);
 	pivot = Vector2f::Zero();
@@ -45,10 +43,10 @@ void Sprite::SetMargins(vector<int> _margins) { margins = _margins; }
 Texture Sprite::GetTexture() { return texture; }
 
 void Sprite::SetTexture(string path) {
-	SetTexture(TextureLoader::LoadTexture(path), pivot);
+	SetTexture(TextureManager::GetTexture(path), pivot);
 }
 void Sprite::SetTexture(string path, Vector2f _pivot) {
-	SetTexture(TextureLoader::LoadTexture(path), _pivot);
+	SetTexture(TextureManager::GetTexture(path), _pivot);
 }
 
 void Sprite::SetTexture(Texture _texture) {

@@ -2,19 +2,14 @@
 #define ENGINNIT_SCENE
 
 #include <string>
-#include "SceneObject.h"
+#include "Objects/SceneObject.h"
 
 using namespace std;
 
-class Scene {
+class Scene : public SceneObject {
 public:
 	Scene();
 	Scene(string filePath);
-
-	vector<SceneObject*> objects;
-
-	void Start();
-	void Tick(double deltaTime);
 private:
 };
-#endif#pragma once
+#endif

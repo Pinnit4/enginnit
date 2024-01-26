@@ -1,7 +1,7 @@
 #ifndef ENGINNIT_UI_IMAGE
 #define ENGINNIT_UI_IMAGE
 
-#include "../Texture.h"
+#include "../Textures/Texture.h"
 #include "UIElement.h"
 
 using namespace std;
@@ -13,23 +13,18 @@ public:
 	UIImage(Texture texture);
 
 	Texture GetTexture();
-	Rect2D* GetRect();
-
-	vector<int> GetMargins();
-	void SetMargins(vector<int> margins);
 
 	void SetTexture(string path);
 	void SetTexture(Texture tx);
 
+	vector<int> GetMargins();
+	void SetMargins(vector<int> margins);
+
 	void Render() override;
 	void Destroy() override;
 
-	void AdjustToCurrentWindow();
-	void AdjustToCurrentWindow(vector<float> padding);
 private:
 	Texture texture;
-	Rect2D* rect;
-
 	vector<int> margins;
 };
 #endif

@@ -2,8 +2,8 @@
 #define SPRITE_ANIMATION_ASSET
 
 #include "SpriteAnimation.h"
-#include "../IO/AssetFile.h"
-#include "../Graphics/Tiles/TilesetAsset.h"
+#include "../Assets/AssetFile.h"
+#include "../Graphics/Tiles/TilesetLoader.h"
 
 #include <string>
 #include <map>
@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class SpriteAnimationAsset {
+class SpriteAnimationLoader {
 public:
 	static void SaveToFile(SpriteAnimation* sa, string filePath) {
 		vector<vector<string>> v = {
@@ -33,7 +33,7 @@ public:
 		AssetFile::ReadAssetFile(filePath, [&](string id, vector<string> values) {
 			if (id == "type") {} // Do nothing
 			else if (id == "tileset")
-				TilesetAsset::LoadFromFile(sa->tileset, values[0]);
+				TilesetLoader::LoadFromFile(sa->tileset, values[0]);
 			else if (id == "fps")
 				sa->fps = stod(values[0]);
 			else if (id == "sequence") {

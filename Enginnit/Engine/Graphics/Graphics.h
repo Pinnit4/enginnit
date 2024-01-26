@@ -2,8 +2,10 @@
 #define ENGINNIT_GRAPHICS
 
 #include "GraphicsInternal.h"
-#include "Sprite.h"
-#include "Texture.h"
+
+#include "Sprites/Sprite.h"
+#include "Textures/Texture.h"
+
 #include "GraphicsManager.h"
 
 #endif

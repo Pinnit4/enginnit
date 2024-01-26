@@ -5,11 +5,11 @@
 #include <vector>
 
 #include "Texture.h"
-#include "TextureLoader.h"
+#include "TextureManager.h"
 
 using namespace std;
 
-class TextureAsset {
+class TextureLoader {
 public:
 	// min & max Ys are inverted (from bottom to top internally, from top to bottom for the user)
 	// so we invert them here
@@ -27,7 +27,7 @@ public:
 	}
 
 	static Texture LoadFromLine(vector<string> values) {
-		Texture tx = TextureLoader::LoadTexture(values[0]);
+		Texture tx = TextureManager::GetTexture(values[0]);
 		if (values.size() < 2) return tx;
 
 		tx.SetName(values[1]);
