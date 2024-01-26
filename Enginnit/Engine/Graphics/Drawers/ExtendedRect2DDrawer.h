@@ -7,8 +7,8 @@
 namespace Drawer {
 	void DrawRect2DWithMargins(Texture tx, Rect2D* rect, vector<int> margins);
 	void DrawRect2DWithMargins(Texture tx, Rect2D* rect, Color c, vector<int> margins);
-	void DrawRect2DWithMargins(Texture tx, Rect2D* rect, TransformData td, vector<int> margins);
-	void DrawRect2DWithMargins(Texture tx, Rect2D* rect, TransformData td, Color c, vector<int> margins);
+	void DrawRect2DWithMargins(Texture tx, Rect2D* rect, Spatial2D sp, vector<int> margins);
+	void DrawRect2DWithMargins(Texture tx, Rect2D* rect, Spatial2D sp, Color c, vector<int> margins);
 }
 
 #endif

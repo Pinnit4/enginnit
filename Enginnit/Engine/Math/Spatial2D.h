@@ -16,5 +16,7 @@ public:
 	Spatial2D();
 	Spatial2D(Vector2f position);
 	Spatial2D(Vector2f position, float rotation);
+	Spatial2D(Vector2f position, float rotation, Vector2f scale);
+	Spatial2D(const Spatial2D& source);
 };
 #endif

@@ -31,11 +31,11 @@ void Drawer::glLinesOpen(vector<Vector2f> points) {
 	}
 }
 
-void Drawer::glTransform(TransformData td) {
+void Drawer::glTransform(Spatial2D sp) {
 	// First translate, then rotate, then scale
-	glRotatef(td.rotation, 0, 0, 1);
-	glTranslatef(td.position.x, td.position.y, 0);
-	glScalef(td.scale.x, td.scale.y, 1);
+	glRotatef(sp.rotation, 0, 0, 1);
+	glTranslatef(sp.position.x, sp.position.y, 0);
+	glScalef(sp.scale.x, sp.scale.y, 1);
 }
 
 void Drawer::glTextureFilter(GLint filter) {

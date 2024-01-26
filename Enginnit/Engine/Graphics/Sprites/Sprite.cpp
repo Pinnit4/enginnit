@@ -1,7 +1,6 @@
 #include "Sprite.h"
 
 #include "../GraphicsManager.h"
-#include "../../Math/TransformData.h"
 #include "../Drawer.h"
 #include "../Textures/TextureLoader.h"
 
@@ -58,8 +57,6 @@ void Sprite::SetTexture(Texture _texture, Vector2f _pivot) {
 }
 
 void Sprite::Render() {
-	TransformData td = TransformData::FromSpatial2D(*this);
-
 	Vector2f size = Vector2f(texture.GetWidth(), texture.GetHeight());
 	Vector2f center = (size / 2.0);
 	center -= GraphicsManager::GetCameraPosition();
@@ -67,7 +64,7 @@ void Sprite::Render() {
 
 	Rect2D mainRect = Rect2D(center, size);
 
-	Drawer::DrawRect2DWithMargins(texture, &mainRect, td, margins);
+	Drawer::DrawRect2DWithMargins(texture, &mainRect, Spatial2D(*this), margins);
 }
 
 void Sprite::Destroy() {

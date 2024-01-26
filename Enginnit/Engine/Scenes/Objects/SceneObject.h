@@ -25,6 +25,7 @@ protected:
 	list<SceneObject*> children;
 
 	virtual void StartInternal();
+
 	virtual void TickInternal(double deltaTime);
 
 	void AddChild(SceneObject* child);

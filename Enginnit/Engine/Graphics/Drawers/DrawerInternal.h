@@ -19,7 +19,7 @@ namespace Drawer {
 	void glLinesClosed(vector<Vector2f> points);
 	void glLinesOpen(vector<Vector2f> points);
 
-	void glTransform(TransformData td);
+	void glTransform(Spatial2D sp);
 	void glTextureFilter(GLint filter);
 }
 

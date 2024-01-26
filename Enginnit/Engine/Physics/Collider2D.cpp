@@ -1,7 +1,6 @@
 #include "Collider2D.h"
 
 #include "Physics2D.h"
-#include "../Math/TransformData.h"
 #include "../Graphics/Drawer.h"
 
 Collider2D::Collider2D() : Spatial2D() {
@@ -43,11 +42,8 @@ void Collider2D::Destroy() { Disable(); }
 
 Rect2D* Collider2D::GetRect() { return rect; }
 void Collider2D::DebugRender() {
-	TransformData td = TransformData::FromSpatial2D(*this);
-	td.rotation = 0;
-	td.position -= GraphicsManager::GetCameraPosition();
-
-	Drawer::DrawWirePolygon(rect, td, debugColor);
+	Spatial2D sp = Spatial2D(position - GraphicsManager::GetCameraPosition(), 0, scale);
+	Drawer::DrawWirePolygon(rect, sp, debugColor);
 }
 
 bool Collider2D::AreColliding(const Collider2D& a, const Collider2D& b) {

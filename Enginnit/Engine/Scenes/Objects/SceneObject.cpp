@@ -14,7 +14,7 @@ void SceneObject::Start()
 void SceneObject::Tick(double deltaTime) 
 {
 	TickInternal(deltaTime);
-	for (auto c : children) c->TickInternal(deltaTime);
+	for (auto c : children) c->Tick(deltaTime);
 }
 
 void SceneObject::StartInternal() {}
