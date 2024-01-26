@@ -102,7 +102,7 @@ protected:
 		else if (id == "pivot")
 			cc->GetSprite()->pivot = Vector2f(stof(values[0]), stof(values[1]));
 		else if (id == "gravity")
-			cc->useGravity = (stoi(values[0]) == 1);
+			cc->GetRigidbody()->useGravity = (stoi(values[0]) == 1);
 
 		else
 			return true;

@@ -9,25 +9,29 @@
 
 using namespace std;
 
-class CharacterController2D : public Rigidbody2D, public Node {
+class CharacterController2D : public Node {
 public:
 	CharacterController2D();
 	CharacterController2D(string filePath);
 
+	Spatial2D* spatial;
 	float movementSpeed;
 
 	string idleRightAnim, idleLeftAnim, idleUpAnim, idleDownAnim;
 	string runRightAnim, runLeftAnim, runUpAnim, runDownAnim;
 
-	void PhysicsTick(double deltaTime) override;
-
 	Sprite* GetSprite() { return sprite; }
 	SpriteAnimator* GetAnimator() { return animator; }
+
+	Rigidbody2D* GetRigidbody() { return rb; }
 
 protected:
 	Sprite* sprite;
 	SpriteAnimator* animator;
 
+	Rigidbody2D* rb;
+
+	void PhysicsTickInternal(double deltaTime) override;
 	void TickInternal(double deltaTime) override;
 
 	void TickMovement(double deltaTime);

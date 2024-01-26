@@ -15,9 +15,12 @@ public:
 	Node();
 
 	vector<map<string, vector<string>>> inParentVariables;
-
+	
 	void Start();
+
+	void PhysicsTick(double deltaTime);
 	void Tick(double deltaTime);
+	void LateTick(double deltaTime);
 
 	void SetParent(Node* parent);
 protected:
@@ -25,8 +28,10 @@ protected:
 	list<Node*> children;
 
 	virtual void StartInternal();
-
+	
+	virtual void PhysicsTickInternal(double deltaTime);
 	virtual void TickInternal(double deltaTime);
+	virtual void LateTickInternal(double deltaTime);
 
 	void AddChild(Node* child);
 	void RemoveChild(Node* child);

@@ -8,23 +8,33 @@ using namespace std;
 void MoveCamera(double deltaTime);
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset);
 
-CharacterController2D::CharacterController2D() : Rigidbody2D(), Node() {
+CharacterController2D::CharacterController2D() : Node() {
+	spatial = new Spatial2D();
+
 	sprite = new Sprite(spatial);
 	animator = new SpriteAnimator(sprite);
+
+	rb = new Rigidbody2D(spatial);
+
 	movementSpeed = 0;
 }
 
-CharacterController2D::CharacterController2D(string filePath) : Rigidbody2D(), Node() {
+CharacterController2D::CharacterController2D(string filePath) : Node() {
+	spatial = new Spatial2D();
+
 	sprite = new Sprite(spatial);
 	animator = new SpriteAnimator(sprite);
+
+	rb = new Rigidbody2D(spatial);
+
 	movementSpeed = 0;
 
 	CharacterController2DLoader loader = CharacterController2DLoader();
 	loader.LoadFromFile(this, filePath);
 
 	Vector2f size = Vector2f(sprite->GetTexture().GetWidth(), sprite->GetTexture().GetHeight());
-	rect->SetCenter(sprite->pivot * size);
-	rect->SetSize(size);
+	rb->GetRect()->SetCenter(sprite->pivot * size);
+	rb->GetRect()->SetSize(size);
 }
 
 void CharacterController2D::TickInternal(double deltaTime) {
@@ -33,8 +43,7 @@ void CharacterController2D::TickInternal(double deltaTime) {
 	FocusCameraOnPlayer(this, Vector2f::Zero());
 }
 
-void CharacterController2D::PhysicsTick(double deltaTime) {
-	Rigidbody2D::PhysicsTick(deltaTime);
+void CharacterController2D::PhysicsTickInternal(double deltaTime) {
 	TickMovement(deltaTime);
 }
 

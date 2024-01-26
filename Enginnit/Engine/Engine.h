@@ -6,6 +6,7 @@
 #include "Debug/DebugConsole.h"
 
 #include <iostream>
+#include "Nodes/NodeManager.h"
 
 using namespace std;
 
@@ -22,14 +23,16 @@ public:
 	void Shutdown();
 
 	void Update();
-
 	void Render();
+	void LateUpdate();
 private:
 	static GLFWwindow* window;
 
 	double lastTime;
 
 	GraphicsManager* graphics;
+	NodeManager* nodes;
+
 	Physics2D* physics;
 	DebugConsole* console;
 };

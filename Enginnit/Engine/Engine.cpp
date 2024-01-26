@@ -41,6 +41,8 @@ bool Engine::Initialize(char* windowTitle) {
 	physics = new Physics2D();
 	physics->Initialize();
 
+	nodes = new NodeManager();
+
 	Mouse::SetCallbacks(window);
 	Keyboard::SetCallbacks(window);
 
@@ -68,7 +70,10 @@ void Engine::Update() {
 
 	glfwPollEvents();
 
+	nodes->PhysicsTick(deltaTime);
 	physics->Tick(deltaTime);
+
+	nodes->Tick(deltaTime);
 
 #ifdef _DEBUG
 	console->Tick(deltaTime);
@@ -81,6 +86,10 @@ bool Engine::ShouldShutdown() {
 
 void Engine::Render() {
 	graphics->Render();
+}
+
+void Engine::LateUpdate() {
+	nodes->LateTick(deltaTime);
 }
 
 void CenterOnScreen(GLFWwindow* window) {

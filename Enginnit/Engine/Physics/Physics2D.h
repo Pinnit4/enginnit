@@ -1,5 +1,5 @@
-#ifndef PHYSICS2DHEADER
-#define PHYSICS2DHEADER
+#ifndef ENGINNIT_PHYSICS2D
+#define ENGINNIT_PHYSICS2D
 
 #include "GLFW/glfw3.h"
 #pragma comment(lib, "opengl32.lib")

@@ -27,6 +27,14 @@ Collider2D::Collider2D(Vector2f position, float rotation) {
 	debugColor = Color(0.5, 1, 0.5);
 	isTrigger = false;
 }
+Collider2D::Collider2D(Spatial2D* _spatial) {
+	spatial = _spatial;
+	rect = new Rect2D();
+	Physics2D::RegisterCollider(this);
+	enabled = true;
+	debugColor = Color(0.5, 1, 0.5);
+	isTrigger = false;
+}
 
 void Collider2D::Enable() {
 	if (enabled) return;

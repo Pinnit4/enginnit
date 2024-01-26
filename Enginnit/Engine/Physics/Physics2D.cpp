@@ -25,8 +25,9 @@ void Physics2D::TickRigidbodies(float deltaTime) {
 		return;
 
 	for (auto rb : rgRb) {
-		rb->PhysicsTick(deltaTime);
+		rb->Preprocess(deltaTime);
 		ProcessRigidbodyCollisions(rb);
+		rb->Postprocess(deltaTime);
 	}
 }
 

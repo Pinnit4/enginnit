@@ -1,5 +1,5 @@
-#ifndef COLLIDER2DHEADER
-#define COLLIDER2DHEADER
+#ifndef ENGINNIT_COLLIDER2D
+#define ENGINNIT_COLLIDER2D
 
 #include "../Math/Math.h"
 #include "../Graphics/Graphics.h"
@@ -9,6 +9,7 @@ public:
 	Collider2D();
 	Collider2D(Vector2f position);
 	Collider2D(Vector2f position, float rotation);
+	Collider2D(Spatial2D* spatial);
 
 	bool isTrigger;
 	Spatial2D* spatial;

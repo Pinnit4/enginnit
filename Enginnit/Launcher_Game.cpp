@@ -19,6 +19,8 @@ int main() {
 		game.Tick(Engine::deltaTime);
 
 		engine.Render();
+
+		engine.LateUpdate();
 	}
 
 	engine.Shutdown();

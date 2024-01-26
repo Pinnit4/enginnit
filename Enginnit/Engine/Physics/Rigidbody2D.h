@@ -8,11 +8,13 @@ public:
 	Rigidbody2D();
 	Rigidbody2D(Vector2f position);
 	Rigidbody2D(Vector2f position, float rotation);
+	Rigidbody2D(Spatial2D* spatial);
 
 	bool useGravity;
 
-	virtual void PhysicsTick(double deltaTime);
+	virtual void Preprocess(double deltaTime);
 	void ProcessCollision(Collider2D* other);
+	virtual void Postprocess(double deltaTime);
 protected:
 	Vector2f velocity;
 	Vector2f previousPos;

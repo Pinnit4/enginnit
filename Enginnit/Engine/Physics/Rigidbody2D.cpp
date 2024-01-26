@@ -1,6 +1,7 @@
 #include "Rigidbody2D.h"
 
 #include "Physics2D.h"
+#include "../Debug/DebugConsole.h"
 
 Rigidbody2D::Rigidbody2D() : Collider2D() {
 	velocity = Vector2f::Zero();
@@ -26,6 +27,14 @@ Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(positio
 	isTrigger = false;
 	debugColor = Color(0.5, 0.5, 1);
 }
+Rigidbody2D::Rigidbody2D(Spatial2D* spatial) : Collider2D(spatial) {
+	velocity = Vector2f::Zero();
+	Physics2D::RegisterRigidbody(this);
+	previousPos = spatial->position;
+	useGravity = true;
+	isTrigger = false;
+	debugColor = Color(0.5, 0.5, 1);
+}
 
 void Rigidbody2D::EnableInternal() {
 	Collider2D::EnableInternal();
@@ -37,9 +46,7 @@ void Rigidbody2D::DisableInternal() {
 	Physics2D::UnregisterRigidbody(this);
 }
 
-void Rigidbody2D::PhysicsTick(double deltaTime) {
-	previousPos = spatial->position;
-
+void Rigidbody2D::Preprocess(double deltaTime) {
 	if (useGravity) {
 		velocity += Vector2f::Down() * 9.81f * 30 * deltaTime;
 		spatial->position += velocity * 30 * deltaTime;
@@ -87,6 +94,10 @@ void Rigidbody2D::ProcessCollision(Collider2D* other) {
 
 	// Full force method
 	//position = previousPos;
+}
+
+void Rigidbody2D::Postprocess(double deltaTime) {
+	previousPos = spatial->position;
 }
 
 bool Rigidbody2D::CollisionSteppedRollback(Collider2D* other, bool useX, bool useY) {

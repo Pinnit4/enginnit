@@ -17,5 +17,5 @@ void Game::Start() {
 }
 
 void Game::Tick(double deltaTime) {
-	currentScene->Tick(deltaTime);
+	//currentScene->Tick(deltaTime);
 }
