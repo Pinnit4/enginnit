@@ -2,11 +2,11 @@
 #define ENGINNIT_SCENE_LOADER
 
 #include "Scene.h"
-#include "Objects/SceneObjectLoader.h"
+#include "../Nodes/NodeLoader.h"
 
-class SceneLoader : public SceneObjectLoader {
+class SceneLoader : public NodeLoader {
 public:
-	SceneLoader() : SceneObjectLoader() { }
+	SceneLoader() : NodeLoader() { }
 protected:
 	string GetType() override { return "Scene"; }
 };

@@ -8,13 +8,13 @@ using namespace std;
 void MoveCamera(double deltaTime);
 void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset);
 
-CharacterController2D::CharacterController2D() : Rigidbody2D(), SceneObject() {
+CharacterController2D::CharacterController2D() : Rigidbody2D(), Node() {
 	sprite = new Sprite(spatial);
 	animator = new SpriteAnimator(sprite);
 	movementSpeed = 0;
 }
 
-CharacterController2D::CharacterController2D(string filePath) : Rigidbody2D(), SceneObject() {
+CharacterController2D::CharacterController2D(string filePath) : Rigidbody2D(), Node() {
 	sprite = new Sprite(spatial);
 	animator = new SpriteAnimator(sprite);
 	movementSpeed = 0;

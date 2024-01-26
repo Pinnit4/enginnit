@@ -22,6 +22,7 @@ public:
 	void Shutdown();
 
 	void Update();
+
 	void Render();
 private:
 	static GLFWwindow* window;

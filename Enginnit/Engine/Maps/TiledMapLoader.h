@@ -2,41 +2,41 @@
 #define ENGINNIT_TILED_MAP_LOADER
 
 #include "TiledMap.h"
-#include "../Scenes/Scenes.h"
+#include "../Nodes/NodeLoader.h"
 
 #include "../Graphics/Tiles/TilesetLoader.h"
 
 using namespace std;
 
-class TiledMapLoader : public SceneObjectLoader {
+class TiledMapLoader : public NodeLoader {
 public:
-	TiledMapLoader() : SceneObjectLoader() { }
+	TiledMapLoader() : NodeLoader() { }
 
 protected:
 	TiledMap* tm;
 
 	virtual void OnLoadStart() override {
-		SceneObjectLoader::OnLoadStart();
+		NodeLoader::OnLoadStart();
 		tm = (TiledMap*)obj;
 	}
 	virtual void OnLoadFinish() override {
 		tm = NULL;
-		SceneObjectLoader::OnLoadFinish();
+		NodeLoader::OnLoadFinish();
 	}
 
 	virtual void OnSaveStart() override {
-		SceneObjectLoader::OnSaveStart();
+		NodeLoader::OnSaveStart();
 		tm = (TiledMap*)obj;
 	}
 	virtual void OnSaveFinish() override {
 		tm = NULL;
-		SceneObjectLoader::OnSaveFinish();
+		NodeLoader::OnSaveFinish();
 	}
 
 	virtual string GetType() override { return "TiledMap"; }
 
 	virtual vector<vector<string>> SaveToFileInternal(vector<vector<string>> v) override {
-		v = SceneObjectLoader::SaveToFileInternal(v);
+		v = NodeLoader::SaveToFileInternal(v);
 
 		v.push_back({"tileset", tm->tileset->path });
 
@@ -64,7 +64,7 @@ protected:
 	}
 
 	virtual bool ProcessLineInternal(string id, vector<string> values) override {
-		if (!SceneObjectLoader::ProcessLineInternal(id, values))
+		if (!NodeLoader::ProcessLineInternal(id, values))
 			return false;
 
 		if (id == "tileset")

@@ -3,7 +3,7 @@
 
 #include "../Graphics/Tiles/Tileset.h"
 #include "../Graphics/Textures/Texture.h"
-#include "../Scenes/Scenes.h"
+#include "../Nodes/Node.h"
 
 #include "TiledMapSprite.h"
 #include "TiledMapCollider.h"
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class TiledMap : public SceneObject {
+class TiledMap : public Node {
 public:
 	TiledMap();
 	TiledMap(string filePath);

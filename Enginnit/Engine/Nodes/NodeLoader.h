@@ -1,8 +1,8 @@
-#ifndef ENGINNIT_SCENEOBJECT_LOADER
-#define ENGINNIT_SCENEOBJECT_LOADER
+#ifndef ENGINNIT_NODE_LOADER
+#define ENGINNIT_NODE_LOADER
 
-#include "SceneObject.h"
-#include "../../Assets/AssetLoader.h"
+#include "Node.h"
+#include "../Assets/AssetLoader.h"
 
 #include <string>
 #include <vector>
@@ -11,11 +11,11 @@
 
 using namespace std;
 
-class SceneObjectLoader : public AssetLoader {
+class NodeLoader : public AssetLoader {
 public:
-	SceneObjectLoader();
+	NodeLoader();
 protected:
-	SceneObject* obj;
+	Node* obj;
 
 	vector<map<string, vector<string>>> childObjectData;
 	bool savingChildObject;

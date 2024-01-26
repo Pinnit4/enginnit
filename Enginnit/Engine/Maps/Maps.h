@@ -5,6 +5,6 @@
 #include "TiledMapCollider.h"
 #include "TiledMapSprite.h"
 
-#include "TiledMapAsset.h"
+#include "TiledMapLoader.h"
 
 #endif

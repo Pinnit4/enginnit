@@ -1,12 +1,12 @@
-#include "SceneObjectLoader.h"
+#include "NodeLoader.h"
 
-#include "../../Assets/Factories/AssetFactory.h"
-#include "../../Assets/Factories/AssetLoaderFactory.h"
-#include "../../Assets/AssetFile.h"
+#include "../Assets/Factories/AssetFactory.h"
+#include "../Assets/Factories/AssetLoaderFactory.h"
+#include "../Assets/AssetFile.h"
 
-#include "../../Debug/DebugConsole.h"
+#include "../Debug/DebugConsole.h"
 
-SceneObjectLoader::SceneObjectLoader() : AssetLoader() {
+NodeLoader::NodeLoader() : AssetLoader() {
 	obj = NULL;
 	childObjectData = {};
 	savingChildObject = false;
@@ -15,9 +15,9 @@ SceneObjectLoader::SceneObjectLoader() : AssetLoader() {
 	childFilePath = "";
 }
 
-vector<vector<string>> SceneObjectLoader::SaveToFileInternal(vector<vector<string>> currentValues) { return AssetLoader::SaveToFileInternal(currentValues); }
+vector<vector<string>> NodeLoader::SaveToFileInternal(vector<vector<string>> currentValues) { return AssetLoader::SaveToFileInternal(currentValues); }
 
-bool SceneObjectLoader::ProcessLineInternal(string id, vector<string> values)
+bool NodeLoader::ProcessLineInternal(string id, vector<string> values)
 {
 	if (!AssetLoader::ProcessLineInternal(id, values))
 		return false;
@@ -35,7 +35,7 @@ bool SceneObjectLoader::ProcessLineInternal(string id, vector<string> values)
 	return false;
 }
 
-void SceneObjectLoader::StartChildObjectLoad(string type) {
+void NodeLoader::StartChildObjectLoad(string type) {
 	childObjectData.clear();
 	savingChildObject = true;
 	childIndent = 0;
@@ -43,7 +43,7 @@ void SceneObjectLoader::StartChildObjectLoad(string type) {
 	childFilePath = "";
 }
 
-void SceneObjectLoader::ProcessChildObjectLine(string id, vector<string> values) {
+void NodeLoader::ProcessChildObjectLine(string id, vector<string> values) {
 	if (id == "start_child")
 		childIndent++;
 	else if (id == "end_child") {
@@ -62,10 +62,10 @@ void SceneObjectLoader::ProcessChildObjectLine(string id, vector<string> values)
 	childObjectData.push_back(line);
 }
 
-void SceneObjectLoader::FinishChildObjectLoad() {
+void NodeLoader::FinishChildObjectLoad() {
 	savingChildObject = false;
 
-	SceneObject* child = (SceneObject*)AssetFactory::CreateAsset(childObjectType, childFilePath);
+	Node* child = (Node*)AssetFactory::CreateAsset(childObjectType, childFilePath);
 
 	if (child != NULL) {
 		AssetLoader* childLoader = AssetLoaderFactory::GetAssetLoader(childObjectType);
@@ -77,22 +77,22 @@ void SceneObjectLoader::FinishChildObjectLoad() {
 	}
 }
 
-string SceneObjectLoader::GetType() { return "SceneObject"; }
+string NodeLoader::GetType() { return "Node"; }
 
-void SceneObjectLoader::OnLoadStart() {
+void NodeLoader::OnLoadStart() {
 	AssetLoader::OnLoadStart();
-	obj = (SceneObject*)asset;
+	obj = (Node*)asset;
 }
-void SceneObjectLoader::OnLoadFinish() {
+void NodeLoader::OnLoadFinish() {
 	obj = NULL;
 	AssetLoader::OnLoadFinish();
 }
 
-void SceneObjectLoader::OnSaveStart() {
+void NodeLoader::OnSaveStart() {
 	AssetLoader::OnSaveStart();
-	obj = (SceneObject*)asset;
+	obj = (Node*)asset;
 }
-void SceneObjectLoader::OnSaveFinish() {
+void NodeLoader::OnSaveFinish() {
 	obj = NULL;
 	AssetLoader::OnSaveFinish();
 }

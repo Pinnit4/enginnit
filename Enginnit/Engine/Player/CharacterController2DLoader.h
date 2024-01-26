@@ -2,16 +2,16 @@
 #define ENGINNIT_CHARACTER_CONTROLLER2D_LOADER
 
 #include "CharacterController2D.h"
-#include "../Scenes/Scenes.h"
+#include "../Nodes/NodeLoader.h"
 
 #include "../Graphics/Textures/TextureLoader.h"
 #include "../Animations/SpriteAnimationLoader.h"
 
 using namespace std;
 
-class CharacterController2DLoader : public SceneObjectLoader {
+class CharacterController2DLoader : public NodeLoader {
 public:
-	CharacterController2DLoader() : SceneObjectLoader() 
+	CharacterController2DLoader() : NodeLoader()
 	{ 
 		cc = NULL;
 	}
@@ -20,28 +20,28 @@ protected:
 	CharacterController2D* cc;
 
 	virtual void OnLoadStart() override {
-		SceneObjectLoader::OnLoadStart();
+		NodeLoader::OnLoadStart();
 		cc = (CharacterController2D*)obj;
 	}
 	virtual void OnLoadFinish() override {
 		cc->GetAnimator()->Play(cc->idleLeftAnim);
 		cc = NULL;
-		SceneObjectLoader::OnLoadFinish();
+		NodeLoader::OnLoadFinish();
 	}
 
 	virtual void OnSaveStart() override {
-		SceneObjectLoader::OnSaveStart();
+		NodeLoader::OnSaveStart();
 		cc = (CharacterController2D*)obj;
 	}
 	virtual void OnSaveFinish() override {
 		cc = NULL;
-		SceneObjectLoader::OnSaveFinish();
+		NodeLoader::OnSaveFinish();
 	}
 
 	virtual string GetType() override { return "CharacterController2D"; }
 
 	virtual vector<vector<string>> SaveToFileInternal(vector<vector<string>> v) override {
-		v = SceneObjectLoader::SaveToFileInternal(v);
+		v = NodeLoader::SaveToFileInternal(v);
 
 		v.push_back({ "speed", to_string(cc->movementSpeed) });
 
@@ -64,7 +64,7 @@ protected:
 	}
 
 	virtual bool ProcessLineInternal(string id, vector<string> values) override {
-		if (!SceneObjectLoader::ProcessLineInternal(id, values))
+		if (!NodeLoader::ProcessLineInternal(id, values))
 			return false;
 
 		if (id == "speed")

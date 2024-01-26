@@ -5,11 +5,11 @@
 #include "../Physics/Rigidbody2D.h"
 #include "../IO/Input.h"
 #include "../Animations/SpriteAnimator.h"
-#include "../Scenes/Scenes.h"
+#include "../Nodes/Node.h"
 
 using namespace std;
 
-class CharacterController2D : public Rigidbody2D, public SceneObject {
+class CharacterController2D : public Rigidbody2D, public Node {
 public:
 	CharacterController2D();
 	CharacterController2D(string filePath);
