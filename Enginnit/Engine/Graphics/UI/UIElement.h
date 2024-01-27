@@ -21,12 +21,15 @@ public:
 	void SetAnchors(Vector2f anchorMin, Vector2f anchorMax);
 	void SetCorners(Vector2f lowerLeftCorner, Vector2f upperRightCorner);
 
-	Rect2D* GetRect();
+	Rect2D* GetRect() { return rect; }
+	Rect2D* GetImGuiRect() { return imGuiRect; }
+
 protected:
 	UIElement* parent;
 	list<UIElement*> children;
 
 	Rect2D* rect;
+	Rect2D* imGuiRect;
 
 	Vector2f anchorMin;
 	Vector2f anchorMax;

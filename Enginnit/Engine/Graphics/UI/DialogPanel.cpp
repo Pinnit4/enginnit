@@ -7,7 +7,10 @@ DialogPanel::DialogPanel() : UIElement() {
 	background->SetMargins({ 3,3,3,3 });
 	background->SetParent(this);
 
-	dialogFont = ImGui::GetIO().Fonts->AddFontFromFileTTF("Assets/fonts/slkscr.ttf", 16);
+	text = new UIText("Assets/fonts/slkscr.ttf", 32);
+	text->SetParent(this);
+	text->SetCorners(Vector2f(4), Vector2f(-4));
+	text->SetText("This is a test!");
 
 	anchorMax = Vector2f(1, 0.3);
 

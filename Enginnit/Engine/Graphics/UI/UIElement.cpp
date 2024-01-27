@@ -9,7 +9,9 @@ void EndRender();
 
 UIElement::UIElement() {
 	sortingOrder = 0;
+
 	rect = new Rect2D();
+	imGuiRect = new Rect2D();
 
 	UIManager::RegisterUIElement(this);
 	parent = NULL;
@@ -67,8 +69,6 @@ void UIElement::SetCorners(Vector2f _lowerLeftCorner, Vector2f _upperRightCorner
 	RefreshRect();
 }
 
-Rect2D* UIElement::GetRect() { return rect; }
-
 void UIElement::RefreshRect() {
 	vector<Vector2f> parentCorners = {};
 	Vector2f screenSize = (Vector2f)GraphicsManager::GetScreenSize();
@@ -96,6 +96,13 @@ void UIElement::RefreshRect() {
 
 	rect->SetSize(Vector2f(ur.x - ll.x, ur.y - ll.y));
 	rect->SetCenter(Vector2f((ur.x + ll.x) / 2.0, (ur.y + ll.y) / 2.0));
+
+	imGuiRect->SetSize(rect->GetSize() * GraphicsManager::GetProjectionScale());
+
+	Vector2f imGuiCenter = rect->GetCenter() * GraphicsManager::GetProjectionScale();
+	imGuiCenter += (screenSize / 2);
+	imGuiCenter.y = screenSize.y - imGuiCenter.y;
+	imGuiRect->SetCenter(imGuiCenter);
 
 	for (auto c : children) {
 		c->RefreshRect();

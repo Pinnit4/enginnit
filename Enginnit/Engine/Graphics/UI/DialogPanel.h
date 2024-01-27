@@ -4,6 +4,7 @@
 #include "UI.h"
 #include "UIImage.h"
 #include "../Graphics.h"
+#include "UIText.h"
 
 class DialogPanel : public UIElement {
 public:
@@ -11,6 +12,6 @@ public:
 	void Render() override;
 private:
 	UIImage* background;
-	ImFont* dialogFont;
+	UIText* text;
 };
 #endif
