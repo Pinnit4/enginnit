@@ -40,7 +40,7 @@ CharacterController2D::CharacterController2D(string filePath) : Node() {
 void CharacterController2D::TickInternal(double deltaTime) {
 	animator->Tick(deltaTime);
 	//MoveCamera(deltaTime);
-	FocusCameraOnPlayer(this, Vector2f::Zero());
+	FocusCameraOnPlayer(this, Vector2f(0));
 }
 
 void CharacterController2D::PhysicsTickInternal(double deltaTime) {
@@ -48,7 +48,7 @@ void CharacterController2D::PhysicsTickInternal(double deltaTime) {
 }
 
 void CharacterController2D::TickMovement(double deltaTime) {
-	Vector2f input = Vector2f::Zero();
+	Vector2f input = Vector2f(0);
 	if (Keyboard::GetKey(GLFW_KEY_W))
 		input.y += 1;
 	if (Keyboard::GetKey(GLFW_KEY_S))
@@ -57,9 +57,6 @@ void CharacterController2D::TickMovement(double deltaTime) {
 		input.x -= 1;
 	if (Keyboard::GetKey(GLFW_KEY_D))
 		input.x += 1;
-
-	if (Keyboard::GetKeyDown(GLFW_KEY_K))
-		DebugConsole::Log("Character pos: " + spatial->position.ToString());
 
 	if (input.x > 0) 
 		animator->SwitchAnimation(runRightAnim);
@@ -92,7 +89,7 @@ void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset) {
 }
 
 void MoveCamera(double deltaTime) {
-	Vector2f input = Vector2f::Zero();
+	Vector2f input = Vector2f(0);
 	if (Keyboard::GetKey(GLFW_KEY_UP))
 		input.y += 1;
 	if (Keyboard::GetKey(GLFW_KEY_DOWN))

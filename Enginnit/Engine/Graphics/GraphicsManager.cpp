@@ -24,7 +24,7 @@ vector<function<void()>> GraphicsManager::afterUiRender = vector<function<void()
 
 vector<function<void()>> GraphicsManager::onEndRender = vector<function<void()>>();
 
-Vector2f GraphicsManager::camPos = Vector2f::Zero();
+Vector2f GraphicsManager::camPos = Vector2f(0);
 
 GraphicsManager::GraphicsManager() {
 	window = NULL;

@@ -22,16 +22,10 @@ string UIText::GetText() {
 	return text;
 }
 
-void UIText::Render() {
+void UIText::RenderInternal() {
 	if (ImGui::Begin("##text", nullptr, ImGuiWindowFlags_NoNav
 		| ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs 
 		| ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoSavedSettings)) {
-
-		Vector2f pos = imGuiRect->GetPoints()[0];
-		Vector2f size = imGuiRect->GetSize();
-
-		ImVec2 wPos = ImVec2(pos.x, pos.y);
-		ImVec2 wSize = ImVec2(size.x, size.y);
 
 		ImGui::SetWindowPos(wPos);
 		ImGui::SetWindowSize(wSize);
@@ -46,4 +40,12 @@ void UIText::Render() {
 void UIText::Destroy() {
 	UIElement::Destroy();
 	font = NULL;
+}
+
+void UIText::OnRectRefreshed() {
+	Vector2f pos = imGuiRect->GetPoints()[0];
+	Vector2f size = imGuiRect->GetSize();
+
+	wPos = ImVec2(pos.x, pos.y);
+	wSize = ImVec2(size.x, size.y);
 }

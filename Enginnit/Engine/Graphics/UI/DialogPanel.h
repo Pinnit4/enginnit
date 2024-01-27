@@ -9,9 +9,10 @@
 class DialogPanel : public UIElement {
 public:
 	DialogPanel();
-	void Render() override;
-private:
+protected:
 	UIImage* background;
 	UIText* text;
+
+	void RenderInternal() override;
 };
 #endif

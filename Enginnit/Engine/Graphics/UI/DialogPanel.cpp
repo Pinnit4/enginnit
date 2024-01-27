@@ -20,6 +20,6 @@ DialogPanel::DialogPanel() : UIElement() {
 	RefreshRect();
 }
 
-void DialogPanel::Render() {
+void DialogPanel::RenderInternal() {
 	
 }

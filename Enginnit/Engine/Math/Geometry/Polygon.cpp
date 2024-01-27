@@ -7,7 +7,7 @@ Vector2f GetProjectionMinMaxOnAxis(Polygon polygon, Vector2f axis);
 float GetProjectionScalarOnAxis(Vector2f vertex, Vector2f axis);
 
 Polygon::Polygon() {
-	center = Vector2f::Zero();
+	center = Vector2f(0);
 	UpdateVertices();
 }
 
@@ -41,7 +41,7 @@ void Polygon::RefreshRotation(float rotation) {
 	if (rotDelta == 0) return;
 
 	for (unsigned int i = 0; i < points.size(); i++)
-		points[i] = Math::RotatePoint(points[i], Vector2f::Zero(), rotDelta);
+		points[i] = Math::RotatePoint(points[i], Vector2f(0), rotDelta);
 
 	lastRotation = rotation;
 }

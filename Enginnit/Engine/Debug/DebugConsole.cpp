@@ -12,12 +12,12 @@ char DebugConsole::inputBuffer[2048] = "";
 vector<DebugConsole::ConsoleLine> DebugConsole::output = {};
 
 DebugConsole::DebugConsole() : UIElement() {
-	visible = false;
+	enabled = false;
 }
 
 void DebugConsole::Tick(double deltaTime) {
 	if (Keyboard::GetKey(GLFW_KEY_LEFT_SHIFT) && Keyboard::GetKeyDown(GLFW_KEY_TAB))
-		visible = !visible;
+		enabled = !enabled;
 }
 
 vector<string> GetLineSplitted(string line, char value) {
@@ -33,9 +33,7 @@ vector<string> GetLineSplitted(string line, char value) {
 	return seglist;
 }
 
-void DebugConsole::Render() {
-	if (!visible) return;
-
+void DebugConsole::RenderInternal() {
 	if (ImGui::Begin("Debug Console", nullptr, ImGuiWindowFlags_NoCollapse)) {
 
 		ImGui::BeginChild("##scrolling", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));
@@ -56,7 +54,7 @@ void DebugConsole::Render() {
 	}
 	ImGui::End();
 
-	UIElement::Render();
+	UIElement::RenderInternal();
 }
 
 void DebugConsole::ProcessConsoleCommand(string value) {

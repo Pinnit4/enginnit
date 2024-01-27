@@ -26,14 +26,14 @@ public:
 	void SetTexture(Texture tx);
 	void SetTexture(Texture tx, Vector2f pivot);
 
-	vector<int> GetMargins();
-	void SetMargins(vector<int> margins);
+	Vector4i GetMargins();
+	void SetMargins(Vector4i margins);
 
 	void Render();
 
 	void Destroy();
 private:
 	Texture texture;
-	vector<int> margins;
+	Vector4i margins;
 };
 #endif

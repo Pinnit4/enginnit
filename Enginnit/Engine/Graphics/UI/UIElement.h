@@ -12,8 +12,9 @@ public:
 	UIElement();
 
 	int sortingOrder;
+	bool enabled;
 
-	virtual void Render();
+	void Render();
 	virtual void Destroy();
 
 	void SetParent(UIElement* parent);
@@ -37,7 +38,9 @@ protected:
 	Vector2f lowerLeftCorner;
 	Vector2f upperRightCorner;
 
+	virtual void RenderInternal();
 	void RefreshRect();
+	virtual void OnRectRefreshed();
 
 	void AddChild(UIElement* child);
 	void RemoveChild(UIElement* child);

@@ -123,7 +123,7 @@ TiledMapSprite* TiledMap::GetSprite(int x, int y) {
 
 Vector2f TiledMap::GetWorldPosition(int x, int y) {
 	auto sprite = GetSprite(x, y);
-	if (sprite == NULL)return Vector2f::Zero();
+	if (sprite == NULL)return Vector2f(0);
 
 	DebugConsole::Log("sprite grid pos: " + sprite->spatial->position.ToString());
 	return (sprite->spatial->position);

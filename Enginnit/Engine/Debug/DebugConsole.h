@@ -17,7 +17,6 @@ public:
 	DebugConsole();
 
 	void Tick(double deltaTime);
-	void Render() override;
 
 	static void Log(string message);
 	static void LogWarning(string message);
@@ -39,14 +38,14 @@ private:
 		}
 	};
 
-	bool visible;
-
 	static vector<ConsoleLine> output;
 
 	static char inputBuffer[2048];
 
 	static void ProcessConsoleCommand(string value);
 	static void ClearConsoleInput();
+
+	void RenderInternal() override;
 
 	void RenderOutputLine(ConsoleLine line);
 };

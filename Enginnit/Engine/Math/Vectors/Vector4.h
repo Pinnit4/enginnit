@@ -12,6 +12,7 @@ struct Vector4f {
 	float w;
 
 	Vector4f() { x = 0; y = 0; z = 0; w = 0; }
+	Vector4f(float a) { x = a; y = a; z = a; w = a; }
 	Vector4f(float _x, float _y) { x = _x; y = _y; z = 0; w = 0; }
 	Vector4f(float _x, float _y, float _z) { x = _x; y = _y; z = _z; w = 0; }
 	Vector4f(float _x, float _y, float _z, float _w) { x = _x; y = _y; z = _z; w = _w; }
@@ -66,8 +67,25 @@ struct Vector4f {
 	bool operator!=(const Vector4f& a) { return !operator==(a); }
 	bool operator!=(const Vector4f& a) const { return !operator==(a); }
 
-	static Vector4f Zero() { return Vector4f(0, 0, 0, 0); }
-	static Vector4f One() { return Vector4f(1, 1, 1, 1); }
+	float operator [](int i) {
+		switch (i) {
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: return x;
+		}
+	}
+
+	float operator [](int i) const {
+		switch (i) {
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: return x;
+		}
+	}
+
+	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + "," + to_string(z) + "," + to_string(w) + ")"); }
 };
 
 struct Vector4d {
@@ -77,6 +95,7 @@ struct Vector4d {
 	double w;
 
 	Vector4d() { x = 0; y = 0; z = 0; w = 0; }
+	Vector4d(double a) { x = a; y = a; z = a; w = a; }
 	Vector4d(double _x, double _y) { x = _x; y = _y; z = 0; w = 0; }
 	Vector4d(double _x, double _y, double _z) { x = _x; y = _y; z = _z; w = 0; }
 	Vector4d(double _x, double _y, double _z, double _w) { x = _x; y = _y; z = _z; w = _w; }
@@ -131,8 +150,92 @@ struct Vector4d {
 	bool operator!=(const Vector4d& a) { return !operator==(a); }
 	bool operator!=(const Vector4d& a) const { return !operator==(a); }
 
-	static Vector4d Zero() { return Vector4d(0, 0, 0, 0); }
-	static Vector4d One() { return Vector4d(1, 1, 1, 1); }
+	double operator [](int i) {
+		switch (i) {
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: return x;
+		}
+	}
+
+	double operator [](int i) const {
+		switch (i) {
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: return x;
+		}
+	}
+
+	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + "," + to_string(z) + "," + to_string(w) + ")"); }
+};
+
+struct Vector4i {
+	int x;
+	int y;
+	int z;
+	int w;
+
+	Vector4i() { x = 0; y = 0; z = 0; w = 0; }
+	Vector4i(int a) { x = a; y = a; z = a; w = a; }
+	Vector4i(int _x, int _y) { x = _x; y = _y; z = 0; w = 0; }
+	Vector4i(int _x, int _y, int _z) { x = _x; y = _y; z = _z; w = 0; }
+	Vector4i(int _x, int _y, int _z, int _w) { x = _x; y = _y; z = _z; w = _w; }
+	Vector4i(const Vector4i& other) { x = other.x; y = other.y; z = other.z; w = other.w; }
+
+	int GetLength() { return sqrt(GetSqrMagnitude()); }
+	int GetSqrMagnitude() { return ((x * x) + (y * y) + (z * z) + (w * w)); }
+
+	Vector4i& operator +=(const Vector4i& a) { x += a.x; y += a.y; z += a.z; w += a.w; return *this; }
+	Vector4i& operator +(const Vector4i& a) { Vector4i v = Vector4i(x + a.x, y + a.y, z + a.z, w + a.w); return v; }
+	Vector4i& operator +(const Vector4i& a) const { Vector4i v = Vector4i(x + a.x, y + a.y, z + a.z, w + a.w); return v; }
+
+	Vector4i& operator -=(const Vector4i& a) { x -= a.x; y -= a.y; z -= a.z; w -= a.w; return *this; }
+	Vector4i& operator -(const Vector4i& a) { Vector4i v = Vector4i(x - a.x, y - a.y, z - a.z, w - a.w); return v; }
+	Vector4i& operator -(const Vector4i& a) const { Vector4i v = Vector4i(x - a.x, y - a.y, z - a.z, w - a.w); return v; }
+
+	Vector4i& operator *=(const Vector4i& a) { x *= a.x; y *= a.y;  z *= a.z; w *= a.w; return *this; }
+	Vector4i& operator *(const Vector4i& a) { Vector4i v = Vector4i(x * a.x, y * a.y, z * a.z, w * a.w); return v; }
+	Vector4i& operator *(const Vector4i& a) const { Vector4i v = Vector4i(x * a.x, y * a.y, z * a.z, w * a.w); return v; }
+
+	Vector4i& operator /=(const Vector4i& a) { x /= a.x; y /= a.y;  z /= a.z; w /= a.w; return *this; }
+	Vector4i& operator /(const Vector4i& a) { Vector4i v = Vector4i(x / a.x, y / a.y, z / a.z, w / a.w); return v; }
+	Vector4i& operator /(const Vector4i& a) const { Vector4i v = Vector4i(x / a.x, y / a.y, z / a.z, w / a.w); return v; }
+
+	Vector4i& operator *=(const int a) { x *= a; y *= a;  z *= a; w *= a; return *this; }
+	Vector4i& operator *(const int a) { Vector4i v = Vector4i(x * a, y * a, z * a, w * a); return v; }
+	Vector4i& operator *(const int a) const { Vector4i v = Vector4i(x * a, y * a, z * a, w * a); return v; }
+
+	Vector4i& operator /=(const int a) { x /= a; y /= a; z /= a; w /= a; return *this; }
+	Vector4i& operator /(const int a) { Vector4i v = Vector4i(x / a, y / a, z / a, w / a); return v; }
+	Vector4i& operator /(const int a) const { Vector4i v = Vector4i(x / a, y / a, z / a, w / a); return v; }
+
+	bool operator==(const Vector4i& a) { return x == a.x && y == a.y && z == a.z && w == a.w; }
+	bool operator==(const Vector4i& a) const { return x == a.x && y == a.y && z == a.z && w == a.w; }
+
+	bool operator!=(const Vector4i& a) { return !operator==(a); }
+	bool operator!=(const Vector4i& a) const { return !operator==(a); }
+
+	int operator [](int i) {
+		switch (i) {
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: return x;
+		}
+	}
+
+	int operator [](int i) const {
+		switch (i) {
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: return x;
+		}
+	}
+
+	string ToString() { return ("(" + to_string(x) + "," + to_string(y) + "," + to_string(z) + "," + to_string(w) + ")"); }
 };
 
 #endif

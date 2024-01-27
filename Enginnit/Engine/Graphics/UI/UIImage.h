@@ -17,14 +17,15 @@ public:
 	void SetTexture(string path);
 	void SetTexture(Texture tx);
 
-	vector<int> GetMargins();
-	void SetMargins(vector<int> margins);
+	Vector4i GetMargins();
+	void SetMargins(Vector4i margins);
 
-	void Render() override;
 	void Destroy() override;
 
-private:
+protected:
 	Texture texture;
-	vector<int> margins;
+	Vector4i margins;
+
+	void RenderInternal() override;
 };
 #endif

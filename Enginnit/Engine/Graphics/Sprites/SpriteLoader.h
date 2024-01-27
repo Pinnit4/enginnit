@@ -47,8 +47,8 @@ protected:
 
 		vector<string> margins = { "margins" };
 
-		for (float i : sp->GetMargins())
-			margins.push_back(to_string(i));
+		for (int i = 0; i < 4; i++)
+			margins.push_back(to_string(sp->GetMargins()[i]));
 
 		return v;
 	}
@@ -59,10 +59,7 @@ protected:
 		if (id == "texture")
 			sp->SetTexture(TextureLoader::LoadFromLine(values));
 		else if (id == "margins") {
-			vector<int> margins = {};
-			for (auto i : values)
-				margins.push_back(stoi(i));
-
+			Vector4i margins = Vector4i(stoi(values[0]), stoi(values[1]), stoi(values[2]), stoi(values[3]));
 			sp->SetMargins(margins);
 		}
 		else

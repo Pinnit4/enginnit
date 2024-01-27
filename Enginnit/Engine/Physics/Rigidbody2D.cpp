@@ -4,7 +4,7 @@
 #include "../Debug/DebugConsole.h"
 
 Rigidbody2D::Rigidbody2D() : Collider2D() {
-	velocity = Vector2f::Zero();
+	velocity = Vector2f(0);
 	Physics2D::RegisterRigidbody(this);
 	previousPos = spatial->position;
 	useGravity = true;
@@ -12,7 +12,7 @@ Rigidbody2D::Rigidbody2D() : Collider2D() {
 	debugColor = Color(0.5, 0.5, 1);
 }
 Rigidbody2D::Rigidbody2D(Vector2f position) : Collider2D(position) {
-	velocity = Vector2f::Zero();
+	velocity = Vector2f(0);
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
 	useGravity = true;
@@ -20,7 +20,7 @@ Rigidbody2D::Rigidbody2D(Vector2f position) : Collider2D(position) {
 	debugColor = Color(0.5, 0.5, 1);
 }
 Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(position, rotation) {
-	velocity = Vector2f::Zero();
+	velocity = Vector2f(0);
 	Physics2D::RegisterRigidbody(this);
 	previousPos = position;
 	useGravity = true;
@@ -28,7 +28,7 @@ Rigidbody2D::Rigidbody2D(Vector2f position, float rotation) : Collider2D(positio
 	debugColor = Color(0.5, 0.5, 1);
 }
 Rigidbody2D::Rigidbody2D(Spatial2D* spatial) : Collider2D(spatial) {
-	velocity = Vector2f::Zero();
+	velocity = Vector2f(0);
 	Physics2D::RegisterRigidbody(this);
 	previousPos = spatial->position;
 	useGravity = true;

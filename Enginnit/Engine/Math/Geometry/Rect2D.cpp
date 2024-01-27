@@ -1,7 +1,7 @@
 #include "Rect2D.h"
 
 Rect2D::Rect2D() : Polygon() {
-	SetSize(Vector2f::Zero());
+	SetSize(Vector2f(0));
 
 }
 

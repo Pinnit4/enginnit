@@ -2,20 +2,20 @@
 
 void DrawRect2DSegment(Texture tx, Vector2f ll_loc, Vector2f tr_loc, Vector2i an_min, Vector2i an_max, Spatial2D td, Color c);
 
-void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, vector<int> margins) {
+void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Vector4i margins) {
 	DrawRect2DWithMargins(tx, rect, Spatial2D(), Color::White(), margins);
 }
-void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Color c, vector<int> margins) {
+void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Color c, Vector4i margins) {
 	DrawRect2DWithMargins(tx, rect, Spatial2D(), c, margins);
 }
-void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Spatial2D sp, vector<int> margins) {
+void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Spatial2D sp, Vector4i margins) {
 	DrawRect2DWithMargins(tx, rect, sp, Color::White(), margins);
 }
-void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Spatial2D sp, Color c, vector<int> margins) {
+void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Spatial2D sp, Color c, Vector4i margins) {
 
 	bool multipleDraw = false;
-	for (float m : margins) {
-		if (m > 0) {
+	for (int i = 0; i < 4; i++) {
+		if (margins[i] > 0) {
 			multipleDraw = true;
 			break;
 		}
@@ -115,7 +115,7 @@ void Drawer::DrawRect2DWithMargins(Texture tx, Rect2D* rect, Spatial2D sp, Color
 }
 
 void DrawRect2DSegment(Texture tx, Vector2f ll_loc, Vector2f tr_loc, Vector2i an_min, Vector2i an_max, Spatial2D sp, Color c) {
-	if (ll_loc.x == tr_loc.x || ll_loc.y == tr_loc.y) return; // Not valid parameters for a quad
+	if (ll_loc.x == tr_loc.x || ll_loc.y == tr_loc.y) return; // Invalid parameters for drawing a quad
 
 	Vector2f center = Vector2f((ll_loc.x + tr_loc.x) / 2, (ll_loc.y + tr_loc.y) / 2);
 	Vector2f size = Vector2f(tr_loc.x - ll_loc.x, tr_loc.y - ll_loc.y);

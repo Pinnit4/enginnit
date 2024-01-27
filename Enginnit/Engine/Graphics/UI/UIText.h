@@ -16,10 +16,15 @@ public:
 	void SetText(string text);
 	string GetText();
 
-	void Render() override;
 	void Destroy() override;
-private:
+protected:
 	ImFont* font;
 	string text;
+
+	ImVec2 wPos;
+	ImVec2 wSize;
+
+	void RenderInternal() override;
+	void OnRectRefreshed() override;
 };
 #endif

@@ -2,7 +2,7 @@
 
 #include "UIManager.h"
 #include "../Drawer.h"
-#include "../Textures/TextureLoader.h"
+#include "../Textures/TextureManager.h"
 
 UIImage::UIImage() : UIElement() {
 	texture = Texture();
@@ -24,10 +24,10 @@ void UIImage::SetTexture(Texture _texture) {
 	texture = _texture;
 }
 
-vector<int> UIImage::GetMargins() { return margins; }
-void UIImage::SetMargins(vector<int> _margins) { margins = _margins; }
+Vector4i UIImage::GetMargins() { return margins; }
+void UIImage::SetMargins(Vector4i _margins) { margins = _margins; }
 
-void UIImage::Render() {
+void UIImage::RenderInternal() {
 	Drawer::DrawRect2DWithMargins(texture, rect, margins);
 }
 

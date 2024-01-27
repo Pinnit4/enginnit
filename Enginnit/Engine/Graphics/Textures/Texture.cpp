@@ -87,7 +87,7 @@ bool Texture::SetImageParameters(int _id) {
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_WIDTH, &internalWidth);
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_HEIGHT, &internalHeight);
 
-		SetAnchors(Vector2i::Zero(), Vector2i(internalWidth - 1, internalHeight - 1));
+		SetAnchors(Vector2i(0), Vector2i(internalWidth - 1, internalHeight - 1));
 
 		return true;
 	}
