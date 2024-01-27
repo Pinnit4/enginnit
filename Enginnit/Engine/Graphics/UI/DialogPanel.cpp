@@ -3,11 +3,11 @@
 #include "../GraphicsManager.h"
 
 DialogPanel::DialogPanel() : UIElement() {
-	background = new UIImage("Assets/sprites/ui_border_opaque.png");
+	background = new UIImage("res/sprites/ui_border_opaque.png");
 	background->SetMargins({ 3,3,3,3 });
 	background->SetParent(this);
 
-	text = new UIText("Assets/fonts/slkscr.ttf", 32);
+	text = new UIText("res/fonts/slkscr.ttf", 32);
 	text->SetParent(this);
 	text->SetCorners(Vector2f(4), Vector2f(-4));
 	text->SetText("This is a test!");

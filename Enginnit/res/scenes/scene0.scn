@@ -2,14 +2,14 @@ type:Scene
 
 start_child:TiledMap
 
-file:Assets/tiledmap.tlm
+file:res/tiledmap.tlm
 position:170.5:128
 
 end_child:0
 
 start_child:CharacterController2D
 
-file:Assets/player.cc2d
+file:res/player.cc2d
 position:258.5:87.5
 gravity:0
 pivot:0.5:0.5

@@ -1,5 +1,5 @@
 type:TiledMap
-tileset:Assets/tilesets/world_tileset0.tls
+tileset:res/tilesets/world_tileset0.tls
 
 tile_line:501025550505502
 tile_line:505503021102103

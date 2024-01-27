@@ -1,9 +1,0 @@
-type:Tileset
-tile_height:16
-tile_width:16
-0:Assets/sprites/tile_world.png:floor_0:0:16:15:31
-1:Assets/sprites/tile_world.png:floor_1:0:32:15:47
-2:Assets/sprites/tile_world.png:floor_2:32:16:47:31
-3:Assets/sprites/tile_world.png:floor_3:64:32:79:47
-4:Assets/sprites/tile_details.png:rock_0:32:48:47:63
-5:Assets/sprites/tile_details.png:rock_1:48:48:63:63

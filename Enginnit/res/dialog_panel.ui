@@ -5,13 +5,13 @@ corners:4:4:-4:4
 
 start_child:UIImage
 
-sprite:Assets/dialog_bg.spr
+sprite:res/dialog_bg.spr
 anchors:0:0:1:1
 corners:0:0:0:0
 
 start_child:UIImage
 
-sprite:Assets/dialog_bg.spr
+sprite:res/dialog_bg.spr
 anchors:0.2:0.2:0.2:0.2
 corners:0:0:0:0
 

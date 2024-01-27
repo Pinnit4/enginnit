@@ -10,7 +10,7 @@ Game::~Game() {
 }
 
 void Game::Start() {
-	currentScene = new Scene("Assets/scene0.scn");
+	currentScene = new Scene("res/scenes/scene0.scn");
 	currentScene->Start();
 
 	DialogPanel* panel = new DialogPanel();
