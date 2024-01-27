@@ -49,13 +49,13 @@ void CharacterController2D::PhysicsTickInternal(double deltaTime) {
 
 void CharacterController2D::TickMovement(double deltaTime) {
 	Vector2f input = Vector2f(0);
-	if (Keyboard::GetKey(GLFW_KEY_W))
+	if (Keyboard::GetKey(KeyCode::W))
 		input.y += 1;
-	if (Keyboard::GetKey(GLFW_KEY_S))
+	if (Keyboard::GetKey(KeyCode::S))
 		input.y -= 1;
-	if (Keyboard::GetKey(GLFW_KEY_A))
+	if (Keyboard::GetKey(KeyCode::A))
 		input.x -= 1;
-	if (Keyboard::GetKey(GLFW_KEY_D))
+	if (Keyboard::GetKey(KeyCode::D))
 		input.x += 1;
 
 	if (input.x > 0) 
@@ -90,13 +90,13 @@ void FocusCameraOnPlayer(CharacterController2D* cc, Vector2f offset) {
 
 void MoveCamera(double deltaTime) {
 	Vector2f input = Vector2f(0);
-	if (Keyboard::GetKey(GLFW_KEY_UP))
+	if (Keyboard::GetKey(KeyCode::UP))
 		input.y += 1;
-	if (Keyboard::GetKey(GLFW_KEY_DOWN))
+	if (Keyboard::GetKey(KeyCode::DOWN))
 		input.y -= 1;
-	if (Keyboard::GetKey(GLFW_KEY_LEFT))
+	if (Keyboard::GetKey(KeyCode::LEFT))
 		input.x -= 1;
-	if (Keyboard::GetKey(GLFW_KEY_RIGHT))
+	if (Keyboard::GetKey(KeyCode::RIGHT))
 		input.x += 1;
 
 	GraphicsManager::MoveCamera(input.GetNormalized() * 50 * deltaTime);

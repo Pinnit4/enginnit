@@ -2,14 +2,15 @@
 #define ENGINNIT_KEYBOARD
 
 #include "GLFW/glfw3.h"
+#include "KeyCode.h"
 
 class Keyboard {
 public:
 	static void SetCallbacks(GLFWwindow* window);
 
-	static bool GetKey(int key);
-	static bool GetKeyDown(int key);
-	static bool GetKeyUp(int key);
+	static bool GetKey(KeyCode key);
+	static bool GetKeyDown(KeyCode key);
+	static bool GetKeyUp(KeyCode key);
 private:
 	static bool keys[];
 	static bool keysDown[];

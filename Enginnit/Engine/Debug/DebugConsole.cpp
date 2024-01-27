@@ -16,7 +16,7 @@ DebugConsole::DebugConsole() : UIElement() {
 }
 
 void DebugConsole::Tick(double deltaTime) {
-	if (Keyboard::GetKey(GLFW_KEY_LEFT_SHIFT) && Keyboard::GetKeyDown(GLFW_KEY_TAB))
+	if (Keyboard::GetKey(KeyCode::LEFT_SHIFT) && Keyboard::GetKeyDown(KeyCode::TAB))
 		enabled = !enabled;
 }
 

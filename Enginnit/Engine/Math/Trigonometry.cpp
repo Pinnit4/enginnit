@@ -1,11 +1,11 @@
 #include "Trigonometry.h"
 #include "MathConstants.h"
 
-double Math::ConvertToRadians(double degrees) { return (degrees * PI) / 180.0; }
-float Math::ConvertToRadians(float degrees) { return (degrees * PI) / 180.0; }
+double Math::ConvertToRadians(double degrees) { return (degrees * MATH_PI) / 180.0; }
+float Math::ConvertToRadians(float degrees) { return (degrees * MATH_PI) / 180.0; }
 
-double Math::ConvertToDegrees(double radians) { return (radians * 180.0) / PI; }
-float Math::ConvertToDegrees(float radians) { return (radians * 180.0) / PI; }
+double Math::ConvertToDegrees(double radians) { return (radians * 180.0) / MATH_PI; }
+float Math::ConvertToDegrees(float radians) { return (radians * 180.0) / MATH_PI; }
 
 Vector2f Math::RotatePoint(Vector2f point, Vector2f pivot, float angle) {
 	double rad = ConvertToRadians(angle);

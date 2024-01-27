@@ -34,19 +34,21 @@ void Keyboard::KeyCallback(GLFWwindow* window, int key, int scancode, int action
 	keys[key] = action != GLFW_RELEASE;
 }
 
-bool Keyboard::GetKeyDown(int key)
+bool Keyboard::GetKeyDown(KeyCode key)
 {
-	bool x = keysDown[key];
-	keysDown[key] = false;
+	int keyInt = KeyCodeHelper::ToGLFW(key);
+	bool x = keysDown[keyInt];
+	keysDown[keyInt] = false;
 	return x;
 }
-bool Keyboard::GetKey(int key)
+bool Keyboard::GetKey(KeyCode key)
 {
-	return keys[key];
+	return keys[KeyCodeHelper::ToGLFW(key)];
 }
-bool Keyboard::GetKeyUp(int key)
+bool Keyboard::GetKeyUp(KeyCode key)
 {
-	bool x = keysUp[key];
-	keysUp[key] = false;
+	int keyInt = KeyCodeHelper::ToGLFW(key);
+	bool x = keysUp[keyInt];
+	keysUp[keyInt] = false;
 	return x;
 }
